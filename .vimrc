@@ -21,7 +21,7 @@ set expandtab
 syntax enable
 colorscheme molokai
 " molokai 256 colors
-" let g:rehash256 = 1
+let g:rehash256 = 1
 
 " highlight search
 set hlsearch
@@ -31,3 +31,15 @@ set ruler
 
 set ignorecase
 set smartcase
+
+command -nargs=0 -bar Update if &modified 
+                           \|    if empty(bufname('%'))
+                           \|        browse confirm write
+                           \|    else
+                           \|        confirm write
+                           \|    endif
+                           \|endif
+nnoremap <silent> <leader>s :<C-u>Update<CR>
+inoremap <leader>s <Esc>:Update<CR>
+vmap <leader>s <esc>:w<CR>gv
+
