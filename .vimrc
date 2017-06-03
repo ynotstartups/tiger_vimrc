@@ -11,7 +11,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
 Plugin 'tpope/vim-surround'
 Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
@@ -35,6 +35,8 @@ set laststatus=2
 " line number
 set number
 
+set colorcolumn=80
+
 " ctrlp
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
@@ -50,12 +52,12 @@ colorscheme molokai
 let g:rehash256 = 1
 hi MatchParen cterm=none ctermbg=none ctermfg=blue
 
-inoremap <leader>c <CR><Esc>O
 
 let g:airline#extensions#tabline#enabled = 1
 
+inoremap <leader>c <CR><Esc>O
 " leader s to save
-command -nargs=0 -bar Update if &modified 
+command -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
                            \|    else
@@ -65,3 +67,5 @@ command -nargs=0 -bar Update if &modified
 nnoremap <silent> <leader>s :<C-u>Update<CR>
 inoremap <leader>s <Esc>:Update<CR>
 vmap <leader>s <esc>:w<CR>gv
+
+let g:javascript_plugin_jsdoc = 1
