@@ -16,6 +16,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
+Plugin 'henrik/vim-indexed-search'
 
 call vundle#end()
 filetype plugin indent on
