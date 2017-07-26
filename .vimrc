@@ -70,3 +70,6 @@ inoremap <leader>s <Esc>:Update<CR>
 vmap <leader>s <esc>:w<CR>gv
 
 let g:javascript_plugin_jsdoc = 1
+
+nnoremap p ]p
+nnoremap <c-p> p
