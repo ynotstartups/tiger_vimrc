@@ -16,7 +16,11 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
-Plugin 'henrik/vim-indexed-search'
+" Plugin 'henrik/vim-indexed-search'
+" Plugin 'elzr/vim-json'
+Plugin 'joonty/vdebug'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
 filetype plugin indent on
@@ -38,15 +42,33 @@ set number
 
 set colorcolumn=80
 
+let g:indentLine_leadingSpaceEnabled = 1
+
 " ctrlp
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
+" let g:ctrlp_clear_cache_on_exit = 0
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
+set wildignore+=*.cache.php
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
 set ignorecase
-set smartcase
 set hlsearch
 
 colorscheme molokai
@@ -73,3 +95,17 @@ let g:javascript_plugin_jsdoc = 1
 
 nnoremap p ]p
 nnoremap <c-p> p
+inoremap jj <Esc>
+
+nnoremap <leader>e <Esc>:Explore<CR>
+nnoremap <S-h> <Esc>:bp<CR>
+nnoremap <S-l> <Esc>:bn<CR>
+
+nnoremap Q @q
+nnoremap Y y$
+
+set list lcs=tab:\|\ 
+
+" nerdtree
+nmap <F6> :NERDTreeToggle<CR>
+nnoremap <leader>d :bp<cr>:bd #<cr>
