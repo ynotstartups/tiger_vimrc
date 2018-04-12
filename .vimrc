@@ -9,8 +9,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
-Plugin 'tpope/vim-surround'
-Plugin 'pangloss/vim-javascript'
+" Plugin 'tpope/vim-surround'
+" Plugin 'pangloss/vim-javascript'
 " Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
@@ -91,12 +91,13 @@ nnoremap <silent> <leader>s :<C-u>Update<CR>
 inoremap <leader>s <Esc>:Update<CR>
 vmap <leader>s <esc>:w<CR>gv
 
+inoremap jj <Esc>
+
 let g:javascript_plugin_jsdoc = 1
 
 nnoremap p ]p
 nnoremap <c-p> p
 inoremap jj <Esc>
-
 nnoremap <leader>e <Esc>:Explore<CR>
 nnoremap <S-h> <Esc>:bp<CR>
 nnoremap <S-l> <Esc>:bn<CR>
