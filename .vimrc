@@ -18,9 +18,9 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
 " Plugin 'henrik/vim-indexed-search'
 " Plugin 'elzr/vim-json'
-Plugin 'joonty/vdebug'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-unimpaired'
 
 call vundle#end()
 filetype plugin indent on
