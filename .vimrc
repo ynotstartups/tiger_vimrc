@@ -9,18 +9,18 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
-" Plugin 'tpope/vim-surround'
-" Plugin 'pangloss/vim-javascript'
-" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'tpope/vim-surround'
+Plugin 'pangloss/vim-javascript'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
-" Plugin 'henrik/vim-indexed-search'
-" Plugin 'elzr/vim-json'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
 
 call vundle#end()
 filetype plugin indent on
@@ -95,10 +95,9 @@ inoremap jj <Esc>
 
 let g:javascript_plugin_jsdoc = 1
 
-nnoremap p ]p
-nnoremap <c-p> p
 inoremap jj <Esc>
-nnoremap <leader>e <Esc>:Explore<CR>
+nnoremap <leader>j <Esc>:set syntax=javascript<CR>
+nnoremap <leader>h <Esc>:set syntax=html<CR>
 nnoremap <S-h> <Esc>:bp<CR>
 nnoremap <S-l> <Esc>:bn<CR>
 
@@ -108,5 +107,6 @@ nnoremap Y y$
 set list lcs=tab:\|\ 
 
 " nerdtree
-nmap <F6> :NERDTreeToggle<CR>
+nnoremap <leader>n <Esc>:NERDTreeToggle<CR>
+nnoremap <leader>f <Esc>:NERDTreeFind<CR>
 nnoremap <leader>d :bp<cr>:bd #<cr>
