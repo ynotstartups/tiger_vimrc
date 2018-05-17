@@ -17,10 +17,9 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-unimpaired'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb'
+Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()
 filetype plugin indent on
@@ -109,4 +108,16 @@ set list lcs=tab:\|\
 " nerdtree
 nnoremap <leader>n <Esc>:NERDTreeToggle<CR>
 nnoremap <leader>f <Esc>:NERDTreeFind<CR>
+
 nnoremap <leader>d :bp<cr>:bd #<cr>
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = "/usr/bin/python3"
