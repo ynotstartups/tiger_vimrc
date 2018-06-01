@@ -20,6 +20,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'google/vim-searchindex'
+Plugin 'easymotion/vim-easymotion'
 
 call vundle#end()
 filetype plugin indent on
@@ -67,8 +69,13 @@ if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 set ignorecase
+set smartcase
 set hlsearch
+set incsearch
 
 colorscheme molokai
 let g:rehash256 = 1
@@ -94,11 +101,13 @@ inoremap jj <Esc>
 
 let g:javascript_plugin_jsdoc = 1
 
-inoremap jj <Esc>
-nnoremap <leader>j <Esc>:set syntax=javascript<CR>
-nnoremap <leader>h <Esc>:set syntax=html<CR>
+" leader syntax
+nnoremap <leader><leader>j <Esc>:set syntax=javascript<CR>
+nnoremap <leader><leader>h <Esc>:set syntax=html<CR>
 nnoremap <S-h> <Esc>:bp<CR>
 nnoremap <S-l> <Esc>:bn<CR>
+" toggle next window
+nnoremap <leader>w <Esc><C-w><C-w>
 
 nnoremap Q @q
 nnoremap Y y$
@@ -121,3 +130,24 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = "/usr/bin/python3"
+
+" EasyMotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap <Leader><space> <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+" GitGutter
+nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
+nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
+nnoremap <Leader>ga <Esc>:GitGutterAll<CR>
+
+nnoremap <Leader>o <Esc>:only<CR>
