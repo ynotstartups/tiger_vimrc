@@ -19,11 +19,18 @@ Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'mxw/vim-jsx'
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
+
+" change leader to space
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+
 filetype plugin indent on
 
 " line number
@@ -42,6 +49,11 @@ set laststatus=2
 set number
 
 set colorcolumn=80
+
+" http://vim.wikia.com/wiki/Example_vimrc
+set wildmenu
+set showcmd
+set cmdheight=2
 
 let g:indentLine_leadingSpaceEnabled = 1
 
@@ -84,7 +96,14 @@ hi MatchParen cterm=none ctermbg=none ctermfg=blue
 
 let g:airline#extensions#tabline#enabled = 1
 
-inoremap <leader>c <CR><Esc>O
+" inoremap <leader>c <CR><Esc>O
+
+" try to open new line in bracket
+inoremap {;<CR> {<CR>};<ESC>O
+inoremap (;<CR> (<CR>);<ESC>O
+inoremap {\<CR> {<CR>}<ESC>O
+inoremap (\<CR> (<CR>)<ESC>O
+
 " leader s to save
 command -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
@@ -94,7 +113,7 @@ command -nargs=0 -bar Update if &modified
                            \|    endif
                            \|endif
 nnoremap <silent> <leader>s :<C-u>Update<CR>
-inoremap <leader>s <Esc>:Update<CR>
+inoremap \s <Esc>:Update<CR>
 vmap <leader>s <esc>:w<CR>gv
 
 inoremap jj <Esc>
@@ -150,4 +169,14 @@ nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
 nnoremap <Leader>ga <Esc>:GitGutterAll<CR>
 
-nnoremap <Leader>o <Esc>:only<CR>
+" YouCompleteMe
+set completeopt-=preview
+
+" Emmet
+let g:user_emmet_leader_key='\'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+let emmet_html5 = 0
