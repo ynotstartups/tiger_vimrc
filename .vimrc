@@ -82,7 +82,8 @@ if executable('ag')
 endif
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <Leader>g <Esc>:grep -ir<space>
 
 set ignorecase
 set smartcase
@@ -95,6 +96,8 @@ hi MatchParen cterm=none ctermbg=none ctermfg=blue
 
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_z = airline#section#create(['%3p%%'])
+let g:airline_powerline_fonts = 1
 
 " inoremap <leader>c <CR><Esc>O
 
@@ -140,9 +143,9 @@ nnoremap <leader>f <Esc>:NERDTreeFind<CR>
 nnoremap <leader>d :bp<cr>:bd #<cr>
 
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -165,9 +168,9 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 " GitGutter
-nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
-nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
-nnoremap <Leader>ga <Esc>:GitGutterAll<CR>
+" nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
+" nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
+" nnoremap <Leader>ga <Esc>:GitGutterAll<CR>
 
 " YouCompleteMe
 set completeopt-=preview
