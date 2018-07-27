@@ -38,9 +38,16 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" color
 set t_Co=256
-
 syntax on
+
+colorscheme molokai
+let g:rehash256 = 1
+" brighter comment color
+hi Comment ctermfg=246
+hi Visual ctermbg=240
+
 
 " status bar
 set laststatus=2
@@ -48,12 +55,15 @@ set laststatus=2
 " line number
 set number
 
+
 set colorcolumn=80
 
 " http://vim.wikia.com/wiki/Example_vimrc
 set wildmenu
-set showcmd
-set cmdheight=2
+
+" how how long (in milliseconds) the plugin will wait
+" after you stop typing before it updates the signs
+set updatetime=100
 
 let g:indentLine_leadingSpaceEnabled = 1
 
@@ -89,10 +99,6 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-
-colorscheme molokai
-let g:rehash256 = 1
-hi MatchParen cterm=none ctermbg=none ctermfg=blue
 
 
 let g:airline#extensions#tabline#enabled = 1
