@@ -49,6 +49,7 @@ let g:rehash256 = 1
 " brighter comment color
 hi Comment ctermfg=245
 hi Visual ctermbg=240
+hi MatchParen cterm=none ctermbg=green ctermfg=blue
 
 
 " status bar
@@ -117,11 +118,35 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
+function! LastCommit()
+    let bufferName = expand('%')
+    let output = system('git log -1 --pretty="%ar" -p '.bufferName.' | head -1')
+
+    if !v:shell_error
+        if len(output) >= 1
+            let output = split(output, "\n")[0]
+            return output
+        endif
+    endif
+
+    return "Not Git"
+
+endfunction
+
+call airline#parts#define_function('lastcommit', 'LastCommit')
+
 let g:airline#extensions#tabline#fnamemod = ':t'
+
 let g:airline_section_x = airline#section#create([])
-let g:airline_section_y = airline#section#create([])
+let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
 let g:airline_section_z = airline#section#create(['%3p%%'])
+
 let g:airline_powerline_fonts = 1
+
+" function! AirlineInit()
+" endfunction
+" autocmd User AirlineAfterInit call AirlineInit()
+
 autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
 " inoremap <leader>c <CR><Esc>O
@@ -204,16 +229,3 @@ let emmet_html5 = 0
 
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
-
-" trying to add git
-function! LastLog()
-    " let shellcmd = 'git log -1'
-
-    " let output=system(shellcmd)
-    " if !v:shell_error
-        " return 0
-    " endif
-    echom "HelloWorld"
-
-    return 1
-endfunction
