@@ -22,8 +22,10 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'mxw/vim-jsx'
-Plugin 'mattn/emmet-vim'
+" Plugin 'mxw/vim-jsx'
+" Plugin 'mattn/emmet-vim'
+Plugin 'ddrscott/vim-side-search'
+Plugin 'vim-scripts/BufOnly.vim'
 
 call vundle#end()
 
@@ -45,7 +47,7 @@ syntax on
 colorscheme molokai
 let g:rehash256 = 1
 " brighter comment color
-hi Comment ctermfg=246
+hi Comment ctermfg=245
 hi Visual ctermbg=240
 
 
@@ -100,10 +102,27 @@ set smartcase
 set hlsearch
 set incsearch
 
-
+" airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_section_x = airline#section#create([])
+let g:airline_section_y = airline#section#create([])
 let g:airline_section_z = airline#section#create(['%3p%%'])
 let g:airline_powerline_fonts = 1
+autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
 " inoremap <leader>c <CR><Esc>O
 
@@ -114,15 +133,8 @@ inoremap {\<CR> {<CR>}<ESC>O
 inoremap (\<CR> (<CR>)<ESC>O
 
 " leader s to save
-command -nargs=0 -bar Update if &modified
-                           \|    if empty(bufname('%'))
-                           \|        browse confirm write
-                           \|    else
-                           \|        confirm write
-                           \|    endif
-                           \|endif
-nnoremap <silent> <leader>s :<C-u>Update<CR>
-inoremap \s <Esc>:Update<CR>
+nnoremap <silent> <leader>s <Esc>:w<CR>
+inoremap \s <Esc>:w<CR>
 vmap <leader>s <esc>:w<CR>gv
 
 inoremap jj <Esc>
@@ -140,7 +152,7 @@ nnoremap <leader>w <Esc><C-w><C-w>
 nnoremap Q @q
 nnoremap Y y$
 
-set list lcs=tab:\|\ 
+set list lcs=tab:\|\
 
 " nerdtree
 nnoremap <leader>n <Esc>:NERDTreeToggle<CR>
@@ -189,3 +201,19 @@ let g:user_emmet_settings = {
     \  },
   \}
 let emmet_html5 = 0
+
+" make sure the color still works after opening session
+set sessionoptions-=options  " Don't save options
+
+" trying to add git
+function! LastLog()
+    " let shellcmd = 'git log -1'
+
+    " let output=system(shellcmd)
+    " if !v:shell_error
+        " return 0
+    " endif
+    echom "HelloWorld"
+
+    return 1
+endfunction
