@@ -26,6 +26,7 @@ Plugin 'easymotion/vim-easymotion'
 " Plugin 'mattn/emmet-vim'
 Plugin 'ddrscott/vim-side-search'
 Plugin 'vim-scripts/BufOnly.vim'
+Plugin 'shime/vim-livedown'
 
 call vundle#end()
 
@@ -120,14 +121,15 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 function! LastCommit()
     let bufferName = expand('%')
-    let output = system('git log -1 --pretty="%ar" -p '.bufferName.' | head -1')
+    " this system call has bug
+    " let output = system('git log -1 --pretty="%ar" -p '.bufferName.' | head -1')
 
-    if !v:shell_error
-        if len(output) >= 1
-            let output = split(output, "\n")[0]
-            return output
-        endif
-    endif
+    " if !v:shell_error
+        " if len(output) >= 1
+            " let output = split(output, "\n")[0]
+            " " return output
+        " endif
+    " endif
 
     return "Not Git"
 
@@ -206,10 +208,6 @@ nmap <Leader><space> <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
 " GitGutter
 " nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
 " nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
@@ -229,3 +227,11 @@ let emmet_html5 = 0
 
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
+
+set cmdheight=2
+
+inoremap <c-u> <esc>viwU<esc>i
+" nnoremap <c-u> <esc>viwU<esc>
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+iabbrev clog console.log(<esc><Right>i
