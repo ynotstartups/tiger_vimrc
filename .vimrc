@@ -235,3 +235,20 @@ inoremap <c-u> <esc>viwU<esc>i
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 iabbrev clog console.log(<esc><Right>i
+
+" if !exists("*Eatchar")
+    " func Eatchar(pat)
+       " let c = nr2char(getchar(0))
+       " return (c =~ a:pat) ? '' : c
+    " endfunc
+    " command! Recfg call Eatchar()
+" endif
+
+" iabbr clog console.log()<Left><c-r>=Eatchar('\s')<cr>
+
+" " force myself to stop use these keys at insert mode
+" inoremap <esc> <nop>
+" inoremap <Up> <nop>
+" inoremap <Down> <nop>
+" inoremap <Left> <nop>
+" inoremap <Right> <nop>
