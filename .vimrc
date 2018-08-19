@@ -27,6 +27,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'ddrscott/vim-side-search'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'shime/vim-livedown'
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 
@@ -45,7 +46,8 @@ set expandtab
 set t_Co=256
 syntax on
 
-colorscheme molokai
+set background=dark
+colorscheme solarized
 let g:rehash256 = 1
 " brighter comment color
 hi Comment ctermfg=245
@@ -77,7 +79,7 @@ let g:ctrlp_max_files = 0
 " let g:ctrlp_clear_cache_on_exit = 0
 
 " nerdcommenter
-let g:NERDSpaceDelims = 1
+" let g:NERDSpaceDelims = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
@@ -123,24 +125,30 @@ function! LastCommit()
     let bufferName = expand('%')
     " this system call has bug
     " let output = system('git log -1 --pretty="%ar" -p '.bufferName.' | head -1')
+    let output = system("git log -1 --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short ".bufferName)
 
-    " if !v:shell_error
-        " if len(output) >= 1
-            " let output = split(output, "\n")[0]
-            " " return output
-        " endif
-    " endif
-
-    return "Not Git"
-
+     if !v:shell_error
+         "if len(output) >= 1
+             " let output = split(output, "\n")[0]
+         echom output
+         "endif
+     else
+        echom "Not Git"
+     endif
 endfunction
 
-call airline#parts#define_function('lastcommit', 'LastCommit')
+augroup LastCommit
+    autocmd!
+    autocmd BufNewFile,BufRead * call LastCommit()
+augroup END
+
+" call airline#parts#define_function('lastcommit', 'LastCommit')
 
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline_section_x = airline#section#create([])
-let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
+" let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
+let g:airline_section_y = airline#section#create([])
 let g:airline_section_z = airline#section#create(['%3p%%'])
 
 let g:airline_powerline_fonts = 1
@@ -149,7 +157,10 @@ let g:airline_powerline_fonts = 1
 " endfunction
 " autocmd User AirlineAfterInit call AirlineInit()
 
-autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
+augroup Airline
+    autocmd!
+    autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
+augroup END
 
 " inoremap <leader>c <CR><Esc>O
 
@@ -246,9 +257,15 @@ iabbrev clog console.log(<esc><Right>i
 
 " iabbr clog console.log()<Left><c-r>=Eatchar('\s')<cr>
 
-" " force myself to stop use these keys at insert mode
-" inoremap <esc> <nop>
-" inoremap <Up> <nop>
-" inoremap <Down> <nop>
-" inoremap <Left> <nop>
-" inoremap <Right> <nop>
+" force myself to stop use these keys at insert mode
+inoremap <esc> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+augroup CommentLine
+    autocmd!
+    autocmd FileType javascript nnoremap <buffer> <leader>l I//<space><esc>
+    autocmd FileType python     nnoremap <buffer> <leader>l I#<space><esc>
+augroup END
