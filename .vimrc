@@ -99,14 +99,14 @@ endif
 
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap <Leader>g <Esc>:grep -ir<space>
+nnoremap <Leader>g <esc>:grep -ir<space>
 
 set ignorecase
 set smartcase
 set hlsearch
 set incsearch
 
-" airline
+"""""""""""""""""""""" airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 nmap <leader>1 <Plug>AirlineSelectTab1
@@ -146,7 +146,7 @@ augroup END
 
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-let g:airline_section_x = airline#section#create([])
+" let g:airline_section_x = airline#section#create([])
 " let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
 let g:airline_section_y = airline#section#create([])
 let g:airline_section_z = airline#section#create(['%3p%%'])
@@ -162,7 +162,7 @@ augroup Airline
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 
-" inoremap <leader>c <CR><Esc>O
+" inoremap <leader>c <CR><esc>O
 
 " try to open new line in bracket
 inoremap {;<CR> {<CR>};<ESC>O
@@ -171,21 +171,22 @@ inoremap {\<CR> {<CR>}<ESC>O
 inoremap (\<CR> (<CR>)<ESC>O
 
 " leader s to save
-nnoremap <silent> <leader>s <Esc>:w<CR>
-inoremap \s <Esc>:w<CR>
+nnoremap <silent> <leader>s <esc>:w<CR>
+" inoremap <silent> <leader>ss <esc>:w<CR>
 vmap <leader>s <esc>:w<CR>gv
 
-inoremap jj <Esc>
+inoremap jj <esc>
 
 let g:javascript_plugin_jsdoc = 1
 
 " leader syntax
-nnoremap <leader><leader>j <Esc>:set syntax=javascript<CR>
-nnoremap <leader><leader>h <Esc>:set syntax=html<CR>
-nnoremap <S-h> <Esc>:bp<CR>
-nnoremap <S-l> <Esc>:bn<CR>
-" toggle next window
-nnoremap <leader>w <Esc><C-w><C-w>
+nnoremap <leader><leader>j <esc>:set syntax=javascript<CR>
+nnoremap <leader><leader>h <esc>:set syntax=html<CR>
+
+""""""""""""""""""""" windows and taps
+nnoremap <S-h> <esc>:bp<CR>
+nnoremap <leader>w <esc><C-w><C-w>
+nnoremap <leader>q <esc>q
 
 nnoremap Q @q
 nnoremap Y y$
@@ -193,8 +194,8 @@ nnoremap Y y$
 set list lcs=tab:\|\
 
 " nerdtree
-nnoremap <leader>n <Esc>:NERDTreeToggle<CR>
-nnoremap <leader>f <Esc>:NERDTreeFind<CR>
+nnoremap <leader>n <esc>:NERDTreeToggle<CR>
+nnoremap <leader>f <esc>:NERDTreeFind<CR>
 
 nnoremap <leader>d :bp<cr>:bd #<cr>
 
@@ -220,9 +221,9 @@ nmap <Leader><space> <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 
 " GitGutter
-" nnoremap <Leader>gp <Esc>:GitGutterPreviewHunk<CR>
-" nnoremap <Leader>gu <Esc>:GitGutterUndo<CR>
-" nnoremap <Leader>ga <Esc>:GitGutterAll<CR>
+" nnoremap <Leader>gp <esc>:GitGutterPreviewHunk<CR>
+" nnoremap <Leader>gu <esc>:GitGutterUndo<CR>
+" nnoremap <Leader>ga <esc>:GitGutterAll<CR>
 
 " YouCompleteMe
 set completeopt-=preview
@@ -241,10 +242,18 @@ set sessionoptions-=options  " Don't save options
 
 set cmdheight=2
 
+" upper case whole word for writing constant
 inoremap <c-u> <esc>viwU<esc>i
 " nnoremap <c-u> <esc>viwU<esc>
+
+
+"""""""""""""""""""" quick reload
+nnoremap <leader>rv :source $MYVIMRC<cr>
+
+"""""""""""""""""""" quick edit
 nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>et :split ~/Documents/TODO<cr>
+
 iabbrev clog console.log(<esc><Right>i
 
 " if !exists("*Eatchar")
@@ -269,3 +278,28 @@ augroup CommentLine
     autocmd FileType javascript nnoremap <buffer> <leader>l I//<space><esc>
     autocmd FileType python     nnoremap <buffer> <leader>l I#<space><esc>
 augroup END
+
+" different folder for swap files (doesn't work)
+" set directory=~/.vim/tmp/swap/   " swap files
+
+"""""""""""""""""""""" search
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+"""""""""""""""""""""" TODO
+augroup TODO
+    au!
+    au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    au FileType TODO nnoremap <leader>f <esc>0r*<esc>:sort<cr>
+    au FileType TODO nnoremap <leader>n <esc>ggO<space><space>
+    au FileType TODO nnoremap O <esc>O<space><space>
+    au FileType TODO nnoremap o <esc>o<space><space>
+augroup END
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
