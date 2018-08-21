@@ -21,12 +21,11 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
-Plugin 'easymotion/vim-easymotion'
+" Plugin 'easymotion/vim-easymotion'
 " Plugin 'mxw/vim-jsx'
 " Plugin 'mattn/emmet-vim'
-Plugin 'ddrscott/vim-side-search'
+" Plugin 'ddrscott/vim-side-search'
 Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'shime/vim-livedown'
 Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
@@ -50,9 +49,9 @@ set background=dark
 colorscheme solarized
 let g:rehash256 = 1
 " brighter comment color
-hi Comment ctermfg=245
-hi Visual ctermbg=240
-hi MatchParen cterm=none ctermbg=green ctermfg=blue
+" hi Comment ctermfg=245
+" hi Visual ctermbg=240
+" hi MatchParen cterm=none ctermbg=green ctermfg=blue
 
 
 " status bar
@@ -291,6 +290,7 @@ nnoremap N Nzzzv
 augroup TODO
     au!
     au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     au FileType TODO nnoremap <leader>f <esc>0r*<esc>:sort<cr>
     au FileType TODO nnoremap <leader>n <esc>ggO<space><space>
     au FileType TODO nnoremap O <esc>O<space><space>
