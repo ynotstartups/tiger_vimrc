@@ -28,6 +28,7 @@ Plugin 'google/vim-searchindex'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
+Plugin 'ConradIrwin/vim-bracketed-paste'
 call vundle#end()
 
 " change leader to space
@@ -187,7 +188,7 @@ nnoremap <leader><leader>h <esc>:set syntax=html<CR>
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 nnoremap <leader>w <esc><C-w><C-w>
-nnoremap <leader>q <esc>q
+nnoremap <leader>q <esc>:q<CR>
 
 nnoremap Q @q
 nnoremap Y y$
