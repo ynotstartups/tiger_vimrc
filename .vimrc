@@ -27,7 +27,7 @@ Plugin 'google/vim-searchindex'
 " Plugin 'ddrscott/vim-side-search'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
-
+Plugin 'tomasr/molokai'
 call vundle#end()
 
 " change leader to space
@@ -44,10 +44,11 @@ set expandtab
 " color
 set t_Co=256
 syntax on
-
 set background=dark
-colorscheme solarized
-let g:rehash256 = 1
+" let g:solarized_termtrans = 1
+" let g:solarized_termcolors=256
+colorscheme molokai
+
 " brighter comment color
 " hi Comment ctermfg=245
 " hi Visual ctermbg=240
@@ -145,7 +146,7 @@ augroup END
 
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" let g:airline_section_x = airline#section#create([])
+" let g:airline_section_x = airline#section#create([]) " file type
 " let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
 let g:airline_section_y = airline#section#create([])
 let g:airline_section_z = airline#section#create(['%3p%%'])
@@ -184,6 +185,7 @@ nnoremap <leader><leader>h <esc>:set syntax=html<CR>
 
 """"""""""""""""""""" windows and taps
 nnoremap <S-h> <esc>:bp<CR>
+nnoremap <S-l> <esc>:bn<CR>
 nnoremap <leader>w <esc><C-w><C-w>
 nnoremap <leader>q <esc>q
 
@@ -295,6 +297,10 @@ augroup TODO
     au FileType TODO nnoremap <leader>n <esc>ggO<space><space>
     au FileType TODO nnoremap O <esc>O<space><space>
     au FileType TODO nnoremap o <esc>o<space><space>
+    " change number in line
+    au FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
+    au FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
+    au FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
 augroup END
 
 " Uncomment the following to have Vim jump to the last position when
