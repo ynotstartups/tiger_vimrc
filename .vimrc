@@ -28,6 +28,7 @@ Plugin 'google/vim-searchindex'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
+Plugin 'python-mode/python-mode'
 call vundle#end()
 
 " change leader to space
@@ -188,6 +189,8 @@ nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 nnoremap <leader>w <esc><C-w><C-w>
 nnoremap <leader>q <esc>:q<CR>
+nnoremap <leader>= <esc>:resize +5<CR>
+nnoremap <leader>- <esc>:resize -5<CR>
 
 nnoremap Q @q
 nnoremap Y y$
