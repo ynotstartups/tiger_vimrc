@@ -28,7 +28,6 @@ Plugin 'google/vim-searchindex'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
-Plugin 'ConradIrwin/vim-bracketed-paste'
 call vundle#end()
 
 " change leader to space
@@ -294,8 +293,8 @@ augroup TODO
     au!
     au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    au FileType TODO nnoremap <leader>f <esc>0r*<esc>:sort<cr>
-    au FileType TODO nnoremap <leader>n <esc>ggO<space><space>
+    au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
+    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>
     au FileType TODO nnoremap O <esc>O<space><space>
     au FileType TODO nnoremap o <esc>o<space><space>
     " change number in line
@@ -310,3 +309,6 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
+
+" xterm
+set t_BE=
