@@ -200,6 +200,7 @@ set list lcs=tab:\|\
 " nerdtree
 nnoremap <leader>n <esc>:NERDTreeToggle<CR>
 nnoremap <leader>f <esc>:NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
 nnoremap <leader>d :bp<cr>:bd #<cr>
 
