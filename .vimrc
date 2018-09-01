@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'shougo/deoplete.nvim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
@@ -21,6 +21,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 " Plugin 'easymotion/vim-easymotion'
 " Plugin 'mxw/vim-jsx'
 " Plugin 'mattn/emmet-vim'
@@ -28,7 +30,7 @@ Plugin 'google/vim-searchindex'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
-Plugin 'python-mode/python-mode'
+Plugin 'davidhalter/jedi-vim'
 call vundle#end()
 
 " change leader to space
@@ -316,3 +318,10 @@ endif
 
 " xterm
 set t_BE=
+
+" jedi
+let g:jedi#completions_enabled = 0
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
