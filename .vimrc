@@ -21,7 +21,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
-" Plugin 'easymotion/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 " Plugin 'mxw/vim-jsx'
 " Plugin 'mattn/emmet-vim'
 " Plugin 'ddrscott/vim-side-search'
@@ -29,6 +29,8 @@ Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'python-mode/python-mode'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'justinmk/vim-sneak'
 call vundle#end()
 
 " change leader to space
@@ -138,10 +140,10 @@ function! LastCommit()
      endif
 endfunction
 
-augroup LastCommit
-    autocmd!
-    autocmd BufNewFile,BufRead * call LastCommit()
-augroup END
+" augroup LastCommit
+    " autocmd!
+    " autocmd BufNewFile,BufRead * call LastCommit()
+" augroup END
 
 " call airline#parts#define_function('lastcommit', 'LastCommit')
 
@@ -198,7 +200,7 @@ nnoremap Y y$
 set list lcs=tab:\|\
 
 " nerdtree
-nnoremap <leader>n <esc>:NERDTreeToggle<CR>
+nnoremap <leader>t <esc>:NERDTreeToggle<CR>
 nnoremap <leader>f <esc>:NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
@@ -299,8 +301,8 @@ augroup TODO
     " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
     au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>
-    au FileType TODO nnoremap O <esc>O<space><space>
-    au FileType TODO nnoremap o <esc>o<space><space>
+    au FileType TODO nnoremap <buffer> O <esc>O<space><space>
+    au FileType TODO nnoremap <buffer> o <esc>o<space><space>
     " change number in line
     au FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
     au FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
@@ -316,3 +318,11 @@ endif
 
 " xterm
 set t_BE=
+
+" pymode
+let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+let g:pymode_options_max_line_length=100
+autocmd FileType python set colorcolumn=100
+
+" sneak
+let g:sneak#use_ic_scs = 1
