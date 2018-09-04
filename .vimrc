@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'shougo/deoplete.nvim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
@@ -21,7 +21,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
-Plugin 'easymotion/vim-easymotion'
+" Plugin 'easymotion/vim-easymotion' " doesn't work on Mac
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 " Plugin 'mxw/vim-jsx'
 " Plugin 'mattn/emmet-vim'
 " Plugin 'ddrscott/vim-side-search'
@@ -326,3 +328,10 @@ autocmd FileType python set colorcolumn=100
 
 " sneak
 let g:sneak#use_ic_scs = 1
+
+" jedi
+let g:jedi#completions_enabled = 0
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
