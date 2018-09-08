@@ -189,8 +189,8 @@ inoremap jj <esc>
 let g:javascript_plugin_jsdoc = 1
 
 " leader syntax
-nnoremap <leader><leader>j <esc>:set syntax=javascript<CR>
-nnoremap <leader><leader>h <esc>:set syntax=html<CR>
+" nnoremap <leader><leader>j <esc>:set syntax=javascript<CR>
+" nnoremap <leader><leader>h <esc>:set syntax=html<CR>
 
 """"""""""""""""""""" windows and buffers
 nnoremap <S-h> <esc>:bp<CR>
@@ -357,5 +357,31 @@ function! JumpToTest()
     let l:bufferName = expand('%')
     let l:testFileName = substitute(bufferName, '^src/', 'tests/', '')
     let l:testFileName = substitute(testFileName, '\(.*\)/', '\1/test_', '')
-    echo l:testFileName
+    if filereadable(testFileName) " check file exists
+        execute 'e '.testFileName
+    else
+        echom "Test file doesn't exist."
+    endif
 endfunction
+
+function! JumpToSrc()
+    let l:bufferName = expand('%')
+    let l:testFileName = substitute(bufferName, '^tests/', 'src/', '')
+    let l:testFileName = substitute(testFileName, '\(.*\)/test_', '\1/', '')
+    if filereadable(testFileName) " check file exists
+        execute 'e '.testFileName
+    else
+        echom "File doesn't exist."
+    endif
+endfunction
+
+function! JumpToAlt()
+    let l:fileName = expand('%:t')
+    if l:fileName =~ '^test_'
+        call JumpToSrc()
+    else
+        call JumpToTest()
+    endif
+endfunction
+
+nnoremap <leader>j :call JumpToAlt()<CR>
