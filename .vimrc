@@ -385,3 +385,6 @@ function! JumpToAlt()
 endfunction
 
 nnoremap <leader>j :call JumpToAlt()<CR>
+
+" backspace why?!
+set backspace=indent,eol,start
