@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'shougo/deoplete.nvim'
+" Plugin 'shougo/deoplete.nvim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'evidens/vim-twig'
@@ -22,8 +22,8 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'google/vim-searchindex'
 " Plugin 'easymotion/vim-easymotion' " doesn't work on Mac
-Plugin 'roxma/nvim-yarp'
-Plugin 'roxma/vim-hug-neovim-rpc'
+" Plugin 'roxma/nvim-yarp'
+" Plugin 'roxma/vim-hug-neovim-rpc'
 " Plugin 'mxw/vim-jsx'
 " Plugin 'mattn/emmet-vim'
 " Plugin 'ddrscott/vim-side-search'
@@ -33,6 +33,10 @@ Plugin 'tomasr/molokai'
 Plugin 'python-mode/python-mode'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'justinmk/vim-sneak'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'prettier/vim-prettier'
+Plugin 'nvie/vim-flake8'
+Plugin 'Glench/Vim-Jinja2-Syntax'
 call vundle#end()
 
 " change leader to space
@@ -81,6 +85,7 @@ let g:indentLine_leadingSpaceEnabled = 1
 " ctrlp
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
+let g:ctrlp_by_filename = 1
 " let g:ctrlp_clear_cache_on_exit = 0
 
 " nerdcommenter
@@ -90,10 +95,9 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 set wildignore+=*.cache.php
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'file': '\v\.(exe|so|dll|po)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
 if executable('ag')
@@ -188,9 +192,10 @@ let g:javascript_plugin_jsdoc = 1
 nnoremap <leader><leader>j <esc>:set syntax=javascript<CR>
 nnoremap <leader><leader>h <esc>:set syntax=html<CR>
 
-""""""""""""""""""""" windows and taps
+""""""""""""""""""""" windows and buffers
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
+nnoremap <leader>bd <esc>:bd<cr>
 nnoremap <leader>w <esc><C-w><C-w>
 nnoremap <leader>q <esc>:q<CR>
 nnoremap <leader>= <esc>:resize +5<CR>
@@ -202,11 +207,9 @@ nnoremap Y y$
 set list lcs=tab:\|\
 
 " nerdtree
-nnoremap <leader>t <esc>:NERDTreeToggle<CR>
+nnoremap <leader>n <esc>:NERDTreeToggle<CR>
 nnoremap <leader>f <esc>:NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
-
-nnoremap <leader>d :bp<cr>:bd #<cr>
 
 " syntastic
 " set statusline+=%#warningmsg#
@@ -262,6 +265,7 @@ nnoremap <leader>rv :source $MYVIMRC<cr>
 """""""""""""""""""" quick edit
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>et :split ~/Documents/TODO<cr>
+nnoremap <leader>en :split ~/Documents/NOTES<cr>
 
 iabbrev clog console.log(<esc><Right>i
 
@@ -302,7 +306,7 @@ augroup TODO
     au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
-    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>
+    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
     au FileType TODO nnoremap <buffer> O <esc>O<space><space>
     au FileType TODO nnoremap <buffer> o <esc>o<space><space>
     " change number in line
@@ -325,13 +329,33 @@ set t_BE=
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
 autocmd FileType python set colorcolumn=100
+autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 
 " sneak
 let g:sneak#use_ic_scs = 1
 
 " jedi
 let g:jedi#completions_enabled = 0
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>a"
+let g:jedi#usages_command = "<leader>u"
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" copy/paste
+nnoremap <leader>y ".y
+nnoremap <leader>p ".p
+
+" prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
+" quick jump
+function! JumpToTest()
+    let l:bufferName = expand('%')
+    let l:testFileName = substitute(bufferName, '^src/', 'tests/', '')
+    let l:testFileName = substitute(testFileName, '\(.*\)/', '\1/test_', '')
+    echo l:testFileName
+endfunction
