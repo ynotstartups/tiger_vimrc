@@ -34,9 +34,11 @@ Plugin 'python-mode/python-mode'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'justinmk/vim-sneak'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'prettier/vim-prettier'
+" Plugin 'prettier/vim-prettier'
 Plugin 'nvie/vim-flake8'
 Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'tpope/vim-repeat'
+Plugin 'groenewege/vim-less'
 call vundle#end()
 
 " change leader to space
@@ -195,13 +197,16 @@ let g:javascript_plugin_jsdoc = 1
 """"""""""""""""""""" windows and buffers
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
+" leader d is taken by Jedi find definition
 nnoremap <leader>bd <esc>:bd<cr>
 nnoremap <leader>w <esc><C-w><C-w>
-nnoremap <leader>q <esc>:q<CR>
+nnoremap <leader>o <esc>:only<CR>
 nnoremap <leader>= <esc>:resize +5<CR>
 nnoremap <leader>- <esc>:resize -5<CR>
+nnoremap <leader>v= <esc>:vertical resize +15<cr>
+nnoremap <leader>v- <esc>:vertical resize -15<cr>
 
-nnoremap Q @q
+vnoremap Q @q
 nnoremap Y y$
 
 set list lcs=tab:\|\
@@ -267,30 +272,12 @@ nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>et :split ~/Documents/TODO<cr>
 nnoremap <leader>en :split ~/Documents/NOTES<cr>
 
-iabbrev clog console.log(<esc><Right>i
-
-" if !exists("*Eatchar")
-    " func Eatchar(pat)
-       " let c = nr2char(getchar(0))
-       " return (c =~ a:pat) ? '' : c
-    " endfunc
-    " command! Recfg call Eatchar()
-" endif
-
-" iabbr clog console.log()<Left><c-r>=Eatchar('\s')<cr>
-
 " force myself to stop use these keys at insert mode
 inoremap <esc> <nop>
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
-
-augroup CommentLine
-    autocmd!
-    autocmd FileType javascript nnoremap <buffer> <leader>l I//<space><esc>
-    autocmd FileType python     nnoremap <buffer> <leader>l I#<space><esc>
-augroup END
 
 " different folder for swap files (doesn't work)
 " set directory=~/.vim/tmp/swap/   " swap files
@@ -299,21 +286,6 @@ augroup END
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-"""""""""""""""""""""" TODO
-augroup TODO
-    au!
-    au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
-    " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
-    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
-    au FileType TODO nnoremap <buffer> O <esc>O<space><space>
-    au FileType TODO nnoremap <buffer> o <esc>o<space><space>
-    " change number in line
-    au FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
-    au FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
-    au FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
-augroup END
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -328,8 +300,6 @@ set t_BE=
 " pymode
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
-autocmd FileType python set colorcolumn=100
-autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 
 " sneak
 let g:sneak#use_ic_scs = 1
@@ -349,8 +319,8 @@ nnoremap <leader>y ".y
 nnoremap <leader>p ".p
 
 " prettier
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+"let g:prettier#autoformat = 0
+"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " quick jump
 function! JumpToTest()
@@ -388,3 +358,43 @@ nnoremap <leader>j :call JumpToAlt()<CR>
 
 " backspace why?!
 set backspace=indent,eol,start
+
+" sessions
+nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
+
+" make dash as a word
+set iskeyword+=-
+
+" file specific
+augroup python
+    autocmd FileType python set colorcolumn=100
+    autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
+augroup END
+
+" javascript
+augroup javascript
+    autocmd FileType javascript set colorcolumn=100
+augroup END
+
+" TODO
+augroup TODO
+    au!
+    au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
+    au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
+    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
+    au FileType TODO nnoremap <buffer> O <esc>O<space><space>
+    au FileType TODO nnoremap <buffer> o <esc>o<space><space>
+    " change number in line
+    au FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
+    au FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
+    au FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
+augroup END
+
+augroup less
+    au FileType less set iskeyword+=@-@
+    au FileType less set iskeyword+=&
+    " css selector wonder whether this will be useful
+    au FileType less set iskeyword+=.
+    au FileType less set iskeyword+=#
+augroup END
