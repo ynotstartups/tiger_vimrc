@@ -15,13 +15,13 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
-Plugin 'StanAngeloff/php.vim'
+" Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
-Plugin 'google/vim-searchindex'
-" Plugin 'easymotion/vim-easymotion' " doesn't work on Mac
+" Plugin 'google/vim-searchindex'
+Plugin 'easymotion/vim-easymotion' " doesn't work on Mac
 " Plugin 'roxma/nvim-yarp'
 " Plugin 'roxma/vim-hug-neovim-rpc'
 " Plugin 'mxw/vim-jsx'
@@ -35,10 +35,10 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'justinmk/vim-sneak'
 Plugin 'Valloric/YouCompleteMe'
 " Plugin 'prettier/vim-prettier'
-Plugin 'nvie/vim-flake8'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'tpope/vim-repeat'
 Plugin 'groenewege/vim-less'
+Plugin 'henrik/vim-indexed-search'
 call vundle#end()
 
 " change leader to space
@@ -88,10 +88,15 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
+nnoremap <c-m> :CtrlPMRU<cr>
+nnoremap <c-b> :CtrlPBuffer<cr>
 " let g:ctrlp_clear_cache_on_exit = 0
 
 " nerdcommenter
-" let g:NERDSpaceDelims = 1
+let g:NERDSpaceDelims = 1
+let g:NERDCustomDelimiters = {
+      \ 'python': { 'left': '#', 'right': '' }
+      \ }
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
@@ -173,8 +178,6 @@ augroup Airline
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 
-" inoremap <leader>c <CR><esc>O
-
 " try to open new line in bracket
 inoremap {;<CR> {<CR>};<ESC>O
 inoremap (;<CR> (<CR>);<ESC>O
@@ -198,13 +201,14 @@ let g:javascript_plugin_jsdoc = 1
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
-nnoremap <leader>bd <esc>:bd<cr>
-nnoremap <leader>w <esc><C-w><C-w>
-nnoremap <leader>o <esc>:only<CR>
-nnoremap <leader>= <esc>:resize +5<CR>
-nnoremap <leader>- <esc>:resize -5<CR>
-nnoremap <leader>v= <esc>:vertical resize +15<cr>
-nnoremap <leader>v- <esc>:vertical resize -15<cr>
+nnoremap <leader>bd :bd<cr>
+nnoremap <leader>w  <C-w><C-w>
+nnoremap <leader>o  :only<CR>
+nnoremap <leader>c  :close<CR>
+nnoremap <leader>=  :resize +5<CR>
+nnoremap <leader>-  :resize -5<CR>
+nnoremap <leader>v= :vertical resize +15<cr>
+nnoremap <leader>v- :vertical resize -15<cr>
 
 vnoremap Q @q
 nnoremap Y y$
@@ -232,7 +236,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap <Leader><space> <Plug>(easymotion-overwin-f2)
+" nmap <Leader><space> <Plug>(easymotion-overwin-f2)
 
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
@@ -268,9 +272,9 @@ inoremap <c-u> <esc>viwU<esc>i
 nnoremap <leader>rv :source $MYVIMRC<cr>
 
 """""""""""""""""""" quick edit
-nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>et :split ~/Documents/TODO<cr>
-nnoremap <leader>en :split ~/Documents/NOTES<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>et :e ~/Documents/TODO<cr>
+nnoremap <leader>en :e ~/Documents/NOTES<cr>
 
 " force myself to stop use these keys at insert mode
 inoremap <esc> <nop>
@@ -286,6 +290,7 @@ inoremap <Right> <nop>
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+nnoremap * *N
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -302,7 +307,7 @@ let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
 
 " sneak
-let g:sneak#use_ic_scs = 1
+" let g:sneak#label = 1
 
 " jedi
 let g:jedi#completions_enabled = 0
@@ -313,10 +318,6 @@ let g:jedi#usages_command = "<leader>u"
 " deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" copy/paste
-nnoremap <leader>y ".y
-nnoremap <leader>p ".p
 
 " prettier
 "let g:prettier#autoformat = 0
@@ -363,7 +364,22 @@ set backspace=indent,eol,start
 nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
 
 " make dash as a word
-set iskeyword+=-
+" set iskeyword+=-
+
+" surround
+let b:surround_{char2nr("v")} = "{{ \r }}"
+let b:surround_{char2nr("{")} = "{{ \r }}"
+let b:surround_{char2nr("%")} = "{% \r %}"
+let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
+let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
+let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
+let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+
+" indexed search
+let g:indexed_search_colors = 0
+" let g:indexed_search_shortmess = 1
+let g:indexed_search_numbered_only = 1
 
 " file specific
 augroup python
@@ -392,9 +408,9 @@ augroup TODO
 augroup END
 
 augroup less
-    au FileType less set iskeyword+=@-@
-    au FileType less set iskeyword+=&
+    au FileType less setlocal iskeyword+=@-@
+    au FileType less setlocal iskeyword+=&
     " css selector wonder whether this will be useful
-    au FileType less set iskeyword+=.
-    au FileType less set iskeyword+=#
+    au FileType less setlocal iskeyword+=.
+    au FileType less setlocal iskeyword+=#
 augroup END
