@@ -9,7 +9,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'shougo/deoplete.nvim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'evidens/vim-twig'
+" Plugin 'evidens/vim-twig'
 Plugin 'tpope/vim-surround'
 Plugin 'pangloss/vim-javascript'
 Plugin 'Yggdroot/indentLine'
@@ -22,7 +22,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'google/vim-searchindex'
-Plugin 'easymotion/vim-easymotion' " doesn't work on Mac
+Plugin 'easymotion/vim-easymotion'
 " Plugin 'roxma/nvim-yarp'
 " Plugin 'roxma/vim-hug-neovim-rpc'
 " Plugin 'mxw/vim-jsx'
@@ -85,14 +85,14 @@ set wildmenu
 " I used it for fast update on GitGutter
 set updatetime=100
 
-let g:indentLine_leadingSpaceEnabled = 1
+" let g:indentLine_leadingSpaceEnabled = 1
 
 " ctrlp {{{
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
-nnoremap <c-m> :CtrlPMRU<cr>
-nnoremap <c-b> :CtrlPBuffer<cr>
+nnoremap <leader>pr :CtrlPMRU<cr>
+nnoremap <leader>pb :CtrlPBuffer<cr>
 " let g:ctrlp_clear_cache_on_exit = 0
 
 let g:ctrlp_custom_ignore = {
@@ -100,9 +100,8 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|po)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
+
 if executable('ag')
-    " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 "  }}}
@@ -116,9 +115,10 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 set wildignore+=*.cache.php
+
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap <Leader>g <esc>:grep -ir<space>
+" nnoremap <Leader>g <esc>:grep -ir<space>
 
 " search {{{
 set ignorecase
@@ -126,11 +126,31 @@ set smartcase
 set hlsearch
 set incsearch
 
+" permanent very magic mode
+nnoremap / /\v
+vnoremap / /\v
+cnoremap %s/ %smagic/
+cnoremap \>s/ \>smagic/
+nnoremap :g/ :g/\v
+nnoremap :g// :g//
+
 " Keep search matches in the middle of the window.
 " the following are not necessary because of indexed-search plugin
 " nnoremap n nzzzv
 " nnoremap N Nzzzv
 " nnoremap * *N
+
+if executable('ag')
+    " Use ag over grep
+    augroup ag
+    autocmd!
+        set grepprg=ag\ --nogroup\ --nocolor
+        command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+        nnoremap <leader>g :Ag<SPACE>-i<SPACE>
+    augroup END
+endif
+
+
 "  }}}
 
 
@@ -171,8 +191,6 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -230,7 +248,8 @@ nnoremap <leader>v- :vertical resize -15<cr>
 vnoremap Q @q
 nnoremap Y y$
 
-set list lcs=tab:\|\
+" for code indented with tabs
+set list lcs=tab:\|\ 
 
 " nerdtree
 nnoremap <leader>n <esc>:NERDTreeToggle<CR>
