@@ -1,6 +1,7 @@
 set nocompatible
 filetype off
 
+" vundle{{{
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -32,7 +33,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'python-mode/python-mode'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'justinmk/vim-sneak'
+" Plugin 'justinmk/vim-sneak'
 Plugin 'Valloric/YouCompleteMe'
 " Plugin 'prettier/vim-prettier'
 Plugin 'Glench/Vim-Jinja2-Syntax'
@@ -40,6 +41,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
 call vundle#end()
+" }}}
 
 " change leader to space
 nnoremap <SPACE> <Nop>
@@ -80,27 +82,18 @@ set wildmenu
 
 " how how long (in milliseconds) the plugin will wait
 " after you stop typing before it updates the signs
+" I used it for fast update on GitGutter
 set updatetime=100
 
 let g:indentLine_leadingSpaceEnabled = 1
 
-" ctrlp
+" ctrlp {{{
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
 nnoremap <c-m> :CtrlPMRU<cr>
 nnoremap <c-b> :CtrlPBuffer<cr>
 " let g:ctrlp_clear_cache_on_exit = 0
-
-" nerdcommenter
-let g:NERDSpaceDelims = 1
-let g:NERDCustomDelimiters = {
-      \ 'python': { 'left': '#', 'right': '' }
-      \ }
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-set wildignore+=*.cache.php
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -112,31 +105,36 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+"  }}}
 
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDCustomDelimiters = {
+      \ 'python': { 'left': '#', 'right': '' }
+      \ }
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
+set wildignore+=*.cache.php
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 nnoremap <Leader>g <esc>:grep -ir<space>
 
+" search {{{
 set ignorecase
 set smartcase
 set hlsearch
 set incsearch
 
-"""""""""""""""""""""" airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
+" Keep search matches in the middle of the window.
+" the following are not necessary because of indexed-search plugin
+" nnoremap n nzzzv
+" nnoremap N Nzzzv
+" nnoremap * *N
+"  }}}
 
+
+" last commits {{{
 function! LastCommit()
     let bufferName = expand('%')
     " this system call has bug
@@ -159,6 +157,23 @@ endfunction
 " augroup END
 
 " call airline#parts#define_function('lastcommit', 'LastCommit')
+" }}}
+
+" airline {{{
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
 
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -177,6 +192,7 @@ augroup Airline
     autocmd!
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
+"  }}}
 
 " try to open new line in bracket
 inoremap {;<CR> {<CR>};<ESC>O
@@ -197,7 +213,7 @@ let g:javascript_plugin_jsdoc = 1
 " nnoremap <leader><leader>j <esc>:set syntax=javascript<CR>
 " nnoremap <leader><leader>h <esc>:set syntax=html<CR>
 
-""""""""""""""""""""" windows and buffers
+" windows and buffers {{{
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
@@ -209,6 +225,7 @@ nnoremap <leader>=  :resize +5<CR>
 nnoremap <leader>-  :resize -5<CR>
 nnoremap <leader>v= :vertical resize +15<cr>
 nnoremap <leader>v- :vertical resize -15<cr>
+" }}}
 
 vnoremap Q @q
 nnoremap Y y$
@@ -232,7 +249,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = "/usr/bin/python3"
 
 " EasyMotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
@@ -257,9 +274,6 @@ let g:user_emmet_settings = {
     \  },
   \}
 let emmet_html5 = 0
-
-" make sure the color still works after opening session
-set sessionoptions-=options  " Don't save options
 
 set cmdheight=2
 
@@ -286,16 +300,10 @@ inoremap <Right> <nop>
 " different folder for swap files (doesn't work)
 " set directory=~/.vim/tmp/swap/   " swap files
 
-"""""""""""""""""""""" search
-" Keep search matches in the middle of the window.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap * *N
-
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
 
@@ -323,7 +331,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "let g:prettier#autoformat = 0
 "autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
-" quick jump
+" django settings {{{
 function! JumpToTest()
     let l:bufferName = expand('%')
     let l:testFileName = substitute(bufferName, '^src/', 'tests/', '')
@@ -356,17 +364,19 @@ function! JumpToAlt()
 endfunction
 
 nnoremap <leader>j :call JumpToAlt()<CR>
+" }}}
 
 " backspace why?!
 set backspace=indent,eol,start
 
-" sessions
+" sessions settings {{{
+" make sure the color still works after opening session
+set sessionoptions-=options  " Don't save options
+
 nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
+" }}}
 
-" make dash as a word
-" set iskeyword+=-
-
-" surround
+" surround settings {{{
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
 let b:surround_{char2nr("%")} = "{% \r %}"
@@ -375,42 +385,62 @@ let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
 let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
 let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+" }}}
 
-" indexed search
+" indexed-search settings {{{
 let g:indexed_search_colors = 0
-" let g:indexed_search_shortmess = 1
 let g:indexed_search_numbered_only = 1
+let g:indexed_search_dont_move = 1
+let g:indexed_search_center = 1
+" }}}
 
 " file specific
+" python file settings {{{
 augroup python
     autocmd FileType python set colorcolumn=100
     autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 augroup END
+" }}}
 
-" javascript
+" javascript file settings {{{
 augroup javascript
+    autocmd!
     autocmd FileType javascript set colorcolumn=100
 augroup END
+" }}}
 
-" TODO
+" TODO file settings {{{
 augroup TODO
-    au!
-    au BufRead,BufNewFile ~/Documents/TODO set ft=TODO
-    " au BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    au FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
-    au FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
-    au FileType TODO nnoremap <buffer> O <esc>O<space><space>
-    au FileType TODO nnoremap <buffer> o <esc>o<space><space>
+    autocmd!
+    autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
+    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
+    autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
+    autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
+    autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
     " change number in line
-    au FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
-    au FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
-    au FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
+    autocmd FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
+    autocmd FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
+    autocmd FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
 augroup END
+" }}}
 
+" less file settings {{{
 augroup less
-    au FileType less setlocal iskeyword+=@-@
-    au FileType less setlocal iskeyword+=&
+    autocmd!
+    autocmd FileType less setlocal iskeyword+=@-@
+    autocmd FileType less setlocal iskeyword+=&
     " css selector wonder whether this will be useful
-    au FileType less setlocal iskeyword+=.
-    au FileType less setlocal iskeyword+=#
+    autocmd FileType less setlocal iskeyword+=.
+    autocmd FileType less setlocal iskeyword+=#
 augroup END
+" }}}
+
+" Vimscript file settings {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim nnoremap <buffer> <leader>fn o" {{{<esc>o}}}<esc>k0lli
+augroup END
+" }}}
+
