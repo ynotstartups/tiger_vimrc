@@ -35,7 +35,7 @@ Plugin 'python-mode/python-mode'
 Plugin 'davidhalter/jedi-vim'
 " Plugin 'justinmk/vim-sneak'
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'prettier/vim-prettier'
+Plugin 'prettier/vim-prettier'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'tpope/vim-repeat'
 Plugin 'groenewege/vim-less'
@@ -91,8 +91,7 @@ set updatetime=100
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
-nnoremap <leader>pr :CtrlPMRU<cr>
-nnoremap <leader>pb :CtrlPBuffer<cr>
+
 " let g:ctrlp_clear_cache_on_exit = 0
 
 let g:ctrlp_custom_ignore = {
@@ -104,6 +103,29 @@ let g:ctrlp_custom_ignore = {
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
+"" CtrlP with current filename
+command! -nargs=0 CtrlPSwitcher call s:ctrlp_switcher()
+function! s:ctrlp_switcher()
+  try
+    let default_input_save = get(g:, 'ctrlp_default_input', '')
+    let current_file_name = expand('%:t:r')
+    let current_file_name = substitute(current_file_name, '[-_]', '', '')
+    let g:ctrlp_default_input = current_file_name
+
+    " call ctrlp#init(g:ctrlp_builtins)
+    " require the 0 for opening in file mode
+    call ctrlp#init(0)
+  finally
+    if exists('default_input_save')
+      let g:ctrlp_default_input = default_input_save
+    endif
+  endtry
+endfunction!
+
+nnoremap <leader>pm :CtrlPMRU<cr>
+nnoremap <leader>pb :CtrlPBuffer<cr>
+nnoremap <leader>pf :CtrlPSwitcher<cr>
 "  }}}
 
 " nerdcommenter
@@ -152,7 +174,6 @@ endif
 
 
 "  }}}
-
 
 " last commits {{{
 function! LastCommit()
@@ -267,15 +288,18 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = "/usr/bin/python3"
 
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+
 " EasyMotion
-" let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-" nmap <Leader><space> <Plug>(easymotion-overwin-f2)
+nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
 
 " Turn on case insensitive feature
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_smartcase = 1
 
 " GitGutter
 " nnoremap <Leader>gp <esc>:GitGutterPreviewHunk<CR>
@@ -308,6 +332,8 @@ nnoremap <leader>rv :source $MYVIMRC<cr>
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
+nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
+nnoremap <leader>en :e ~/Documents/BUGS<cr>
 
 " force myself to stop use these keys at insert mode
 inoremap <esc> <nop>
@@ -413,11 +439,28 @@ let g:indexed_search_dont_move = 1
 let g:indexed_search_center = 1
 " }}}
 
+" movement settings {{{
+nnoremap <up> <c-u>
+nnoremap <down> <c-d>
+nnoremap <left> <c-b>
+nnoremap <right> <c-f>
+" }}}
+
+" vim-prettier movement settings {{{
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js PrettierAsync
+
+" }}}
+
 " file specific
-" python file settings {{{
-augroup python
-    autocmd FileType python set colorcolumn=100
-    autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
+" less file settings {{{
+augroup less
+    autocmd!
+    autocmd FileType less setlocal iskeyword+=@-@
+    autocmd FileType less setlocal iskeyword+=&
+    " css selector wonder whether this will be useful
+    autocmd FileType less setlocal iskeyword+=.
+    autocmd FileType less setlocal iskeyword+=#
 augroup END
 " }}}
 
@@ -425,6 +468,21 @@ augroup END
 augroup javascript
     autocmd!
     autocmd FileType javascript set colorcolumn=100
+augroup END
+" }}}
+
+" jinja file settings {{{
+augroup jinja
+    autocmd!
+    autocmd FileType jinja setlocal iskeyword+=-
+    autocmd FileType jinja setlocal iskeyword+=_
+augroup END
+" }}}
+
+" python file settings {{{
+augroup python
+    autocmd FileType python set colorcolumn=100
+    autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 augroup END
 " }}}
 
@@ -441,17 +499,6 @@ augroup TODO
     autocmd FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
     autocmd FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
     autocmd FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
-augroup END
-" }}}
-
-" less file settings {{{
-augroup less
-    autocmd!
-    autocmd FileType less setlocal iskeyword+=@-@
-    autocmd FileType less setlocal iskeyword+=&
-    " css selector wonder whether this will be useful
-    autocmd FileType less setlocal iskeyword+=.
-    autocmd FileType less setlocal iskeyword+=#
 augroup END
 " }}}
 
