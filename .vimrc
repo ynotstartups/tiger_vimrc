@@ -110,8 +110,41 @@ function! s:ctrlp_switcher()
   try
     let default_input_save = get(g:, 'ctrlp_default_input', '')
     let current_file_name = expand('%:t:r')
-    let current_file_name = substitute(current_file_name, '[-_]', '', '')
+    let current_file_name = substitute(current_file_name, '[_-]', '', 'g')
     let g:ctrlp_default_input = current_file_name
+
+    " call ctrlp#init(g:ctrlp_builtins)
+    " require the 0 for opening in file mode
+    call ctrlp#init(0)
+  finally
+    if exists('default_input_save')
+      let g:ctrlp_default_input = default_input_save
+    endif
+  endtry
+endfunction!
+
+command! -nargs=0 CtrlPWordUnderCursor call s:ctrlp_word_uncursor()
+function! s:ctrlp_word_uncursor()
+  try
+    let default_input_save = get(g:, 'ctrlp_default_input', '')
+    let current_file_name = expand('<cword>')
+    let current_file_name = substitute(current_file_name, '[_-]', '', 'g')
+    let g:ctrlp_default_input = current_file_name
+
+    " call ctrlp#init(g:ctrlp_builtins)
+    " require the 0 for opening in file mode
+    call ctrlp#init(0)
+  finally
+    if exists('default_input_save')
+      let g:ctrlp_default_input = default_input_save
+    endif
+  endtry
+endfunction!
+
+function! s:ctrlp_str(str)
+  try
+    let default_input_save = get(g:, 'ctrlp_default_input', '')
+    let g:ctrlp_default_input = str
 
     " call ctrlp#init(g:ctrlp_builtins)
     " require the 0 for opening in file mode
@@ -126,6 +159,9 @@ endfunction!
 nnoremap <leader>pm :CtrlPMRU<cr>
 nnoremap <leader>pb :CtrlPBuffer<cr>
 nnoremap <leader>pf :CtrlPSwitcher<cr>
+nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
+" my <down> is mapped to <c-f>
+nnoremap <c-f> :CtrlPSwitcher<cr>
 "  }}}
 
 " nerdcommenter
@@ -141,6 +177,10 @@ set wildignore+=*.cache.php
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " nnoremap <Leader>g <esc>:grep -ir<space>
+
+" autoread
+set autoread
+au CursorHold * checktime
 
 " search {{{
 set ignorecase
@@ -333,7 +373,7 @@ nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
-nnoremap <leader>en :e ~/Documents/BUGS<cr>
+nnoremap <leader>eb :e ~/Documents/BUGS<cr>
 
 " force myself to stop use these keys at insert mode
 inoremap <esc> <nop>
@@ -414,6 +454,9 @@ nnoremap <leader>j :call JumpToAlt()<CR>
 " backspace why?!
 set backspace=indent,eol,start
 
+set iskeyword+=-
+set iskeyword+=_
+
 " sessions settings {{{
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
@@ -474,8 +517,8 @@ augroup END
 " jinja file settings {{{
 augroup jinja
     autocmd!
-    autocmd FileType jinja setlocal iskeyword+=-
-    autocmd FileType jinja setlocal iskeyword+=_
+    " autocmd FileType jinja setlocal iskeyword+=-
+    " autocmd FileType jinja setlocal iskeyword+=_
 augroup END
 " }}}
 
