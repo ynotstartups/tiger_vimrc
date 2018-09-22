@@ -4,42 +4,32 @@ filetype off
 " vundle{{{
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 Plugin 'VundleVim/Vundle.vim'
-" Plugin 'shougo/deoplete.nvim'
+
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
-" Plugin 'evidens/vim-twig'
 Plugin 'tpope/vim-surround'
 Plugin 'pangloss/vim-javascript'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-airline/vim-airline'
-" Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-" Plugin 'vim-syntastic/syntastic'
-" Plugin 'google/vim-searchindex'
 Plugin 'easymotion/vim-easymotion'
-" Plugin 'roxma/nvim-yarp'
-" Plugin 'roxma/vim-hug-neovim-rpc'
-" Plugin 'mxw/vim-jsx'
-" Plugin 'mattn/emmet-vim'
-" Plugin 'ddrscott/vim-side-search'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'python-mode/python-mode'
 Plugin 'davidhalter/jedi-vim'
-" Plugin 'justinmk/vim-sneak'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'prettier/vim-prettier'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'tpope/vim-repeat'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
+Plugin 'wincent/terminus'
 call vundle#end()
 " }}}
 
@@ -54,7 +44,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" color
+" color {{{
 set t_Co=256
 syntax on
 set background=dark
@@ -66,6 +56,7 @@ colorscheme molokai
 " hi Comment ctermfg=245
 " hi Visual ctermbg=240
 " hi MatchParen cterm=none ctermbg=green ctermfg=blue
+" }}}
 
 " status bar
 set laststatus=2
@@ -82,9 +73,6 @@ set wildmenu
 " I used it for fast update on GitGutter
 set updatetime=100
 
-" for pairing with non-vim user
-set mouse=a
-
 " swap file in a diff directory
 set directory=~/.vim/swap//
 
@@ -95,7 +83,6 @@ set wildignore+=*.cache.php
 
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" nnoremap <Leader>g <esc>:grep -ir<space>
 
 " autoread
 set autoread
@@ -146,8 +133,6 @@ vmap <leader>s <esc>:w<CR>gv
 
 inoremap jj <esc>
 
-let g:javascript_plugin_jsdoc = 1
-
 " windows and buffers {{{
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
@@ -181,7 +166,6 @@ set cmdheight=2
 inoremap <c-u> <esc>viwU<esc>i
 " nnoremap <c-u> <esc>viwU<esc>
 
-
 " quick reload/edit {{{
 nnoremap <leader>rv :source $MYVIMRC<cr>
 
@@ -204,9 +188,6 @@ if has("autocmd")
   autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
-
-" for xterm copy/paste
-set t_BE=
 
 set backspace=indent,eol,start
 
@@ -353,11 +334,14 @@ nnoremap <Leader>gu :GitGutterUndo<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gc :Gcommit<CR>
 " }}}
-" indexed-search settings {{{
+" indexed-search {{{
 let g:indexed_search_colors = 0
 let g:indexed_search_numbered_only = 1
 let g:indexed_search_dont_move = 1
 let g:indexed_search_center = 1
+" }}}
+" indentLine {{{
+let g:indentLine_bufTypeExclude = ['help']
 " }}}
 " jedi {{{
 let g:jedi#completions_enabled = 0
@@ -404,13 +388,13 @@ let NERDTreeIgnore = ['\.pyc$']
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
 " }}}
-" sessions settings {{{
+" sessions {{{
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
 
 nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
 " }}}
-" surround settings {{{
+" surround {{{
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
 let b:surround_{char2nr("%")} = "{% \r %}"
@@ -420,7 +404,7 @@ let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
 let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 " }}}
-" vim-prettier movement settings {{{
+" vim-prettier {{{
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js PrettierAsync
 " }}}
