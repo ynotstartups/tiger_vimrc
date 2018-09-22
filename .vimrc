@@ -6,29 +6,30 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-surround'
-Plugin 'pangloss/vim-javascript'
-Plugin 'Yggdroot/indentLine'
-Plugin 'Raimondi/delimitMate'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'vim-airline/vim-airline'
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'python-mode/python-mode'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'prettier/vim-prettier'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'tpope/vim-repeat'
+Plugin 'Raimondi/delimitMate'
+Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Yggdroot/indentLine'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
+Plugin 'pangloss/vim-javascript'
+Plugin 'prettier/vim-prettier'
+Plugin 'python-mode/python-mode'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
 call vundle#end()
 " }}}
@@ -76,17 +77,14 @@ set updatetime=100
 " swap file in a diff directory
 set directory=~/.vim/swap//
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-set wildignore+=*.cache.php
-
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " autoread
 set autoread
 au CursorHold * checktime
+
+set clipboard=unnamed
 
 " search {{{
 set ignorecase
@@ -133,11 +131,15 @@ vmap <leader>s <esc>:w<CR>gv
 
 inoremap jj <esc>
 
-" windows and buffers {{{
+" buffers {{{
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
-nnoremap <leader>bd :bd<cr>
+nnoremap <leader>b :bd<cr>
+nnoremap <leader>bo :BufOnly<cr>
+" }}}
+
+" windows {{{
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<CR>
 nnoremap <leader>c  :close<CR>
@@ -153,11 +155,17 @@ nnoremap Y y$
 " for code indented with tabs
 set list lcs=tab:\|\ 
 
-" movement settings {{{
+" arrow key map {{{
+" nnoremap <up> <c-u>
 nnoremap <up> <c-u>
 nnoremap <down> <c-d>
 nnoremap <left> <c-b>
 nnoremap <right> <c-f>
+
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
 " }}}
 
 set cmdheight=2
@@ -165,6 +173,9 @@ set cmdheight=2
 " upper case whole word for writing constant
 inoremap <c-u> <esc>viwU<esc>i
 " nnoremap <c-u> <esc>viwU<esc>
+
+" jump to help identifier
+nnoremap ]i :call search('*\w*\*')<CR>
 
 " quick reload/edit {{{
 nnoremap <leader>rv :source $MYVIMRC<cr>
@@ -175,13 +186,6 @@ nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
 nnoremap <leader>eb :e ~/Documents/BUGS<cr>
 " }}}
-
-" force myself to stop use these keys at insert mode
-inoremap <esc> <nop>
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-inoremap <Left> <nop>
-inoremap <Right> <nop>
 
 " the following to have Vim jump to the last position when reopening a file
 if has("autocmd")
@@ -227,21 +231,19 @@ augroup Airline
 augroup END
 "  }}}
 " ctrlp {{{
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+let g:ctrlp_lazy_update = 1
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
-
-" let g:ctrlp_clear_cache_on_exit = 0
-
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|po)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
-
-if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
 
 function! s:ctrlp_str(str)
   try
@@ -317,7 +319,9 @@ nnoremap <leader>j :call JumpToAlt()<CR>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" have to use nmap for whatever reason
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
+let g:EasyMotion_smartcase = 1
 " }}}
 " Emmet {{{
 let g:user_emmet_leader_key='\'
@@ -384,7 +388,7 @@ nnoremap <leader>n <esc>:NERDTreeToggle<CR>
 nnoremap <leader>f <esc>:NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 " }}}
-" pymode settings {{{
+" pymode {{{
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
 " }}}
