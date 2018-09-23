@@ -31,6 +31,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
+Plugin 'mhinz/vim-startify'
 call vundle#end()
 " }}}
 
@@ -135,7 +136,7 @@ inoremap jj <esc>
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
-nnoremap <leader>b :bd<cr>
+nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 " }}}
 
@@ -249,7 +250,7 @@ function! s:ctrlp_str(str)
   try
     let default_input_save = get(g:, 'ctrlp_default_input', '')
     let g:ctrlp_default_input = a:str
-
+    let g:ctrlp_default_input = substitute(ctrlp_default_input, '[_-]', '.', 'g')
     " call ctrlp#init(g:ctrlp_builtins)
     " require the 0 for opening in file mode
     call ctrlp#init(0)
@@ -264,14 +265,12 @@ endfunction!
 command! -nargs=0 CtrlPSwitcher call s:ctrlp_switcher()
 function! s:ctrlp_switcher()
     let current_file_name = expand('%:t:r')
-    let current_file_name_modified = substitute(current_file_name, '[_-]', '', 'g')
     call s:ctrlp_str(current_file_name_modified)
 endfunction!
 
 command! -nargs=0 CtrlPWordUnderCursor call s:ctrlp_word_under_cursor()
 function! s:ctrlp_word_under_cursor()
     let word_under_cursor = expand('<cword>')
-    let word_modified = substitute(word_under_cursor, '[_-]', '', 'g')
     call s:ctrlp_str(word_modified)
 endfunction!
 
@@ -284,38 +283,25 @@ nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
 nnoremap <c-f> :CtrlPSwitcher<cr>
 "  }}}
 " django custom {{{
-function! JumpToTest()
-    let l:bufferName = expand('%')
-    let l:testFileName = substitute(bufferName, '^src/', 'tests/', '')
-    let l:testFileName = substitute(testFileName, '\(.*\)/', '\1/test_', '')
-    if filereadable(testFileName) " check file exists
-        execute 'e '.testFileName
+function! JumpToType(extension)
+    let l:fileName = expand('%:t:r')
+    let l:fileName = substitute(fileName, 'test_', '', '')
+    let l:fileName = substitute(fileName, '[-_]', '.', '')
+
+    if a:extension == "test"
+        let l:fileName = "test." . fileName . "." . "py"
     else
-        echom "Test file doesn't exist."
+        let l:fileName = fileName . "." . a:extension
     endif
+    " echo fileName
+    execute 'cexpr system("ag . -w -G '. fileName .'")'
 endfunction
 
-function! JumpToSrc()
-    let l:bufferName = expand('%')
-    let l:testFileName = substitute(bufferName, '^tests/', 'src/', '')
-    let l:testFileName = substitute(testFileName, '\(.*\)/test_', '\1/', '')
-    if filereadable(testFileName) " check file exists
-        execute 'e '.testFileName
-    else
-        echom "File doesn't exist."
-    endif
-endfunction
-
-function! JumpToAlt()
-    let l:fileName = expand('%:t')
-    if l:fileName =~ '^test_'
-        call JumpToSrc()
-    else
-        call JumpToTest()
-    endif
-endfunction
-
-nnoremap <leader>j :call JumpToAlt()<CR>
+nnoremap <leader>j :call JumpToType("stories.js")<CR>
+nnoremap <leader>jj :call JumpToType("jinja")<CR>
+nnoremap <leader>jp :call JumpToType("py")<CR>
+nnoremap <leader>js :call JumpToType("js")<CR>
+nnoremap <leader>jt :call JumpToType("test")<CR>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -392,6 +378,9 @@ let NERDTreeIgnore = ['\.pyc$']
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_options_max_line_length=100
 " }}}
+" startify {{{
+let g:startify_custom_header = []
+" }}}
 " sessions {{{
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
@@ -443,7 +432,8 @@ augroup END
 " python {{{
 augroup python
     autocmd FileType python set colorcolumn=100
-    autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
+    " pymode has leader.b to pdb
+    " autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 augroup END
 " }}}
 " TODO {{{
