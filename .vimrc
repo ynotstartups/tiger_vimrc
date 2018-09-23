@@ -285,15 +285,22 @@ nnoremap <c-f> :CtrlPSwitcher<cr>
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
-    let l:fileName = substitute(fileName, 'test_', '', '')
-    let l:fileName = substitute(fileName, '[-_]', '.', '')
+    let l:fileName = substitute(l:fileName, 'test_', '', '')
+    let l:fileName = substitute(l:fileName, '[-_]', '.', '')
 
     if a:extension == "test"
-        let l:fileName = "test." . fileName . "." . "py"
+        let l:fileName = "test." . l:fileName . "." . "py"
     else
-        let l:fileName = fileName . "." . a:extension
+        let l:fileName = l:fileName . "." . a:extension
     endif
+
+    echo l:fileName
     " echo fileName
+    " echo system("ag . -w -g ". fileName )
+    " echo l:fileName
+    " let l:filePath = system("ag . -w -G ". l:fileName )
+    " let l:filePath = system("ag -g ". fileName )
+    " echo l:filePath
     execute 'cexpr system("ag . -w -G '. fileName .'")'
 endfunction
 
@@ -302,6 +309,7 @@ nnoremap <leader>jj :call JumpToType("jinja")<CR>
 nnoremap <leader>jp :call JumpToType("py")<CR>
 nnoremap <leader>js :call JumpToType("js")<CR>
 nnoremap <leader>jt :call JumpToType("test")<CR>
+nnoremap <leader>jl :call JumpToType("less")<CR>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
