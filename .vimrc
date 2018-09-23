@@ -133,6 +133,7 @@ vmap <leader>s <esc>:w<CR>gv
 inoremap jj <esc>
 
 " buffers {{{
+set nostartofline
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
