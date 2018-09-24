@@ -31,7 +31,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
-Plugin 'mhinz/vim-startify'
 call vundle#end()
 " }}}
 
@@ -151,7 +150,7 @@ nnoremap <leader>v= :vertical resize +15<cr>
 nnoremap <leader>v- :vertical resize -15<cr>
 " }}}
 
-vnoremap Q @q
+nnoremap Q @q
 nnoremap Y y$
 
 " for code indented with tabs
@@ -192,7 +191,7 @@ nnoremap <leader>eb :e ~/Documents/BUGS<cr>
 " the following to have Vim jump to the last position when reopening a file
 if has("autocmd")
   autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+    \| exe "normal! g`\"" | endif
 endif
 
 set backspace=indent,eol,start
@@ -251,7 +250,7 @@ function! s:ctrlp_str(str)
   try
     let default_input_save = get(g:, 'ctrlp_default_input', '')
     let g:ctrlp_default_input = a:str
-    let g:ctrlp_default_input = substitute(ctrlp_default_input, '[_-]', '.', 'g')
+    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, '[_-]', '.', 'g')
     " call ctrlp#init(g:ctrlp_builtins)
     " require the 0 for opening in file mode
     call ctrlp#init(0)
@@ -266,13 +265,13 @@ endfunction!
 command! -nargs=0 CtrlPSwitcher call s:ctrlp_switcher()
 function! s:ctrlp_switcher()
     let current_file_name = expand('%:t:r')
-    call s:ctrlp_str(current_file_name_modified)
+    call s:ctrlp_str(current_file_name)
 endfunction!
 
 command! -nargs=0 CtrlPWordUnderCursor call s:ctrlp_word_under_cursor()
 function! s:ctrlp_word_under_cursor()
     let word_under_cursor = expand('<cword>')
-    call s:ctrlp_str(word_modified)
+    call s:ctrlp_str(word_under_cursor)
 endfunction!
 
 nnoremap <leader>p :CtrlP<cr>
@@ -281,12 +280,13 @@ nnoremap <leader>pb :CtrlPBuffer<cr>
 nnoremap <leader>pf :CtrlPSwitcher<cr>
 nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
 " my <down> is mapped to <c-f>
-nnoremap <c-f> :CtrlPSwitcher<cr>
+" nnoremap <c-f> :CtrlPSwitcher<cr>
 "  }}}
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
     let l:fileName = substitute(l:fileName, 'test_', '', '')
+    let l:fileName = substitute(l:fileName, '\.stories', '', '')
     let l:fileName = substitute(l:fileName, '[-_]', '.', '')
 
     if a:extension == "test"
@@ -295,14 +295,8 @@ function! JumpToType(extension)
         let l:fileName = l:fileName . "." . a:extension
     endif
 
-    echo l:fileName
-    " echo fileName
-    " echo system("ag . -w -g ". fileName )
-    " echo l:fileName
-    " let l:filePath = system("ag . -w -G ". l:fileName )
-    " let l:filePath = system("ag -g ". fileName )
-    " echo l:filePath
-    execute 'cexpr system("ag . -w -G '. fileName .'")'
+    let l:filePath = system('ag -w -g "'.  l:fileName .'"')
+    execute "edit ".l:filePath
 endfunction
 
 nnoremap <leader>j :call JumpToType("stories.js")<CR>
@@ -330,8 +324,12 @@ let emmet_html5 = 0
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndo<CR>
+nnoremap <Leader>ggs :GitGutterStageHunk<CR>
+
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gd :Gdiff<CR>
 " }}}
 " indexed-search {{{
 let g:indexed_search_colors = 0
@@ -458,6 +456,9 @@ augroup TODO
     autocmd FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
     autocmd FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
     autocmd FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
+
+    autocmd Syntax TODO syntax match TODOLabel "\v^  \(.{-}\)"
+    autocmd Syntax TODO highlight link TODOLabel Keyword
 augroup END
 " }}}
 " Vimscript {{{
