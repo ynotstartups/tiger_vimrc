@@ -40,35 +40,29 @@ call vundle#end()
 nnoremap <SPACE> <nop>
 let mapleader = " "
 
+" indent {{{
 filetype plugin indent on
 set smartindent
 
-" Mac OS X
-set antialias
-
-" line number
 set tabstop=4
 set shiftwidth=4
 set expandtab
+
+" for code indented with tabs
+set list lcs=tab:\|\ 
+
+" }}}
 
 " color {{{
 set t_Co=256
 syntax on
 set background=dark
-" let g:solarized_termtrans = 1
-" let g:solarized_termcolors=256
 colorscheme molokai
-
-" brighter comment color
-" hi Comment ctermfg=245
-" hi Visual ctermbg=240
-" hi MatchParen cterm=none ctermbg=green ctermfg=blue
 " }}}
 
 " status bar
 set laststatus=2
 
-" line number
 set number
 
 set colorcolumn=80
@@ -80,17 +74,9 @@ set wildmenu
 " I used it for fast update on GitGutter
 set updatetime=100
 
-" swap file in a diff directory
-set directory=~/.vim/swap//
-
-" bind K to grep word under cursor
-nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
 " autoread
 set autoread
 au CursorHold * checktime
-
-set clipboard=unnamed
 
 " search {{{
 set ignorecase
@@ -121,6 +107,9 @@ if executable('ag')
         nnoremap <leader>g :Ag<SPACE>-i<SPACE>
     augroup END
 endif
+
+" bind K to grep word under cursor
+nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 "  }}}
 
@@ -165,9 +154,6 @@ nnoremap <leader>v- :vertical resize -15<cr>
 nnoremap Q @q
 nnoremap Y y$
 
-" for code indented with tabs
-set list lcs=tab:\|\ 
-
 " arrow key map {{{
 " nnoremap <up> <c-u>
 nnoremap <up> <c-u>
@@ -209,15 +195,21 @@ set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
 
+" copy/paste {{{
+set clipboard=unnamed
 nnoremap <leader>cf :let @*=expand("%")<cr>
+" }}}
 
-" undo {{{
+" undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
 set undofile
-set undodir=$HOME/.vim/undo
+set undodir=~/.vim/undo
 
 set undolevels=1000
 set undoreload=10000
+
+" swap file in a diff directory
+set directory=~/.vim/swap//
 " }}}
 
 " plugins
@@ -449,7 +441,6 @@ let g:ycm_semantic_triggers = {
 augroup jinja
     autocmd!
     autocmd FileType jinja set colorcolumn=100
-    autocmd BufRead,BufNewFile *.jinja setfiletype jinja2
 augroup END
 " }}}
 " javascript {{{
