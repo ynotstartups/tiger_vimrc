@@ -211,6 +211,15 @@ set iskeyword+=_
 
 nnoremap <leader>cf :let @*=expand("%")<cr>
 
+" undo {{{
+" Persistent undo, remember to mkdir ~/.vim/undo
+set undofile
+set undodir=$HOME/.vim/undo
+
+set undolevels=1000
+set undoreload=10000
+" }}}
+
 " plugins
 " airline {{{
 let g:airline#extensions#tabline#enabled = 1
