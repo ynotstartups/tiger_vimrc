@@ -8,7 +8,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'Raimondi/delimitMate'
-Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
@@ -31,14 +30,21 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 call vundle#end()
 " }}}
 
 " change leader to space
-nnoremap <SPACE> <Nop>
+nnoremap <SPACE> <nop>
 let mapleader = " "
 
 filetype plugin indent on
+set smartindent
+
+" Mac OS X
+set antialias
 
 " line number
 set tabstop=4
@@ -122,11 +128,13 @@ endif
 inoremap {;<CR> {<CR>};<ESC>O
 inoremap (;<CR> (<CR>);<ESC>O
 inoremap {\<CR> {<CR>}<ESC>O
-inoremap (\<CR> (<CR>)<ESC>O
+inoremap (c<CR> (<CR>)<ESC>O
 
 " leader s to save
 nnoremap <silent> <leader>s <esc>:w<CR>
-" inoremap <silent> <leader>ss <esc>:w<CR>
+nnoremap <silent> S <esc>:w<CR>
+inoremap <silent> SS <esc>:w<CR>
+" inoremap <silent> <c-s> <esc>:w<CR>
 vmap <leader>s <esc>:w<CR>gv
 
 inoremap jj <esc>
@@ -141,9 +149,13 @@ nnoremap <leader>bo :BufOnly<cr>
 " }}}
 
 " windows {{{
+nnoremap <leader>sp  :split<cr>
+nnoremap <leader>vs  :vsplit<cr>
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<CR>
 nnoremap <leader>c  :close<CR>
+nnoremap <leader>q  :quit<CR>
+nnoremap <leader>qa  :quitall<CR>
 nnoremap <leader>=  :resize +5<CR>
 nnoremap <leader>-  :resize -5<CR>
 nnoremap <leader>v= :vertical resize +15<cr>
@@ -172,11 +184,8 @@ inoremap <Right> <nop>
 set cmdheight=2
 
 " upper case whole word for writing constant
-inoremap <c-u> <esc>viwU<esc>i
-" nnoremap <c-u> <esc>viwU<esc>
-
-" jump to help identifier
-nnoremap ]i :call search('*\w*\*')<CR>
+nnoremap <c-u> <esc>viwU<esc>ea
+nnoremap <c-u> <esc>viwU<esc>e
 
 " quick reload/edit {{{
 nnoremap <leader>rv :source $MYVIMRC<cr>
@@ -186,6 +195,7 @@ nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
 nnoremap <leader>eb :e ~/Documents/BUGS<cr>
+nnoremap <leader>ep :e ~/.bash_profile<cr>
 " }}}
 
 " the following to have Vim jump to the last position when reopening a file
@@ -198,6 +208,8 @@ set backspace=indent,eol,start
 
 set iskeyword+=-
 set iskeyword+=_
+
+nnoremap <leader>cf :let @*=expand("%")<cr>
 
 " plugins
 " airline {{{
@@ -250,7 +262,7 @@ function! s:ctrlp_str(str)
   try
     let default_input_save = get(g:, 'ctrlp_default_input', '')
     let g:ctrlp_default_input = a:str
-    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, '[_-]', '.', 'g')
+    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, '[_-]', '', 'g')
     " call ctrlp#init(g:ctrlp_builtins)
     " require the 0 for opening in file mode
     call ctrlp#init(0)
@@ -274,6 +286,7 @@ function! s:ctrlp_word_under_cursor()
     call s:ctrlp_str(word_under_cursor)
 endfunction!
 
+nnoremap <c-p> <nop>
 nnoremap <leader>p :CtrlP<cr>
 nnoremap <leader>pm :CtrlPMRU<cr>
 nnoremap <leader>pb :CtrlPBuffer<cr>
@@ -373,7 +386,8 @@ endfunction
 " nerdcommenter {{{
 let g:NERDSpaceDelims = 1
 let g:NERDCustomDelimiters = {
-      \ 'python': { 'left': '#', 'right': '' }
+      \ 'python': { 'left': '#', 'right': '' },
+      \ 'jinja': { 'left': '{#', 'right': '#}' },
       \ }
 " }}}
 " nerdtree {{{
@@ -395,35 +409,44 @@ set sessionoptions-=options  " Don't save options
 nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
 " }}}
 " surround {{{
-let b:surround_{char2nr("v")} = "{{ \r }}"
-let b:surround_{char2nr("{")} = "{{ \r }}"
-let b:surround_{char2nr("%")} = "{% \r %}"
-let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
-let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
-let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
-let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+autocmd FileType jinja let b:surround_{char2nr("v")} = "{{ \r }}"
+autocmd FileType jinja let b:surround_{char2nr("{")} = "{{ \r }}"
+autocmd FileType jinja let b:surround_{char2nr("%")} = "{% \r %}"
+autocmd FileType jinja let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+autocmd FileType jinja let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
+autocmd FileType jinja let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
+autocmd FileType jinja let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
+autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+" }}}
+" ultisnips {{{
+let g:UltiSnipsExpandTrigger="L"
+" let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
 " }}}
 " vim-prettier {{{
 let g:prettier#autoformat = 0
+let g:prettier#config#print_width = 80
 autocmd BufWritePre *.js PrettierAsync
 " }}}
 " YouCompleteMe {{{
 set completeopt-=preview
+let g:ycm_semantic_triggers = {
+    \   'less': [ 're!^\s{4}', 're!:\s+' ],
+    \   'css': [ 're!^\s{4}', 're!:\s+' ],
+    \ }
 " }}}
 
 " file specific
-" javascript {{{
-augroup javascript
-    autocmd!
-    autocmd FileType javascript set colorcolumn=100
-augroup END
-" }}}
 " jinja {{{
 augroup jinja
     autocmd!
-    " autocmd FileType jinja setlocal iskeyword+=-
-    " autocmd FileType jinja setlocal iskeyword+=_
+    autocmd FileType jinja set colorcolumn=100
+    autocmd BufRead,BufNewFile *.jinja setfiletype jinja2
+augroup END
+" }}}
+" javascript {{{
+augroup javascript
+    autocmd!
+    autocmd FileType javascript execute "UltiSnipsAddFiletypes jinja2"
 augroup END
 " }}}
 " less {{{
@@ -434,6 +457,12 @@ augroup less
     " css selector wonder whether this will be useful
     autocmd FileType less setlocal iskeyword+=.
     autocmd FileType less setlocal iskeyword+=#
+augroup END
+" }}}
+" tiger_profile {{{
+augroup tiger_profile
+    autocmd!
+    autocmd BufRead,BufNewFile .tiger_profile setfiletype sh
 augroup END
 " }}}
 " python {{{
@@ -449,7 +478,7 @@ augroup TODO
     autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
-    autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO<space><space>()<space><left><left>
+    autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
     autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
     autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
     " change number in line
