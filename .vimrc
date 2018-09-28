@@ -58,6 +58,10 @@ set t_Co=256
 syntax on
 set background=dark
 colorscheme molokai
+" MatchParen highlighting makes it look like cursor jumped to matching parenthesis
+hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
+hi diffAdded ctermfg=46  cterm=NONE guifg=#2BFF2B gui=NONE
+hi diffRemoved ctermfg=196 cterm=NONE guifg=#FF2B2B gui=NONE
 " }}}
 
 " status bar
@@ -89,8 +93,8 @@ nnoremap / /\v
 vnoremap / /\v
 cnoremap %s/ %smagic/
 cnoremap \>s/ \>smagic/
-nnoremap :g/ :g/\v
-nnoremap :g// :g//
+" nnoremap :g/ :g/\v
+" nnoremap :g// :g//
 
 " Keep search matches in the middle of the window.
 " the following are not necessary because of indexed-search plugin
@@ -138,8 +142,8 @@ nnoremap <leader>bo :BufOnly<cr>
 " }}}
 
 " windows {{{
-nnoremap <leader>sp  :split<cr>
-nnoremap <leader>vs  :vsplit<cr>
+nnoremap <leader>ws  :split<cr><c-w><c-w>
+nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<CR>
 nnoremap <leader>c  :close<CR>
@@ -181,7 +185,7 @@ nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
 nnoremap <leader>eb :e ~/Documents/BUGS<cr>
-nnoremap <leader>ep :e ~/.bash_profile<cr>
+nnoremap <leader>ep :e ~/.tiger_profile<cr>
 " }}}
 
 " the following to have Vim jump to the last position when reopening a file
@@ -420,7 +424,7 @@ autocmd FileType jinja let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}
 autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 " }}}
 " ultisnips {{{
-let g:UltiSnipsExpandTrigger="L"
+let g:UltiSnipsExpandTrigger="<c-l>"
 " let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
 " }}}
 " vim-prettier {{{
