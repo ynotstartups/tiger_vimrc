@@ -341,6 +341,9 @@ let g:user_emmet_settings = {
   \}
 let emmet_html5 = 0
 " }}}
+" fzf {{{
+nnoremap <leader>f :Files<CR>
+" }}}
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndo<CR>
@@ -398,8 +401,9 @@ let g:NERDCustomDelimiters = {
       \ }
 " }}}
 " nerdtree {{{
-nnoremap <leader>n <esc>:NERDTreeToggle<CR>
-nnoremap <leader>f <esc>:NERDTreeFind<CR>
+" nnoremap <leader>n <esc>:NERDTreeToggle<CR>
+" nnoremap <leader>f <esc>:NERDTreeFind<CR>
+nnoremap <leader>n <esc>:NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 " }}}
 " pymode {{{
