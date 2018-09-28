@@ -102,16 +102,15 @@ cnoremap \>s/ \>smagic/
 " nnoremap N Nzzzv
 " nnoremap * *N
 
-if executable('ag')
-    " Use ag over grep
-    augroup ag
+if executable('rg')
+    " Use rg over grep
+    augroup rg
     autocmd!
-        set grepprg=ag\ --nogroup\ --nocolor
-        command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-        nnoremap <leader>g :Ag<SPACE>-i<SPACE>
+        set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+        command! -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
+        nnoremap <leader>g :Rg<SPACE>
     augroup END
 endif
-
 " bind K to grep word under cursor
 nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
@@ -249,14 +248,15 @@ augroup Airline
 augroup END
 "  }}}
 " ctrlp {{{
-if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+if executable('rg')
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 endif
 
-let g:ctrlp_lazy_update = 1
+" let g:ctrlp_lazy_update = 1
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
+" let g:ctrlp_use_caching = 0
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|po)$',
