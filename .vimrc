@@ -13,7 +13,6 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
@@ -252,75 +251,6 @@ augroup Airline
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 "  }}}
-" ctrlp {{{
-if executable('rg')
-    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-endif
-
-" let g:ctrlp_lazy_update = 1
-let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_max_files = 0
-let g:ctrlp_by_filename = 1
-" let g:ctrlp_use_caching = 0
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|po)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-" command! -nargs=1 CtrlPStr call s:ctrlp_str(<f-args>)
-function! CtrlPStr(str)
-  try
-    let default_input_save = get(g:, 'ctrlp_default_input', '')
-    let g:ctrlp_default_input = a:str
-    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, '[_-]', '', 'g')
-    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, ' ', '', 'g')
-    call ctrlp#init(0)
-  finally
-    if exists('default_input_save')
-      let g:ctrlp_default_input = default_input_save
-    endif
-  endtry
-endfunction!
-
-function! CtrlPOperatorFunction(type)
-    if a:type ==# 'char'
-        execute "normal! `[v`]y"
-    else
-        return
-    endif
-    execute "call CtrlPStr(" . shellescape(@@) . ")"
-endfunction!
-
-"" CtrlP with current filename
-command! -nargs=0 CtrlPSwitcher call s:ctrlp_switcher()
-function! s:ctrlp_switcher()
-    let current_file_name = expand('%:t:r')
-    call s:ctrlp_str(current_file_name)
-endfunction!
-
-command! -nargs=0 CtrlPWordUnderCursor call s:ctrlp_word_under_cursor()
-function! s:ctrlp_word_under_cursor()
-    let word_under_cursor = expand('<cword>')
-    call s:ctrlp_str(word_under_cursor)
-endfunction!
-
-function! CtrlPMotion()
-   execute "echo ".input("enter motion: ")
-   let @/=@"
-   startinsert
-endfunction
-
-nnoremap <c-p> <nop>
-" nnoremap <leader>pp :CtrlP<cr>
-" nnoremap <leader>pm :CtrlPMRU<cr>
-" nnoremap <leader>pb :CtrlPBuffer<cr>
-" nnoremap <leader>pf :CtrlPSwitcher<cr>
-" nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
-nnoremap <leader>p :set operatorfunc=CtrlPOperatorFunction<cr>g@
-" my <down> is mapped to <c-f>
-" nnoremap <c-f> :CtrlPSwitcher<cr>
-"  }}}
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
@@ -361,12 +291,13 @@ let g:user_emmet_settings = {
 let emmet_html5 = 0
 " }}}
 " fzf {{{
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>fm :History<cr>
-nnoremap <leader>fb :Buffers<cr>
-" nnoremap <leader>pf :CtrlPSwitcher<cr>
-" nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
-" }}}
+nnoremap <leader>p :FZF<cr>
+nnoremap <leader>pm :History<cr>
+nnoremap <leader>pb :Buffers<cr>
+
+nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<cr>
+nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.expand('%:t:r')})<cr>
+"  }}}
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndo<CR>
