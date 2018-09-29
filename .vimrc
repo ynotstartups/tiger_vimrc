@@ -66,6 +66,9 @@ hi diffAdded ctermfg=46  cterm=NONE guifg=#2BFF2B gui=NONE
 hi diffRemoved ctermfg=196 cterm=NONE guifg=#FF2B2B gui=NONE
 " }}}
 
+" ignore Intro and Written
+set shortmess+=IW
+
 " status bar
 set laststatus=2
 
@@ -109,7 +112,7 @@ if executable('rg')
     augroup rg
     autocmd!
         set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-        command! -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
+        " command! -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
         nnoremap <leader>g :Rg<SPACE>
     augroup END
 endif
@@ -143,8 +146,8 @@ nnoremap <leader>bo :BufOnly<cr>
 " }}}
 
 " windows {{{
-nnoremap <leader>ws  :split<cr><c-w><c-w>
-nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
+" nnoremap <leader>ws  :split<cr><c-w><c-w>
+" nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<CR>
 nnoremap <leader>c  :close<CR>
@@ -152,8 +155,8 @@ nnoremap <leader>q  :quit<CR>
 nnoremap <leader>qa  :quitall<CR>
 nnoremap <leader>=  :resize +5<CR>
 nnoremap <leader>-  :resize -5<CR>
-nnoremap <leader>v= :vertical resize +15<cr>
-nnoremap <leader>v- :vertical resize -15<cr>
+nnoremap <leader>v= :vertical resize +30<cr>
+nnoremap <leader>v- :vertical resize -30<cr>
 " }}}
 
 nnoremap Q @q
@@ -166,10 +169,10 @@ nnoremap <down> <c-d>
 nnoremap <left> <c-b>
 nnoremap <right> <c-f>
 
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-inoremap <Left> <nop>
-inoremap <Right> <nop>
+" inoremap <Up> <nop>
+" inoremap <Down> <nop>
+" inoremap <Left> <nop>
+" inoremap <Right> <nop>
 " }}}
 
 set cmdheight=2
@@ -265,19 +268,28 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
-function! s:ctrlp_str(str)
+" command! -nargs=1 CtrlPStr call s:ctrlp_str(<f-args>)
+function! CtrlPStr(str)
   try
     let default_input_save = get(g:, 'ctrlp_default_input', '')
     let g:ctrlp_default_input = a:str
     let g:ctrlp_default_input = substitute(g:ctrlp_default_input, '[_-]', '', 'g')
-    " call ctrlp#init(g:ctrlp_builtins)
-    " require the 0 for opening in file mode
+    let g:ctrlp_default_input = substitute(g:ctrlp_default_input, ' ', '', 'g')
     call ctrlp#init(0)
   finally
     if exists('default_input_save')
       let g:ctrlp_default_input = default_input_save
     endif
   endtry
+endfunction!
+
+function! CtrlPOperatorFunction(type)
+    if a:type ==# 'char'
+        execute "normal! `[v`]y"
+    else
+        return
+    endif
+    execute "call CtrlPStr(" . shellescape(@@) . ")"
 endfunction!
 
 "" CtrlP with current filename
@@ -293,12 +305,19 @@ function! s:ctrlp_word_under_cursor()
     call s:ctrlp_str(word_under_cursor)
 endfunction!
 
+function! CtrlPMotion()
+   execute "echo ".input("enter motion: ")
+   let @/=@"
+   startinsert
+endfunction
+
 nnoremap <c-p> <nop>
-nnoremap <leader>p :CtrlP<cr>
-nnoremap <leader>pm :CtrlPMRU<cr>
-nnoremap <leader>pb :CtrlPBuffer<cr>
-nnoremap <leader>pf :CtrlPSwitcher<cr>
-nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
+" nnoremap <leader>pp :CtrlP<cr>
+" nnoremap <leader>pm :CtrlPMRU<cr>
+" nnoremap <leader>pb :CtrlPBuffer<cr>
+" nnoremap <leader>pf :CtrlPSwitcher<cr>
+" nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
+nnoremap <leader>p :set operatorfunc=CtrlPOperatorFunction<cr>g@
 " my <down> is mapped to <c-f>
 " nnoremap <c-f> :CtrlPSwitcher<cr>
 "  }}}
@@ -343,11 +362,15 @@ let emmet_html5 = 0
 " }}}
 " fzf {{{
 nnoremap <leader>f :Files<CR>
+nnoremap <leader>fm :History<cr>
+nnoremap <leader>fb :Buffers<cr>
+" nnoremap <leader>pf :CtrlPSwitcher<cr>
+" nnoremap <leader>pw :CtrlPWordUnderCursor<cr>
 " }}}
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndo<CR>
-nnoremap <Leader>ggs :GitGutterStageHunk<CR>
+nnoremap <Leader>gsh :GitGutterStageHunk<CR>
 
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gc :Gcommit<CR>
