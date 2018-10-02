@@ -205,6 +205,12 @@ set iskeyword+=_
 " copy/paste {{{
 set clipboard=unnamed
 nnoremap <leader>cf :let @*=expand("%")<cr>
+nmap <leader>cm [[wyw
+function! CopyTestFunctionName()
+    normal [[w"ayw
+    let @*=expand('%').'::'.@a
+endfunction
+nnoremap <leader>ct :call CopyTestFunctionName()<cr>
 " }}}
 
 " undo/swap extra dir {{{
@@ -217,6 +223,16 @@ set undoreload=10000
 
 " swap file in a diff directory
 set directory=~/.vim/swap//
+" }}}
+
+" Go to last file(s) if invoked without arguments {{{
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
+    \ call mkdir($HOME . "/.vim") |
+    \ endif |
+    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+
+autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+    \ execute "source " . $HOME . "/.vim/Session.vim"
 " }}}
 
 " plugins
@@ -315,7 +331,7 @@ let g:indexed_search_dont_move = 1
 let g:indexed_search_center = 1
 " }}}
 " indentLine {{{
-let g:indentLine_bufTypeExclude = ['help']
+let g:indentLine_bufTypeExclude = ['help', 'man']
 " }}}
 " jedi {{{
 let g:jedi#completions_enabled = 0
@@ -441,7 +457,7 @@ augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort<cr>
+    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
     autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
     autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
