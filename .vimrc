@@ -29,7 +29,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
-Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'SirVer/ultisnips'
@@ -112,7 +111,7 @@ if executable('rg')
     autocmd!
         set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
         " command! -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
-        nnoremap <leader>g :Rg<SPACE>
+        nnoremap <leader>r :Rg<SPACE>
     augroup END
 endif
 " bind K to grep word under cursor
@@ -181,7 +180,7 @@ nnoremap <c-u> <esc>viwU<esc>ea
 nnoremap <c-u> <esc>viwU<esc>e
 
 " quick reload/edit {{{
-nnoremap <leader>rv :source $MYVIMRC<cr>
+nnoremap <leader>lv :source $MYVIMRC<cr>
 
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
@@ -236,6 +235,12 @@ autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.
 " }}}
 
 " plugins
+" util functions {{{
+function! CleanWord(word)
+    echom a:word
+    return substitute(a:word, '[-_\.]', '', 'g')
+endfunction
+" }}}
 " airline {{{
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -272,16 +277,14 @@ function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
     let l:fileName = substitute(l:fileName, 'test_', '', '')
     let l:fileName = substitute(l:fileName, '\.stories', '', '')
-    let l:fileName = substitute(l:fileName, '[-_]', '.', '')
+    let l:fileName = CleanWord(l:fileName)
 
     if a:extension == "test"
-        let l:fileName = "test." . l:fileName . "." . "py"
+        let l:fileName = "test" . l:fileName . "py"
     else
-        let l:fileName = l:fileName . "." . a:extension
+        let l:fileName = l:fileName . a:extension
     endif
-
-    let l:filePath = system('ag -w -g "'.  l:fileName .'"')
-    execute "edit ".l:filePath
+    call fzf#vim#files('.', {'options':'--query '.l:fileName})<cr>
 endfunction
 
 nnoremap <leader>j :call JumpToType("stories.js")<CR>
@@ -307,12 +310,13 @@ let g:user_emmet_settings = {
 let emmet_html5 = 0
 " }}}
 " fzf {{{
+set rtp+=/usr/local/opt/fzf
 nnoremap <leader>p :FZF<cr>
+nnoremap <leader>pp :FZF<cr>
 nnoremap <leader>pm :History<cr>
 nnoremap <leader>pb :Buffers<cr>
 
-nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<cr>
-nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.expand('%:t:r')})<cr>
+nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 "  }}}
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
@@ -448,8 +452,6 @@ augroup END
 " python {{{
 augroup python
     autocmd FileType python set colorcolumn=100
-    " pymode has leader.b to pdb
-    " autocmd FileType python :iabbrev <buffer> pdb import pdb; pdb.set_trace()
 augroup END
 " }}}
 " TODO {{{
