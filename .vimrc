@@ -7,22 +7,22 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'lepture/vim-jinja'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'pangloss/vim-javascript'
 Plugin 'prettier/vim-prettier'
-Plugin 'python-mode/python-mode'
+" Plugin 'python-mode/python-mode'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
+" Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
@@ -49,7 +49,7 @@ set shiftwidth=4
 set expandtab
 
 " for code indented with tabs
-set list lcs=tab:\|\ 
+" set list lcs=tab:\|\
 
 " }}}
 
@@ -110,8 +110,6 @@ if executable('rg')
     augroup rg
     autocmd!
         set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-        " command! -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
-        nnoremap <leader>r :Rg<SPACE>
     augroup END
 endif
 " bind K to grep word under cursor
@@ -139,7 +137,8 @@ set nostartofline
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
-nnoremap <leader>bd :bd<cr>
+nnoremap <leader>bd :d<cr>
+nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 " }}}
 
@@ -200,6 +199,8 @@ set backspace=indent,eol,start
 
 set iskeyword+=-
 set iskeyword+=_
+
+nnoremap J gJ
 
 " copy/paste {{{
 set clipboard=unnamed
@@ -312,9 +313,12 @@ let emmet_html5 = 0
 " fzf {{{
 set rtp+=/usr/local/opt/fzf
 nnoremap <leader>p :FZF<cr>
-nnoremap <leader>pp :FZF<cr>
-nnoremap <leader>pm :History<cr>
 nnoremap <leader>pb :Buffers<cr>
+nnoremap <leader>pg :GFiles?<cr>
+nnoremap <leader>pm :History<cr>
+nnoremap <leader>pp :FZF<cr>
+nnoremap <leader>pr :Rg<cr>
+nnoremap <leader>pt :Tags<cr>
 
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 "  }}}
@@ -403,6 +407,15 @@ autocmd FileType jinja let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{
 autocmd FileType jinja let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 " }}}
+" trailing-whitespace {{{
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+command! TrimWhitespace call TrimWhitespace()
+autocmd BufWritePre * :call TrimWhitespace()
+"}}}
 " ultisnips {{{
 let g:UltiSnipsExpandTrigger="<c-l>"
 " let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
