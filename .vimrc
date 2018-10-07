@@ -137,7 +137,7 @@ set nostartofline
 nnoremap <S-h> <esc>:bp<CR>
 nnoremap <S-l> <esc>:bn<CR>
 " leader d is taken by Jedi find definition
-nnoremap <leader>bd :d<cr>
+nnoremap <leader>bd :bd<cr>
 nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 " }}}
@@ -319,6 +319,7 @@ nnoremap <leader>pm :History<cr>
 nnoremap <leader>pp :FZF<cr>
 nnoremap <leader>pr :Rg<cr>
 nnoremap <leader>pt :Tags<cr>
+nnoremap <leader>ps :Snippets<cr>
 
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 "  }}}
