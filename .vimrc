@@ -32,7 +32,7 @@ Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plugin 'ynotstartups/vim-snippets'
 call vundle#end()
 " }}}
 
@@ -427,8 +427,20 @@ command! TrimWhitespace call TrimWhitespace()
 autocmd BufWritePre * :call TrimWhitespace()
 "}}}
 " ultisnips {{{
-let g:UltiSnipsExpandTrigger="<c-l>"
-" let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
+
+" Expand snippet or return
+let g:ulti_expand_res = 0
+function! Ulti_ExpandOrEnter()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res
+        return ''
+    else
+        return "\<return>"
+endfunction
+
+" Set <space> as primary trigger
+inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<CR>
+
 " }}}
 " vim-prettier {{{
 let g:prettier#autoformat = 0
