@@ -17,7 +17,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'pangloss/vim-javascript'
-Plugin 'prettier/vim-prettier'
+" Plugin 'prettier/vim-prettier'
 " Plugin 'python-mode/python-mode'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -180,6 +180,8 @@ nnoremap <c-u> <esc>viwU<esc>e
 
 " quick reload/edit {{{
 nnoremap <leader>lv :source $MYVIMRC<cr>
+nnoremap <leader>lz :source ~/.zshrc<cr>
+nnoremap <leader>lb :source ~/.bash_profile<cr>
 
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
@@ -187,6 +189,7 @@ nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
 nnoremap <leader>eb :e ~/Documents/BUGS<cr>
 nnoremap <leader>ep :e ~/.tiger_profile<cr>
+nnoremap <leader>ez :e ~/.zshrc<cr>
 " }}}
 
 " the following to have Vim jump to the last position when reopening a file
@@ -204,6 +207,10 @@ nnoremap J gJ
 
 " copy/paste {{{
 set clipboard=unnamed
+
+" copy with indent
+nnoremap p p=`]
+
 nnoremap <leader>cf :let @*=expand("%")<cr>
 nmap <leader>cm [[wyw
 function! CopyTestFunctionName()
@@ -314,14 +321,16 @@ let emmet_html5 = 0
 set rtp+=/usr/local/opt/fzf
 nnoremap <leader>p :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
+nnoremap <leader>pc :BCommits<cr>
 nnoremap <leader>pg :GFiles?<cr>
 nnoremap <leader>pm :History<cr>
 nnoremap <leader>pp :FZF<cr>
-nnoremap <leader>pr :Rg<cr>
+nnoremap <leader>pr :Rg<Space>
 nnoremap <leader>pt :Tags<cr>
 nnoremap <leader>ps :Snippets<cr>
 
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
+nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
 "  }}}
 " Git {{{
 nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
