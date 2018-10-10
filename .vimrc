@@ -9,7 +9,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'lepture/vim-jinja'
 Plugin 'Raimondi/delimitMate'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
@@ -33,6 +33,15 @@ Plugin 'junegunn/fzf.vim'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'ynotstartups/vim-snippets'
+
+if has('nvim')
+    Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plugin 'Shougo/deoplete.nvim'
+    Plugin 'roxma/nvim-yarp'
+    Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+
 call vundle#end()
 " }}}
 
@@ -184,7 +193,9 @@ nnoremap <leader>lv :source $MYVIMRC<cr>
 nnoremap <leader>lz :source ~/.zshrc<cr>
 nnoremap <leader>lb :source ~/.bash_profile<cr>
 
-nnoremap <leader>ev :e $MYVIMRC<cr>
+" not working with nvim
+" nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ev :e ~/.vimrc<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
 nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
@@ -281,6 +292,11 @@ augroup Airline
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 "  }}}
+" deocomplete {{{
+let g:deoplete#enable_at_startup = 1
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" }}}
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
@@ -429,6 +445,8 @@ autocmd BufWritePre * :call TrimWhitespace()
 "}}}
 " ultisnips {{{
 
+let g:UltiSnipsExpandTrigger = "<NUL>"
+
 " Expand snippet or return
 let g:ulti_expand_res = 0
 function! Ulti_ExpandOrEnter()
@@ -495,8 +513,9 @@ augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write>
+    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
+    autocmd FileType TODO nnoremap <buffer> <leader>c :setlocal conceallevel=0<cr>
     autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
     autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
     " change number in line
@@ -506,6 +525,11 @@ augroup TODO
 
     autocmd Syntax TODO syntax match TODOLabel "\v^  \(.{-}\)"
     autocmd Syntax TODO highlight link TODOLabel Keyword
+
+    autocmd Syntax TODO syntax match TODOLabel "\v^. \(life\).*" conceal cchar=☝
+    " autocmd Syntax TODO syntax match Life life conceal cchar=!
+    setlocal conceallevel=1
+
 augroup END
 " }}}
 " Vimscript {{{
@@ -517,3 +541,6 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
 augroup END
 " }}}
+
+inoremap <silent><expr> <Tab>
+    \ pumvisible() ? "\<C-n>" : deoplete#manual_complete()
