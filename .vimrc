@@ -113,29 +113,30 @@ if executable('rg')
     augroup END
 endif
 " bind K to grep word under cursor
-nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
 
 "  }}}
 
 " try to open new line in bracket
-inoremap {;<CR> {<CR>};<ESC>O
-inoremap (;<CR> (<CR>);<ESC>O
-inoremap {\<CR> {<CR>}<ESC>O
-inoremap (c<CR> (<CR>)<ESC>O
+inoremap {;<cr> {<cr>};<esc>O
+inoremap (;<cr> (<cr>);<esc>O
+inoremap {\<cr> {<cr>}<esc>O
+inoremap (c<cr> (<cr>)<esc>O
 
 " leader s to save
-nnoremap <silent> <leader>s <esc>:w<CR>
-nnoremap <silent> S <esc>:w<CR>
-inoremap <silent> SS <esc>:w<CR>
-" inoremap <silent> <c-s> <esc>:w<CR>
-vmap <leader>s <esc>:w<CR>gv
+nnoremap <silent> <leader>s <esc>:w<cr>
+nnoremap <silent> S <esc>:w<cr>
+inoremap <silent> SS <esc>:w<cr>
+" inoremap <silent> <c-s> <esc>:w<cr>
+vmap <leader>s <esc>:w<cr>gv
 
 inoremap jj <esc>
+inoremap jk <esc>:w<cr>
 
 " buffers {{{
 set nostartofline
-nnoremap <S-h> <esc>:bp<CR>
-nnoremap <S-l> <esc>:bn<CR>
+nnoremap <S-h> <esc>:bp<cr>
+nnoremap <S-l> <esc>:bn<cr>
 " leader d is taken by Jedi find definition
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>ba :%bd<cr>
@@ -146,12 +147,12 @@ nnoremap <leader>bo :BufOnly<cr>
 " nnoremap <leader>ws  :split<cr><c-w><c-w>
 " nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 nnoremap <leader>w  <C-w><C-w>
-nnoremap <leader>o  :only<CR>
-nnoremap <leader>c  :close<CR>
-nnoremap <leader>q  :quit<CR>
-nnoremap <leader>qa  :quitall<CR>
-nnoremap <leader>=  :resize +5<CR>
-nnoremap <leader>-  :resize -5<CR>
+nnoremap <leader>o  :only<cr>
+nnoremap <leader>c  :close<cr>
+nnoremap <leader>q  :quit<cr>
+nnoremap <leader>qa  :quitall<cr>
+nnoremap <leader>=  :resize +5<cr>
+nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
 nnoremap <leader>v- :vertical resize -30<cr>
 " }}}
@@ -208,8 +209,8 @@ nnoremap J gJ
 " copy/paste {{{
 set clipboard=unnamed
 
-" copy with indent
-nnoremap p p=`]
+" copy with indent and set cursor to the end of paste
+nnoremap p p=`]`]
 
 nnoremap <leader>cf :let @*=expand("%")<cr>
 nmap <leader>cm [[wyw
@@ -295,17 +296,17 @@ function! JumpToType(extension)
     call fzf#vim#files('.', {'options':'--query '.l:fileName})<cr>
 endfunction
 
-nnoremap <leader>j :call JumpToType("stories.js")<CR>
-nnoremap <leader>jj :call JumpToType("jinja")<CR>
-nnoremap <leader>jp :call JumpToType("py")<CR>
-nnoremap <leader>js :call JumpToType("js")<CR>
-nnoremap <leader>jt :call JumpToType("test")<CR>
-nnoremap <leader>jl :call JumpToType("less")<CR>
+nnoremap <leader>j :call JumpToType("stories.js")<cr>
+nnoremap <leader>jj :call JumpToType("jinja")<cr>
+nnoremap <leader>jp :call JumpToType("py")<cr>
+nnoremap <leader>js :call JumpToType("js")<cr>
+nnoremap <leader>jt :call JumpToType("test")<cr>
+nnoremap <leader>jl :call JumpToType("less")<cr>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " have to use nmap for whatever reason
-nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
+nmap <leader><leader> <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 " }}}
 " Emmet {{{
@@ -333,14 +334,14 @@ nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c
 nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
 "  }}}
 " Git {{{
-nnoremap <Leader>gp :GitGutterPreviewHunk<CR>
-nnoremap <Leader>gu :GitGutterUndo<CR>
-nnoremap <Leader>gsh :GitGutterStageHunk<CR>
+nnoremap <leader>gp :GitGutterPreviewHunk<cr>
+nnoremap <leader>gu :GitGutterUndo<cr>
+nnoremap <leader>gsh :GitGutterStageHunk<cr>
 
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gd :Gdiff<cr>
 " }}}
 " indexed-search {{{
 let g:indexed_search_colors = 0
@@ -389,9 +390,9 @@ let g:NERDCustomDelimiters = {
       \ }
 " }}}
 " nerdtree {{{
-" nnoremap <leader>n <esc>:NERDTreeToggle<CR>
-" nnoremap <leader>f <esc>:NERDTreeFind<CR>
-nnoremap <leader>n <esc>:NERDTreeFind<CR>
+" nnoremap <leader>n <esc>:NERDTreeToggle<cr>
+" nnoremap <leader>f <esc>:NERDTreeFind<cr>
+nnoremap <leader>n <esc>:NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
 " }}}
 " pymode {{{
@@ -439,7 +440,7 @@ function! Ulti_ExpandOrEnter()
 endfunction
 
 " Set <space> as primary trigger
-inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<CR>
+inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
 " }}}
 " vim-prettier {{{
@@ -494,7 +495,7 @@ augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
-    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
+    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
     autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
     autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
