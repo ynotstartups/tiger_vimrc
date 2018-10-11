@@ -28,7 +28,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'wincent/terminus'
+" Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'SirVer/ultisnips'
@@ -358,6 +358,14 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gd :Gdiff<cr>
+
+function! GitBranch()
+    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! BranchTicket()
+    return GitBranch()[:7]
+endfunction
 " }}}
 " indexed-search {{{
 let g:indexed_search_colors = 0
@@ -397,6 +405,9 @@ endfunction
 " augroup END
 
 " call airline#parts#define_function('lastcommit', 'LastCommit')
+" }}}
+" deocomplete {{{
+nnoremap <leader>t :terminal<cr>
 " }}}
 " nerdcommenter {{{
 let g:NERDSpaceDelims = 1
@@ -475,6 +486,9 @@ let g:ycm_semantic_triggers = {
 " }}}
 
 " file specific
+" git {{{
+nnoremap <leader>t 0"=BranchTicket()<cr>P
+" }}}
 " jinja {{{
 augroup jinja
     autocmd!
@@ -541,6 +555,3 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
 augroup END
 " }}}
-
-inoremap <silent><expr> <Tab>
-    \ pumvisible() ? "\<C-n>" : deoplete#manual_complete()
