@@ -156,6 +156,8 @@ nnoremap <leader>bo :BufOnly<cr>
 " windows {{{
 " nnoremap <leader>ws  :split<cr><c-w><c-w>
 " nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
+set splitbelow
+
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<cr>
 nnoremap <leader>c  :close<cr>
