@@ -26,9 +26,10 @@ Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-rhubarb'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
-" Plugin 'wincent/terminus'
+Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'SirVer/ultisnips'
@@ -69,8 +70,8 @@ set background=dark
 colorscheme molokai
 " MatchParen highlighting makes it look like cursor jumped to matching parenthesis
 hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
-hi diffAdded ctermfg=46  cterm=NONE guifg=#2BFF2B gui=NONE
-hi diffRemoved ctermfg=196 cterm=NONE guifg=#FF2B2B gui=NONE
+hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
+hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
 " }}}
 
 " ignore Intro and Written
@@ -254,6 +255,9 @@ autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.
     \ execute "source " . $HOME . "/.vim/Session.vim"
 " }}}
 
+" private
+execute "source " . $HOME . "/.vim/private.vim"
+
 " plugins
 " util functions {{{
 function! CleanWord(word)
@@ -346,8 +350,26 @@ nnoremap <leader>pr :Rg<Space>
 nnoremap <leader>pt :Tags<cr>
 nnoremap <leader>ps :Snippets<cr>
 
+" alt-p
+nnoremap π :FZF<cr>
+
+" alt-b
+nnoremap ∫ :Buffers<cr>
+
+" alt-r
+nnoremap ® :Rg<space>
+
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
+
+command! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+            \   <bang>0 ? fzf#vim#with_preview('up:60%')
+            \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+            \   <bang>0)
+
+nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
 " Git {{{
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
@@ -445,6 +467,9 @@ autocmd FileType jinja let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{
 autocmd FileType jinja let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 " }}}
+" terminal neovim {{{
+tnoremap <leader><esc> <C-\><C-n>
+"}}}
 " trailing-whitespace {{{
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -487,7 +512,7 @@ let g:ycm_semantic_triggers = {
 
 " file specific
 " git {{{
-nnoremap <leader>t 0"=BranchTicket()<cr>P
+nnoremap <leader>it 0"=BranchTicket()<cr>P
 " }}}
 " jinja {{{
 augroup jinja
