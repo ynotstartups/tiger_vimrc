@@ -161,6 +161,11 @@ nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
 nnoremap <leader>v- :vertical resize -30<cr>
 " }}}
+"
+" quickfix{{{
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprev<cr>
+" }}}
 
 nnoremap Q @q
 nnoremap Y y$
