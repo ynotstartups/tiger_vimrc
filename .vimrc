@@ -30,6 +30,7 @@ Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
 Plugin 'w0rp/ale'
+Plugin 'sheerun/vim-polyglot'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'ynotstartups/vim-snippets'
@@ -68,7 +69,7 @@ hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
 " }}}
 
 " ignore Intro and Written
-set shortmess+=IW
+set shortmess+=IWA
 
 " status bar
 set laststatus=2
@@ -78,15 +79,17 @@ set number
 set colorcolumn=80
 
 set wildmenu
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+
 
 " how how long (in milliseconds) the plugin will wait
 " after you stop typing before it updates the signs
 " I used it for fast update on GitGutter
 set updatetime=100
 
-" autoread
 set autoread
 au CursorHold * checktime
+set autowrite               " Write on :next/:prev/^Z
 
 " search {{{
 set ignorecase
@@ -144,6 +147,8 @@ nnoremap <S-l> <esc>:bn<cr>
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
+
+nnoremap <a-w> :bd<cr>
 " }}}
 
 " windows {{{
@@ -160,6 +165,11 @@ nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
 nnoremap <leader>v- :vertical resize -30<cr>
+
+map <m-j> <C-W>j
+map <m-k> <C-W>k
+map <m-h> <C-W>h
+map <m-l> <C-W>l
 " }}}
 "
 " quickfix{{{
@@ -203,6 +213,12 @@ nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
 nnoremap <leader>eb :e ~/Documents/BUGS<cr>
 nnoremap <leader>ep :e ~/.tiger_profile<cr>
 nnoremap <leader>ez :e ~/.zshrc<cr>
+
+nnoremap <m-e> :e#<cr>
+" }}}
+
+" folding {{{
+nnoremap <cr> za
 " }}}
 
 " the following to have Vim jump to the last position when reopening a file
@@ -216,7 +232,10 @@ set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
 
+" concat without space
 nnoremap J gJ
+
+map q: <silent>
 
 " copy/paste {{{
 set clipboard=unnamed
@@ -391,6 +410,11 @@ nnoremap <leader>rw :Rg <c-r><c-w><cr>
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
 nnoremap <leader>gsh :GitGutterStageHunk<cr>
+
+" let g:gitgutter_sign_added = '∙'
+" let g:gitgutter_sign_modified = '∙'
+" let g:gitgutter_sign_removed = '∙'
+" let g:gitgutter_sign_modified_removed = '∙'
 
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
