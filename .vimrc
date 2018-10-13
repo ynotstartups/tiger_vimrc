@@ -9,7 +9,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'lepture/vim-jinja'
 Plugin 'Raimondi/delimitMate'
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
@@ -22,7 +21,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
-" Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
@@ -31,17 +29,12 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
+Plugin 'w0rp/ale'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'ynotstartups/vim-snippets'
 
-if has('nvim')
-    Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plugin 'Shougo/deoplete.nvim'
-    Plugin 'roxma/nvim-yarp'
-    Plugin 'roxma/vim-hug-neovim-rpc'
-endif
+Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()
 " }}}
@@ -298,6 +291,22 @@ augroup Airline
     autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 "  }}}
+" ale {{{
+let g:ale_echo_msg_format = '%linter%: %s'
+
+let g:ale_linters = {
+            \   'python': ['flake8'],
+            \}
+let g:ale_linters_ignore = {
+            \   'javascript': ['jshint'],
+            \}
+let g:ale_fixers = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'python': ['isort'],
+            \   'javascript': ['prettier'],
+            \}
+let g:ale_fix_on_save = 1
+"  }}}
 " deocomplete {{{
 let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -352,11 +361,11 @@ nnoremap <leader>pr :Rg<Space>
 nnoremap <leader>pt :Tags<cr>
 nnoremap <leader>ps :Snippets<cr>
 
-" alt-p
-nnoremap π :FZF<cr>
-
-" alt-b
-nnoremap ∫ :Buffers<cr>
+" require alt sends Esc+, iterm2 preference->Profiles->Keys
+nnoremap <m-p> :FZF<cr>
+nnoremap <m-b> :Buffers<cr>
+nnoremap <m-m> :History<cr>
+nnoremap <m-r> :Rg<Space>
 
 " alt-r
 nnoremap ® :Rg<space>
@@ -473,13 +482,13 @@ autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcom
 tnoremap <leader><esc> <C-\><C-n>
 "}}}
 " trailing-whitespace {{{
-fun! TrimWhitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfun
-command! TrimWhitespace call TrimWhitespace()
-autocmd BufWritePre * :call TrimWhitespace()
+" fun! TrimWhitespace()
+    " let l:save = winsaveview()
+    " keeppatterns %s/\s\+$//e
+    " call winrestview(l:save)
+" endfun
+" command! TrimWhitespace call TrimWhitespace()
+" autocmd BufWritePre * :call TrimWhitespace()
 "}}}
 " ultisnips {{{
 
@@ -500,9 +509,9 @@ inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
 " }}}
 " vim-prettier {{{
-let g:prettier#autoformat = 0
-let g:prettier#config#print_width = 80
-autocmd BufWritePre *.js PrettierAsync
+" let g:prettier#autoformat = 0
+" let g:prettier#config#print_width = 80
+" autocmd BufWritePre *.js PrettierAsync
 " }}}
 " YouCompleteMe {{{
 set completeopt-=preview
