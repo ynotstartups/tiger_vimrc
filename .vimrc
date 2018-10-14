@@ -1,6 +1,5 @@
 set nocompatible
 filetype off
-
 " vundle{{{
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -39,222 +38,6 @@ Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()
 " }}}
-
-" change leader to space
-nnoremap <SPACE> <nop>
-let mapleader = " "
-
-" color {{{
-set t_Co=256
-syntax on
-set background=dark
-colorscheme molokai
-" MatchParen highlighting makes it look like cursor jumped to matching parenthesis
-hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
-hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
-hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
-" }}}
-" indent {{{
-filetype plugin indent on
-set smartindent
-
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
-" for code indented with tabs
-" set list lcs=tab:\|\
-
-" }}}
-set shortmess+=IWA " ignore Intro, Written and swapfile exists
-set laststatus=2 " status bar always on
-set number
-set colorcolumn=80
-set wildmenu
-set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
-set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
-set autoread
-au CursorHold * checktime
-set autowrite               " Write on :next/:prev/^Z
-set timeout
-set timeoutlen=200
-
-" search {{{
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
-
-" permanent very magic mode
-nnoremap / /\v
-vnoremap / /\v
-cnoremap %s/ %smagic/
-cnoremap \>s/ \>smagic/
-" nnoremap :g/ :g/\v
-" nnoremap :g// :g//
-
-" Keep search matches in the middle of the window.
-" the following are not necessary because of indexed-search plugin
-" nnoremap n nzzzv
-" nnoremap N Nzzzv
-" nnoremap * *N
-
-if executable('rg')
-    " Use rg over grep
-    augroup rg
-    autocmd!
-        set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-    augroup END
-endif
-" bind K to grep word under cursor
-nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
-
-"  }}}
-" save {{{
-nnoremap <silent> <leader>s <esc>:w<cr>
-inoremap jk <esc>:w<cr>
-" }}}
-
-inoremap jj <esc>
-
-" buffers {{{
-set nostartofline
-nnoremap <S-h> <esc>:bp<cr>
-nnoremap <S-l> <esc>:bn<cr>
-" leader d is taken by Jedi find definition
-nnoremap <leader>bd :bd<cr>
-nnoremap <leader>ba :%bd<cr>
-nnoremap <leader>bo :BufOnly<cr>
-
-nnoremap <a-w> :bd<cr>
-" }}}
-
-" windows {{{
-" nnoremap <leader>ws  :split<cr><c-w><c-w>
-" nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
-set splitbelow
-
-nnoremap <leader>w  <C-w><C-w>
-nnoremap <leader>o  :only<cr>
-nnoremap <leader>c  :close<cr>
-nnoremap <leader>q  :quit<cr>
-nnoremap <leader>qa  :quitall<cr>
-nnoremap <leader>=  :resize +5<cr>
-nnoremap <leader>-  :resize -5<cr>
-nnoremap <leader>v= :vertical resize +30<cr>
-nnoremap <leader>v- :vertical resize -30<cr>
-
-map <m-j> <C-W>j
-map <m-k> <C-W>k
-map <m-h> <C-W>h
-map <m-l> <C-W>l
-" }}}
-"
-" quickfix{{{
-nnoremap ]q :cnext<cr>
-nnoremap [q :cprev<cr>
-" }}}
-
-nnoremap Q @q
-nnoremap Y y$
-
-" arrow key map {{{
-" nnoremap <up> <c-u>
-nnoremap <up> <c-u>
-nnoremap <down> <c-d>
-nnoremap <left> <c-b>
-nnoremap <right> <c-f>
-
-" inoremap <Up> <nop>
-" inoremap <Down> <nop>
-" inoremap <Left> <nop>
-" inoremap <Right> <nop>
-" }}}
-
-set cmdheight=2
-
-" upper case whole word for writing constant
-inoremap <c-u> <esc>viwU<esc>ea
-nnoremap <c-u> <esc>viwU<esc>e
-
-" quick reload/edit {{{
-nnoremap <leader>lv :source $MYVIMRC<cr>
-nnoremap <leader>lz :source ~/.zshrc<cr>
-nnoremap <leader>lb :source ~/.bash_profile<cr>
-
-" not working with nvim
-" nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <leader>ev :e ~/.vimrc<cr>
-nnoremap <leader>et :e ~/Documents/TODO<cr>
-nnoremap <leader>en :e ~/Documents/NOTES<cr>
-nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
-nnoremap <leader>eb :e ~/Documents/BUGS<cr>
-nnoremap <leader>ep :e ~/.tiger_profile<cr>
-nnoremap <leader>ez :e ~/.zshrc<cr>
-
-nnoremap <m-e> :e#<cr>
-" }}}
-
-" folding {{{
-nnoremap <cr> za
-" }}}
-
-" the following to have Vim jump to the last position when reopening a file
-if has("autocmd")
-  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
-endif
-
-set backspace=indent,eol,start
-
-set iskeyword+=-
-set iskeyword+=_
-
-" concat without space
-nnoremap J gJ
-
-map q: <silent>
-
-" copy/paste {{{
-set clipboard=unnamed
-
-" copy with indent and set cursor to the end of paste
-nnoremap p p=`]`]
-
-nnoremap <leader>cf :let @*=expand("%")<cr>
-nmap <leader>cm [[wyw
-function! CopyTestFunctionName()
-    normal [[w"ayw
-    let @*=expand('%').'::'.@a
-endfunction
-nnoremap <leader>ct :call CopyTestFunctionName()<cr>
-" }}}
-
-" undo/swap extra dir {{{
-" Persistent undo, remember to mkdir ~/.vim/undo
-set undofile
-set undodir=~/.vim/undo
-
-set undolevels=1000
-set undoreload=10000
-
-" swap file in a diff directory
-set directory=~/.vim/swap//
-" }}}
-
-" Go to last file(s) if invoked without arguments {{{
-autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
-    \ call mkdir($HOME . "/.vim") |
-    \ endif |
-    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
-
-autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
-    \ execute "source " . $HOME . "/.vim/Session.vim"
-" }}}
-
-" private
-execute "source " . $HOME . "/.vim/private.vim"
-
 " plugins
 " util functions {{{
 function! CleanWord(word)
@@ -527,7 +310,6 @@ let g:ycm_semantic_triggers = {
     \   'css': [ 're!^\s{4}', 're!:\s+' ],
     \ }
 " }}}
-
 " file specific
 " git {{{
 nnoremap <leader>it 0"=BranchTicket()<cr>P
@@ -598,3 +380,212 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
 augroup END
 " }}}
+" personal
+
+" change leader to space has to be in the beginning
+let mapleader = " "
+
+" color {{{
+set t_Co=256
+syntax on
+set background=dark
+colorscheme molokai
+" MatchParen highlighting makes it look like cursor jumped to matching parenthesis
+hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
+hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
+hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
+" }}}
+" indent {{{
+filetype plugin indent on
+set smartindent
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" for code indented with tabs
+" set list lcs=tab:\|\
+
+" }}}
+set shortmess+=IWA " ignore Intro, Written and swapfile exists
+set laststatus=2 " status bar always on
+set number
+set colorcolumn=80
+set wildmenu
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
+set autoread
+au CursorHold * checktime
+set autowrite               " Write on :next/:prev/^Z
+set timeout
+set timeoutlen=200
+set cmdheight=2 " set command line height to 2
+
+" search {{{
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+" permanent very magic mode
+nnoremap / /\v
+vnoremap / /\v
+cnoremap %s/ %smagic/
+cnoremap \>s/ \>smagic/
+" nnoremap :g/ :g/\v
+" nnoremap :g// :g//
+
+" Keep search matches in the middle of the window.
+" the following are not necessary because of indexed-search plugin
+" nnoremap n nzzzv
+" nnoremap N Nzzzv
+" nnoremap * *N
+
+if executable('rg')
+    " Use rg over grep
+    augroup rg
+        autocmd!
+        set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+    augroup END
+endif
+" bind K to grep word under cursor
+nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
+
+"  }}}
+" save {{{
+nnoremap <leader>s :w<cr>
+inoremap jk <esc>:w<cr>
+" }}}
+
+inoremap jj <esc>
+
+nnoremap Q @q
+nnoremap Y y$
+
+" upper case whole word for writing constant
+inoremap <c-u> <esc>viwU<esc>ea
+nnoremap <c-u> <esc>viwU<esc>e
+
+" buffers {{{
+set nostartofline
+nnoremap <S-h> <esc>:bp<cr>
+nnoremap <S-l> <esc>:bn<cr>
+" leader d is taken by Jedi find definition
+nnoremap <leader>bd :bd<cr>
+nnoremap <leader>ba :%bd<cr>
+nnoremap <leader>bo :BufOnly<cr>
+
+nnoremap <a-w> :bd<cr>
+" }}}
+" windows {{{
+" nnoremap <leader>ws  :split<cr><c-w><c-w>
+" nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
+set splitbelow
+
+nnoremap <leader>w  <C-w><C-w>
+nnoremap <leader>o  :only<cr>
+nnoremap <leader>c  :close<cr>
+nnoremap <leader>q  :quit<cr>
+nnoremap <leader>qa  :quitall<cr>
+nnoremap <leader>=  :resize +5<cr>
+nnoremap <leader>-  :resize -5<cr>
+nnoremap <leader>v= :vertical resize +30<cr>
+nnoremap <leader>v- :vertical resize -30<cr>
+
+map <m-j> <C-W>j
+map <m-k> <C-W>k
+map <m-h> <C-W>h
+map <m-l> <C-W>l
+" }}}
+" quickfix{{{
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprev<cr>
+" }}}
+" arrow key map {{{
+" nnoremap <up> <c-u>
+nnoremap <up> <c-u>
+nnoremap <down> <c-d>
+nnoremap <left> <c-b>
+nnoremap <right> <c-f>
+
+" inoremap <Up> <nop>
+" inoremap <Down> <nop>
+" inoremap <Left> <nop>
+" inoremap <Right> <nop>
+" }}}
+" quick reload/edit {{{
+nnoremap <leader>lv :source $MYVIMRC<cr>
+nnoremap <leader>lz :source ~/.zshrc<cr>
+nnoremap <leader>lb :source ~/.bash_profile<cr>
+
+" not working with nvim
+" nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ev :e ~/.vimrc<cr>
+nnoremap <leader>et :e ~/Documents/TODO<cr>
+nnoremap <leader>en :e ~/Documents/NOTES<cr>
+nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
+nnoremap <leader>eb :e ~/Documents/BUGS<cr>
+nnoremap <leader>ep :e ~/.tiger_profile<cr>
+nnoremap <leader>ez :e ~/.zshrc<cr>
+
+nnoremap <m-e> :e#<cr>
+" }}}
+" folding {{{
+nnoremap <cr> za
+" }}}
+
+" the following to have Vim jump to the last position when reopening a file
+if has("autocmd")
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g`\"" | endif
+endif
+
+set backspace=indent,eol,start
+
+set iskeyword+=-
+set iskeyword+=_
+
+" concat without space
+nnoremap J gJ
+
+map q: <silent>
+
+" copy/paste {{{
+set clipboard=unnamed
+
+" copy with indent and set cursor to the end of paste
+nnoremap p p=`]`]
+
+nnoremap <leader>cf :let @*=expand("%")<cr>
+nmap <leader>cm [[wyw
+function! CopyTestFunctionName()
+    normal [[w"ayw
+    let @*=expand('%').'::'.@a
+endfunction
+nnoremap <leader>ct :call CopyTestFunctionName()<cr>
+" }}}
+
+" undo/swap extra dir {{{
+" Persistent undo, remember to mkdir ~/.vim/undo
+set undofile
+set undodir=~/.vim/undo
+
+set undolevels=1000
+set undoreload=10000
+
+" swap file in a diff directory
+set directory=~/.vim/swap//
+" }}}
+
+" Go to last file(s) if invoked without arguments {{{
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
+            \ call mkdir($HOME . "/.vim") |
+            \ endif |
+            \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+
+autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+            \ execute "source " . $HOME . "/.vim/Session.vim"
+" }}}
+
+" private
+execute "source " . $HOME . "/.vim/private.vim"
