@@ -38,6 +38,10 @@ Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()
 " }}}
+" change leader to space, has to be in the beginning
+nnoremap <SPACE> <nop>
+let mapleader = " "
+
 " plugins
 " util functions {{{
 function! CleanWord(word)
@@ -379,9 +383,6 @@ augroup END
 " }}}
 " personal
 
-" change leader to space has to be in the beginning
-let mapleader = " "
-
 " color {{{
 set t_Co=256
 syntax on
@@ -467,11 +468,6 @@ inoremap jj <esc>
 " upper case whole word for writing constant
 inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
-
-" comand line map {{{
-cnoremap <m-left> <s-left>
-cnoremap <m-right> <s-right>
-" }}}
 
 " buffers {{{
 set nostartofline
