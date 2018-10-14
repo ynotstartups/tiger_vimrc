@@ -44,6 +44,16 @@ call vundle#end()
 nnoremap <SPACE> <nop>
 let mapleader = " "
 
+" color {{{
+set t_Co=256
+syntax on
+set background=dark
+colorscheme molokai
+" MatchParen highlighting makes it look like cursor jumped to matching parenthesis
+hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
+hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
+hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
+" }}}
 " indent {{{
 filetype plugin indent on
 set smartindent
@@ -56,40 +66,18 @@ set expandtab
 " set list lcs=tab:\|\
 
 " }}}
-
-" color {{{
-set t_Co=256
-syntax on
-set background=dark
-colorscheme molokai
-" MatchParen highlighting makes it look like cursor jumped to matching parenthesis
-hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
-hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
-hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
-" }}}
-
-" ignore Intro and Written
-set shortmess+=IWA
-
-" status bar
-set laststatus=2
-
+set shortmess+=IWA " ignore Intro, Written and swapfile exists
+set laststatus=2 " status bar always on
 set number
-
 set colorcolumn=80
-
 set wildmenu
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
-
-
-" how how long (in milliseconds) the plugin will wait
-" after you stop typing before it updates the signs
-" I used it for fast update on GitGutter
-set updatetime=100
-
+set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
 set autoread
 au CursorHold * checktime
 set autowrite               " Write on :next/:prev/^Z
+set timeout
+set timeoutlen=200
 
 " search {{{
 set ignorecase
@@ -122,22 +110,12 @@ endif
 nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
 
 "  }}}
-
-" try to open new line in bracket
-inoremap {;<cr> {<cr>};<esc>O
-inoremap (;<cr> (<cr>);<esc>O
-inoremap {\<cr> {<cr>}<esc>O
-inoremap (c<cr> (<cr>)<esc>O
-
-" leader s to save
+" save {{{
 nnoremap <silent> <leader>s <esc>:w<cr>
-nnoremap <silent> S <esc>:w<cr>
-inoremap <silent> SS <esc>:w<cr>
-" inoremap <silent> <c-s> <esc>:w<cr>
-vmap <leader>s <esc>:w<cr>gv
+inoremap jk <esc>:w<cr>
+" }}}
 
 inoremap jj <esc>
-inoremap jk <esc>:w<cr>
 
 " buffers {{{
 set nostartofline
