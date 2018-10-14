@@ -152,9 +152,6 @@ nnoremap <m-b> :Buffers<cr>
 nnoremap <m-m> :History<cr>
 nnoremap <m-r> :Rg<Space>
 
-" alt-r
-nnoremap ® :Rg<space>
-
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
 
@@ -420,6 +417,9 @@ set autowrite               " Write on :next/:prev/^Z
 set timeout
 set timeoutlen=200
 set cmdheight=2 " set command line height to 2
+set backspace=indent,eol,start
+set iskeyword+=-
+set iskeyword+=_
 
 " search {{{
 set ignorecase
@@ -457,14 +457,21 @@ nnoremap <leader>s :w<cr>
 inoremap jk <esc>:w<cr>
 " }}}
 
-inoremap jj <esc>
-
 nnoremap Q @q
 nnoremap Y y$
+" concat without space
+nnoremap J gJ
+map q: <silent>
 
+inoremap jj <esc>
 " upper case whole word for writing constant
-inoremap <c-u> <esc>viwU<esc>ea
-nnoremap <c-u> <esc>viwU<esc>e
+inoremap <m-u> <esc>viwU<esc>ea
+nnoremap <m-u> <esc>viwU<esc>e
+
+" comand line map {{{
+cnoremap <m-left> <s-left>
+cnoremap <m-right> <s-right>
+" }}}
 
 " buffers {{{
 set nostartofline
@@ -507,11 +514,6 @@ nnoremap <up> <c-u>
 nnoremap <down> <c-d>
 nnoremap <left> <c-b>
 nnoremap <right> <c-f>
-
-" inoremap <Up> <nop>
-" inoremap <Down> <nop>
-" inoremap <Left> <nop>
-" inoremap <Right> <nop>
 " }}}
 " quick reload/edit {{{
 nnoremap <leader>lv :source $MYVIMRC<cr>
@@ -520,6 +522,8 @@ nnoremap <leader>lb :source ~/.bash_profile<cr>
 
 " not working with nvim
 " nnoremap <leader>ev :e $MYVIMRC<cr>
+
+nnoremap <leader>e  :e#<cr>
 nnoremap <leader>ev :e ~/.vimrc<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>en :e ~/Documents/NOTES<cr>
@@ -533,23 +537,6 @@ nnoremap <m-e> :e#<cr>
 " folding {{{
 nnoremap <cr> za
 " }}}
-
-" the following to have Vim jump to the last position when reopening a file
-if has("autocmd")
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g`\"" | endif
-endif
-
-set backspace=indent,eol,start
-
-set iskeyword+=-
-set iskeyword+=_
-
-" concat without space
-nnoremap J gJ
-
-map q: <silent>
-
 " copy/paste {{{
 set clipboard=unnamed
 
@@ -564,7 +551,6 @@ function! CopyTestFunctionName()
 endfunction
 nnoremap <leader>ct :call CopyTestFunctionName()<cr>
 " }}}
-
 " undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
 set undofile
@@ -576,8 +562,8 @@ set undoreload=10000
 " swap file in a diff directory
 set directory=~/.vim/swap//
 " }}}
-
-" Go to last file(s) if invoked without arguments {{{
+" remember files & cursor position between vim sessions & buffer changes {{{
+" Go to last file(s) if invoked without arguments
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
             \ call mkdir($HOME . "/.vim") |
             \ endif |
@@ -585,6 +571,13 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
 
 autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
             \ execute "source " . $HOME . "/.vim/Session.vim"
+
+" the following to have Vim jump to the last position when reopening a file
+if has("autocmd")
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g`\"" | endif
+endif
+
 " }}}
 
 " private
