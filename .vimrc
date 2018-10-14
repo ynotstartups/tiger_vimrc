@@ -196,7 +196,7 @@ nnoremap <right> <c-f>
 set cmdheight=2
 
 " upper case whole word for writing constant
-nnoremap <c-u> <esc>viwU<esc>ea
+inoremap <c-u> <esc>viwU<esc>ea
 nnoremap <c-u> <esc>viwU<esc>e
 
 " quick reload/edit {{{
@@ -409,7 +409,7 @@ nnoremap <leader>rw :Rg <c-r><c-w><cr>
 " Git {{{
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
-nnoremap <leader>gsh :GitGutterStageHunk<cr>
+" nnoremap <leader>gsh :GitGutterStageHunk<cr>
 
 " let g:gitgutter_sign_added = '∙'
 " let g:gitgutter_sign_modified = '∙'
