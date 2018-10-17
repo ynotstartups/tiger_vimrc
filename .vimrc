@@ -15,8 +15,6 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'pangloss/vim-javascript'
-" Plugin 'prettier/vim-prettier'
-" Plugin 'python-mode/python-mode'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
@@ -30,12 +28,11 @@ Plugin 'wincent/terminus'
 Plugin 'junegunn/fzf.vim'
 Plugin 'w0rp/ale'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'tpope/vim-unimpaired'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'ynotstartups/vim-snippets'
-
-Plugin 'Shougo/deoplete.nvim'
-
 call vundle#end()
 " }}}
 " change leader to space, has to be in the beginning
@@ -75,8 +72,8 @@ set updatetime=100 " how how long (in milliseconds) the plugin will wait for Git
 set autoread
 au CursorHold * checktime
 set autowrite               " Write on :next/:prev/^Z
-set timeout
-set timeoutlen=200
+" set timeout
+" set timeoutlen=500
 set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
@@ -161,8 +158,9 @@ map <m-h> <C-W>h
 map <m-l> <C-W>l
 " }}}
 " quickfix{{{
-nnoremap ]q :cnext<cr>
-nnoremap [q :cprev<cr>
+" the following is not necessary because of unimpaired
+" nnoremap ]q :cnext<cr>
+" nnoremap [q :cprev<cr>
 " }}}
 " arrow key map {{{
 " nnoremap <up> <c-u>
@@ -191,7 +189,7 @@ nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <m-e> :e#<cr>
 " }}}
 " folding {{{
-nnoremap <cr> za
+" nnoremap <cr> za
 " }}}
 " copy/paste {{{
 set clipboard=unnamed
@@ -292,6 +290,11 @@ let g:ale_fixers = {
             \   'javascript': ['prettier'],
             \}
 let g:ale_fix_on_save = 1
+
+nnoremap [L :ALEFirst<cr>
+nnoremap [l :ALEPrevious<cr>
+nnoremap ]l :ALENext<cr>
+nnoremap ]L :ALELast<cr>
 "  }}}
 " deocomplete {{{
 let g:deoplete#enable_at_startup = 1
