@@ -189,7 +189,7 @@ nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <m-e> :e#<cr>
 " }}}
 " folding {{{
-" nnoremap <cr> za
+nnoremap \ za
 " }}}
 " copy/paste {{{
 set clipboard=unnamed
@@ -342,7 +342,7 @@ let emmet_html5 = 0
 set rtp+=/usr/local/opt/fzf
 nnoremap <leader>p :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
-nnoremap <leader>pc :BCommits<cr>
+nnoremap <leader>pl :Commits<cr>
 nnoremap <leader>pg :GFiles?<cr>
 nnoremap <leader>pm :History<cr>
 nnoremap <leader>pp :FZF<cr>
@@ -368,10 +368,10 @@ command! -bang -nargs=* Rg
 
 nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
-" Git {{{
+" Git/Fugitive {{{
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
-" nnoremap <leader>gsh :GitGutterStageHunk<cr>
+nnoremap <leader>ggs :GitGutterStageHunk<cr>
 
 " let g:gitgutter_sign_added = '∙'
 " let g:gitgutter_sign_modified = '∙'
@@ -383,13 +383,18 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gd :Gdiff<cr>
 
+nnoremap <leader>gl :Commits<cr>
+
 function! GitBranch()
     return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
 
 function! BranchTicket()
-    return GitBranch()[:7]
+    " return GitBranch()[:7]
+    return GitBranch()
 endfunction
+
+command -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
 " }}}
 " indexed-search {{{
 let g:indexed_search_colors = 0
@@ -398,7 +403,7 @@ let g:indexed_search_dont_move = 1
 let g:indexed_search_center = 1
 " }}}
 " indentLine {{{
-let g:indentLine_bufTypeExclude = ['help', 'man']
+let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit']
 " }}}
 " jedi {{{
 let g:jedi#completions_enabled = 0
