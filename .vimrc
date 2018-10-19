@@ -516,9 +516,12 @@ let g:ycm_semantic_triggers = {
 nnoremap <leader>it 0"=BranchTicket()<cr>P
 augroup gitcommit
     autocmd!
-    autocmd FileType gitcommit setlocal spell
-    autocmd FileType gitcommit setlocal textwidth=72
-    autocmd FileType gitcommit setlocal spellcapcheck=""
+    autocmd FileType gitcommit setlocal spell spelllang=en_gb
+    autocmd FileType gitcommit set textwidth=72
+    autocmd FileType gitcommit set colorcolumn=73
+
+    " turn off Capital letter check for the first letter
+    autocmd FileType gitcommit setlocal spellcapcheck=
 augroup END
 " }}}
 " jinja {{{
