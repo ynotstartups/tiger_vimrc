@@ -514,11 +514,17 @@ let g:ycm_semantic_triggers = {
 " file specific
 " git {{{
 nnoremap <leader>it 0"=BranchTicket()<cr>P
+augroup gitcommit
+    autocmd!
+    autocmd FileType gitcommit setlocal spell
+    autocmd FileType gitcommit setlocal textwidth=72
+    autocmd FileType gitcommit setlocal spellcapcheck=""
+augroup END
 " }}}
 " jinja {{{
 augroup jinja
     autocmd!
-    autocmd FileType jinja set colorcolumn=100
+    autocmd FileType jinja setlocal colorcolumn=100
 augroup END
 " }}}
 " javascript {{{
@@ -545,7 +551,7 @@ augroup END
 " }}}
 " python {{{
 augroup python
-    autocmd FileType python set colorcolumn=100
+    autocmd FileType python setlocal colorcolumn=100
 augroup END
 " }}}
 " TODO {{{
