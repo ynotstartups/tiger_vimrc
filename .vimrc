@@ -21,6 +21,7 @@ Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/BufOnly.vim'
@@ -78,6 +79,7 @@ set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
+set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 
 " search {{{
 set ignorecase
@@ -369,9 +371,13 @@ command! -bang -nargs=* Rg
 nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
 " Git/Fugitive {{{
+command -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
+
+nnoremap <leader>g? :GitGutterPreviewHunk<cr>
+
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
-nnoremap <leader>ggs :GitGutterStageHunk<cr>
+nnoremap <leader>gS :GitGutterStageHunk<cr>
 
 " let g:gitgutter_sign_added = '∙'
 " let g:gitgutter_sign_modified = '∙'
@@ -379,9 +385,10 @@ nnoremap <leader>ggs :GitGutterStageHunk<cr>
 " let g:gitgutter_sign_modified_removed = '∙'
 
 nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gc :Gcv<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gL :Glog<cr>
 
 nnoremap <leader>gl :Commits<cr>
 
@@ -394,7 +401,6 @@ function! BranchTicket()
     return GitBranch()
 endfunction
 
-command -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
 " }}}
 " indexed-search {{{
 let g:indexed_search_colors = 0
@@ -593,5 +599,11 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>fn o"<space>{{{<esc>o}}}<esc>k0lli
     autocmd FileType vim nnoremap <buffer> <leader>fs A<space>{{{<esc>
     autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
+augroup END
+" }}}
+" zshrc {{{
+augroup filetype_zsh
+    autocmd!
+    autocmd FileType zsh setlocal foldmethod=marker
 augroup END
 " }}}
