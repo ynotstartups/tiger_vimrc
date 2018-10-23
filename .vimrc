@@ -72,7 +72,7 @@ set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in
 set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
 set autoread
 au CursorHold * checktime
-set autowrite               " Write on :next/:prev/^Z
+set hidden " no need to save when change buffer
 " set timeout
 " set timeoutlen=500
 set cmdheight=2 " set command line height to 2
