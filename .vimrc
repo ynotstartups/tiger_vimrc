@@ -371,9 +371,7 @@ command! -bang -nargs=* Rg
 nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
 " Git/Fugitive {{{
-command -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
-
-nnoremap <leader>g? :GitGutterPreviewHunk<cr>
+command! -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
 
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
