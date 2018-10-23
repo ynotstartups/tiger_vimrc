@@ -315,15 +315,15 @@ function! JumpToType(extension)
     else
         let l:fileName = l:fileName . a:extension
     endif
-    call fzf#vim#files('.', {'options':'--query '.l:fileName})<cr>
+    call fzf#vim#files('.', {'options':'--query '.l:fileName})
 endfunction
 
-nnoremap <leader>j :call JumpToType("stories.js")<cr>
-nnoremap <leader>jj :call JumpToType("jinja")<cr>
-nnoremap <leader>jp :call JumpToType("py")<cr>
-nnoremap <leader>js :call JumpToType("js")<cr>
-nnoremap <leader>jt :call JumpToType("test")<cr>
-nnoremap <leader>jl :call JumpToType("less")<cr>
+nnoremap <leader>jS :call JumpToType("stories.js")<cr><cr>
+nnoremap <leader>jj :call JumpToType("jinja")<cr><cr>
+nnoremap <leader>jp :call JumpToType("py")<cr><cr>
+nnoremap <leader>js :call JumpToType("js")<cr><cr>
+nnoremap <leader>jt :call JumpToType("test")<cr><cr>
+nnoremap <leader>jl :call JumpToType("less")<cr><cr>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
