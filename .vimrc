@@ -137,7 +137,7 @@ nnoremap <leader>bd :bd<cr>
 nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 
-nnoremap <a-w> :bd<cr>
+nnoremap <m-w> :bd<cr>
 " }}}
 " windows {{{
 " nnoremap <leader>ws  :split<cr><c-w><c-w>
@@ -147,8 +147,6 @@ set splitbelow
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<cr>
 nnoremap <leader>c  :close<cr>
-nnoremap <leader>q  :quit<cr>
-nnoremap <leader>qa  :quitall<cr>
 nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
@@ -158,6 +156,8 @@ map <m-j> <C-W>j
 map <m-k> <C-W>k
 map <m-h> <C-W>h
 map <m-l> <C-W>l
+
+map <m-s> :split<cr>
 " }}}
 " quickfix{{{
 " the following is not necessary because of unimpaired
@@ -343,7 +343,7 @@ let emmet_html5 = 0
 " }}}
 " fzf {{{
 set rtp+=/usr/local/opt/fzf
-nnoremap <leader>p :FZF<cr>
+nnoremap <leader>P :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
 nnoremap <leader>pl :Commits<cr>
 nnoremap <leader>pg :GFiles?<cr>
@@ -358,6 +358,7 @@ nnoremap <m-p> :FZF<cr>
 nnoremap <m-b> :Buffers<cr>
 nnoremap <m-m> :History<cr>
 nnoremap <m-r> :Rg<Space>
+nnoremap <m-g> :Commits<Space>
 
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
