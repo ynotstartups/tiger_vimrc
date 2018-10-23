@@ -522,6 +522,16 @@ let g:ycm_semantic_triggers = {
     \   'css': [ 're!^\s{4}', 're!:\s+' ],
     \ }
 " }}}
+" Autoload {{{
+function! Autoload()
+    silent execute "!osascript /Users/tigerhuang/Documents/applescript_learning/open_or_reload.scpt"
+endfunction
+augroup autoload
+    autocmd!
+    autocmd FileType python autocmd! BufWritePost <buffer> call Autoload()
+    autocmd FileType jinja autocmd! BufWritePost <buffer> call Autoload()
+augroup END
+" }}}
 " file specific
 " git {{{
 nnoremap <leader>it 0"=BranchTicket()<cr>P
