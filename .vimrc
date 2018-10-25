@@ -132,8 +132,7 @@ nnoremap <m-u> <esc>viwU<esc>e
 set nostartofline
 nnoremap <S-h> <esc>:bp<cr>
 nnoremap <S-l> <esc>:bn<cr>
-" leader d is taken by Jedi find definition
-nnoremap <leader>bd :bd<cr>
+map <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>.
 nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 
@@ -416,9 +415,9 @@ let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit']
 " }}}
 " jedi {{{
 let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>a"
-let g:jedi#usages_command = "<leader>u"
+let g:jedi#goto_command = "<leader>Jd"
+let g:jedi#goto_assignments_command = "<leader>Ja"
+let g:jedi#usages_command = "<leader>Ju"
 " }}}
 " last commits {{{
 function! LastCommit()
