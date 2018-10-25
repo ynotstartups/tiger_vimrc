@@ -15,7 +15,6 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'groenewege/vim-less'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'pangloss/vim-javascript'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'
@@ -31,6 +30,7 @@ Plugin 'w0rp/ale'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-commentary'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'ynotstartups/vim-snippets'
@@ -146,7 +146,6 @@ set splitbelow
 
 nnoremap <leader>w  <C-w><C-w>
 nnoremap <leader>o  :only<cr>
-nnoremap <leader>c  :close<cr>
 nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
@@ -200,13 +199,14 @@ set clipboard=unnamed
 " copy with indent and set cursor to the end of paste
 nnoremap p p=`]`]
 
-nnoremap <leader>cf :let @*=expand("%")<cr>
-nmap <leader>cm [[wyw
+nnoremap <leader>yn :let @*=expand("#")<cr>
+nnoremap <leader>yf :let @*=expand("%")<cr>
+nmap <leader>ym [[wyw
 function! CopyTestFunctionName()
     normal [[w"ayw
     let @*=expand('%').'::'.@a
 endfunction
-nnoremap <leader>ct :call CopyTestFunctionName()<cr>
+nnoremap <leader>yt :call CopyTestFunctionName()<cr>
 " }}}
 " undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
@@ -303,6 +303,9 @@ nnoremap ]L :ALELast<cr>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" }}}
+" commentary {{{
+nmap <leader>c gcc
 " }}}
 " django custom {{{
 function! JumpToType(extension)
@@ -443,13 +446,6 @@ endfunction
 " }}}
 " deocomplete {{{
 nnoremap <leader>t :terminal<cr>
-" }}}
-" nerdcommenter {{{
-let g:NERDSpaceDelims = 1
-let g:NERDCustomDelimiters = {
-      \ 'python': { 'left': '#', 'right': '' },
-      \ 'jinja': { 'left': '{#', 'right': '#}' },
-      \ }
 " }}}
 " nerdtree {{{
 " nnoremap <leader>n <esc>:NERDTreeToggle<cr>
