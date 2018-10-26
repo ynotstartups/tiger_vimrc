@@ -606,6 +606,12 @@ augroup TODO
 
 augroup END
 " }}}
+" NOTES {{{
+augroup NOTES
+    autocmd!
+    autocmd BufRead,BufNewFile ~/Documents/NOTES set ft=markdown
+augroup END
+" }}}
 " Vimscript {{{
 augroup filetype_vim
     autocmd!
