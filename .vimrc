@@ -173,6 +173,10 @@ nnoremap <up> <c-u>
 nnoremap <down> <c-d>
 nnoremap <left> <c-b>
 nnoremap <right> <c-f>
+vnoremap <up> 15k
+vnoremap <down> 15j
+vnoremap <left> 30k
+vnoremap <right> 30j
 " }}}
 " quick reload/edit {{{
 nnoremap <leader>lv :source $MYVIMRC<cr>
