@@ -114,6 +114,7 @@ nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
 "  }}}
 " save {{{
 nnoremap <leader>s :w<cr>
+nnoremap <leader>S :wa<cr>
 inoremap jk <esc>:w<cr>
 " }}}
 
