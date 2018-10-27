@@ -587,6 +587,7 @@ augroup END
 augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    autocmd FileType TODO setlocal conceallevel=1
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
@@ -602,8 +603,7 @@ augroup TODO
     autocmd Syntax TODO highlight link TODOLabel Keyword
 
     autocmd Syntax TODO syntax match TODOLabel "\v^. \(life\).*" conceal cchar=☝
-    " autocmd Syntax TODO syntax match Life life conceal cchar=!
-    setlocal conceallevel=1
+    autocmd Syntax TODO syntax match Life life conceal cchar=!
 
 augroup END
 " }}}
