@@ -17,7 +17,7 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'junegunn/fzf.vim'
 Plugin 'lepture/vim-jinja'
 Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'
+Plugin 'vimwiki/vimwiki'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tomasr/molokai'
@@ -149,7 +149,7 @@ nnoremap <m-w> :bd<cr>
 " nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 set splitbelow
 
-nnoremap <leader>w  <C-w><C-w>
+nnoremap <leader>q  <C-w><C-w>
 nnoremap <leader>o  :only<cr>
 nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
@@ -519,6 +519,12 @@ inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 " let g:prettier#autoformat = 0
 " let g:prettier#config#print_width = 80
 " autocmd BufWritePre *.js PrettierAsync
+" }}}
+" wiki {{{
+let wiki = {}
+let wiki.path = '~/Dropbox/vimwiki'
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
+let g:vimwiki_list = [wiki]
 " }}}
 " YouCompleteMe {{{
 set completeopt-=preview
