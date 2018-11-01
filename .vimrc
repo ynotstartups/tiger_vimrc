@@ -127,7 +127,19 @@ inoremap jk <esc>:w<cr>
 nnoremap Q @q
 nnoremap Y y$
 " concat without space
-nnoremap J gJ
+" Like gJ, but always remove spaces
+fun! JoinSpaceless()
+    execute 'normal gJ'
+
+    " Character under cursor is whitespace?
+    if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+        " When remove it!
+        execute 'normal dw'
+    endif
+endfun
+
+" Map it to a key
+nnoremap J :call JoinSpaceless()<CR>
 map q: <silent>
 
 inoremap jj <esc>
