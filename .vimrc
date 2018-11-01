@@ -164,11 +164,6 @@ map <m-l> <C-W>l
 
 map <m-s> :split<cr>
 " }}}
-" quickfix{{{
-" the following is not necessary because of unimpaired
-" nnoremap ]q :cnext<cr>
-" nnoremap [q :cprev<cr>
-" }}}
 " arrow key map {{{
 " nnoremap <up> <c-u>
 nnoremap <up> <c-u>
