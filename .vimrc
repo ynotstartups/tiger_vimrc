@@ -390,6 +390,8 @@ command! -bang -nargs=* Rg
             \           : fzf#vim#with_preview('right:50%:hidden', '?'),
             \   <bang>0)
 
+command! -bang -nargs=* History call fzf#vim#history({'options': '--no-sort'})
+
 nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
 " Git/Fugitive {{{
