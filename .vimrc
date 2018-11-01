@@ -197,11 +197,11 @@ nnoremap <leader>lb :source ~/.bash_profile<cr>
 
 nnoremap <leader>ee :e#<cr>
 nnoremap <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
-nnoremap <leader>eb :e ~/Documents/BUGS<cr>
-nnoremap <leader>en :e ~/Documents/NOTES<cr>
+nnoremap <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
+nnoremap <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
 nnoremap <leader>ep :e ~/.tiger_profile<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
-nnoremap <leader>eu :e ~/Documents/USEFUL_COMMANDS<cr>
+nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL_COMMANDS.wiki<cr>
 nnoremap <leader>ev :e ~/.vimrc<cr>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 
