@@ -568,6 +568,12 @@ augroup END
 augroup jinja
     autocmd!
     autocmd FileType jinja setlocal colorcolumn=100
+
+    autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v\w*/ containedin=htmlString,htmlTag contained
+    autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v\w*/ containedin=htmlString,htmlTag contained
+    autocmd Syntax jinja highlight link BEM_element Function
+    autocmd Syntax jinja highlight link BEM_modifier Conditional
+
 augroup END
 " }}}
 " javascript {{{
