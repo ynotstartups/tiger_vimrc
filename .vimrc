@@ -590,6 +590,9 @@ augroup less
     " css selector wonder whether this will be useful
     autocmd FileType less setlocal iskeyword+=.
     autocmd FileType less setlocal iskeyword+=#
+
+    autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=lessClass contained
+    autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=lessClass contained
 augroup END
 " }}}
 " tiger_profile {{{
