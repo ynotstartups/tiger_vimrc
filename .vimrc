@@ -158,7 +158,7 @@ nnoremap <leader>bo :BufOnly<cr>
 nnoremap <m-w> :bd<cr>
 " }}}
 " windows {{{
-" nnoremap <leader>ws  :split<cr><c-w><c-w>
+nnoremap <leader>x  :split<cr><c-w><c-w>
 " nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 set splitbelow
 
@@ -260,7 +260,6 @@ execute "source " . $HOME . "/.vim/private.vim"
 " plugins
 " util functions {{{
 function! CleanWord(word)
-    echom a:word
     return substitute(a:word, '[-_\.]', '', 'g')
 endfunction
 " }}}
@@ -419,8 +418,7 @@ function! GitBranch()
 endfunction
 
 function! BranchTicket()
-    " return GitBranch()[:7]
-    return GitBranch()
+    return GitBranch()[:7]
 endfunction
 
 " }}}
@@ -642,6 +640,12 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>fn o"<space>{{{<esc>o}}}<esc>k0lli
     autocmd FileType vim nnoremap <buffer> <leader>fs A<space>{{{<esc>
     autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
+augroup END
+" }}}
+" vimwiki {{{
+augroup vimwiki
+    autocmd!
+    autocmd FileType vimwiki let b:surround_{char2nr("=")} = "= \r ="
 augroup END
 " }}}
 " zshrc {{{
