@@ -85,7 +85,7 @@ set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
-set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
+" set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 
 " search {{{
 set ignorecase
@@ -140,6 +140,7 @@ endfun
 
 " Map it to a key
 nnoremap J :call JoinSpaceless()<CR>
+
 map q: <silent>
 
 inoremap jj <esc>
@@ -201,7 +202,7 @@ nnoremap <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
 nnoremap <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
 nnoremap <leader>ep :e ~/.tiger_profile<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
-nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL_COMMANDS.wiki<cr>
+nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
 nnoremap <leader>ev :e ~/.vimrc<cr>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 
@@ -315,10 +316,14 @@ nnoremap [l :ALEPrevious<cr>
 nnoremap ]l :ALENext<cr>
 nnoremap ]L :ALELast<cr>
 "  }}}
+" BEM-syntax {{{
+autocmd Syntax less highlight link BEM_element Label
+autocmd Syntax less highlight link BEM_modifier Conditional
+"  }}}
 " deocomplete {{{
-let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:deoplete#enable_at_startup = 1
 " }}}
 " commentary {{{
 nmap <leader>c gcc
@@ -571,9 +576,6 @@ augroup jinja
 
     autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
     autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
-    autocmd Syntax jinja highlight link BEM_element Function
-    autocmd Syntax jinja highlight link BEM_modifier Conditional
-
 augroup END
 " }}}
 " javascript {{{
