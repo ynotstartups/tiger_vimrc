@@ -158,6 +158,12 @@ nnoremap <leader>bo :BufOnly<cr>
 
 nnoremap <m-w> :bd<cr>
 " }}}
+" tabs {{{
+nnoremap ]t :tabnext<cr>
+nnoremap [t :tabprevious<cr>
+nnoremap ]T :tabfirst<cr>
+nnoremap [T :tablast<cr>
+" }}}
 " windows {{{
 nnoremap <leader>x  :split<cr><c-w><c-w>
 " nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
