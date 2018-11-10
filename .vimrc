@@ -1,6 +1,13 @@
 set nocompatible
 filetype off
-" vundle{{{
+" Autoinstall vim-plug {{{
+if empty(glob('~/.nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+" }}}
+" vim-plug {{{
 call plug#begin('~/.nvim/plugged')
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
@@ -409,7 +416,7 @@ nnoremap <leader>gS :GitGutterStageHunk<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcv<cr>
 nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gd :Gvdiff<cr>
 nnoremap <leader>gL :Glog<cr>
 
 nnoremap <leader>gl :Commits<cr>
