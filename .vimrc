@@ -323,10 +323,6 @@ nnoremap [l :ALEPrevious<cr>
 nnoremap ]l :ALENext<cr>
 nnoremap ]L :ALELast<cr>
 "  }}}
-" BEM-syntax {{{
-autocmd Syntax less highlight link BEM_element Label
-autocmd Syntax less highlight link BEM_modifier Conditional
-"  }}}
 " deocomplete {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -569,8 +565,8 @@ nnoremap <leader>it 0"=BranchTicket()<cr>P
 augroup gitcommit
     autocmd!
     autocmd FileType gitcommit setlocal spell spelllang=en_gb
-    autocmd FileType gitcommit set textwidth=72
-    autocmd FileType gitcommit set colorcolumn=73
+    autocmd FileType gitcommit setlocal textwidth=72
+    autocmd FileType gitcommit setlocal colorcolumn=73
 
     " turn off Capital letter check for the first letter
     autocmd FileType gitcommit setlocal spellcapcheck=
@@ -583,6 +579,8 @@ augroup jinja
 
     autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
     autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
+    autocmd Syntax jinja highlight link BEM_element Label
+    autocmd Syntax jinja highlight link BEM_modifier Conditional
 augroup END
 " }}}
 " javascript {{{
@@ -602,6 +600,10 @@ augroup less
 
     autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=lessClass contained
     autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=lessClass contained
+    autocmd Syntax less highlight def link BEM_element Label
+    autocmd Syntax less highlight def link BEM_modifier Conditional
+
+    autocmd FileType less execute "syntax sync fromstart"
 augroup END
 " }}}
 " tiger_profile {{{
