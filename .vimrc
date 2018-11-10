@@ -177,8 +177,8 @@ nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
 nnoremap <leader>v- :vertical resize -30<cr>
 
-map <m-j> <C-W>j
-map <m-k> <C-W>k
+map <m-j> <c-d>
+map <m-k> <c-u>
 map <m-h> <C-W>h
 map <m-l> <C-W>l
 
