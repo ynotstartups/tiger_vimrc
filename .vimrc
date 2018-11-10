@@ -562,7 +562,6 @@ augroup END
 " }}}
 " file specific
 " git {{{
-nnoremap <leader>it 0"=BranchTicket()<cr>P
 augroup gitcommit
     autocmd!
     autocmd FileType gitcommit setlocal spell spelllang=en_gb
@@ -571,6 +570,7 @@ augroup gitcommit
 
     " turn off Capital letter check for the first letter
     autocmd FileType gitcommit setlocal spellcapcheck=
+    autocmd FileType gitcommit nnoremap <buffer> <localleader>t 0"=BranchTicket()<cr>P
 augroup END
 " }}}
 " jinja {{{
