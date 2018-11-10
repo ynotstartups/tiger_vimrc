@@ -329,9 +329,6 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:deoplete#enable_at_startup = 1
 " }}}
-" commentary {{{
-nmap <leader>c gcc
-" }}}
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
@@ -577,6 +574,7 @@ augroup END
 augroup jinja
     autocmd!
     autocmd FileType jinja setlocal colorcolumn=100
+    autocmd FileType jinja setlocal commentstring={#%s#}
 
     autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
     autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
