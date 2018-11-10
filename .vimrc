@@ -211,8 +211,8 @@ nnoremap <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
 nnoremap <leader>ep :e ~/.tiger_profile<cr>
 nnoremap <leader>et :e ~/Documents/TODO<cr>
 nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
-nnoremap <leader>ev :e ~/.vimrc<cr>
-nnoremap <leader>ez :e ~/.zshrc<cr>
+nnoremap <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
+nnoremap <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
 
 nnoremap <m-e> :e#<cr>
 " }}}
