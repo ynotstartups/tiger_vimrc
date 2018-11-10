@@ -54,9 +54,9 @@ hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
 hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
 hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
 highlight diffAdd    ctermfg=none ctermbg=22
-highlight diffDelete ctermfg=none ctermbg=none
+highlight diffDelete ctermfg=52 ctermbg=52
 highlight diffChange ctermfg=none ctermbg=22
-highlight diffText ctermfg=none ctermbg=9
+highlight diffText ctermfg=none ctermbg=235
 " }}}
 " indent {{{
 filetype plugin indent on
