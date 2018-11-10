@@ -558,6 +558,10 @@ augroup autoload
 augroup END
 " }}}
 " file specific
+" diff {{{
+autocmd FilterWritePre * if &diff | execute 'windo set wrap' | endif
+autocmd FilterWritePre * if &diff | execute 'IndentLinesDisable' | endif
+" }}}
 " git {{{
 augroup gitcommit
     autocmd!
