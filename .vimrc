@@ -21,6 +21,7 @@ Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'henrik/vim-indexed-search'
 Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
 Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
@@ -34,7 +35,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
@@ -275,37 +275,6 @@ function! CleanWord(word)
     return substitute(a:word, '[-_\.]', '', 'g')
 endfunction
 " }}}
-" airline {{{
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-" let g:airline_section_x = airline#section#create([]) " file type
-" let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
-let g:airline_section_y = airline#section#create([])
-let g:airline_section_z = airline#section#create(['%3p%%'])
-
-let g:airline_powerline_fonts = 1
-
-" function! AirlineInit()
-" endfunction
-" autocmd User AirlineAfterInit call AirlineInit()
-
-augroup Airline
-    autocmd!
-    autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
-augroup END
-"  }}}
 " ale {{{
 let g:ale_echo_msg_format = '%linter%: %s'
 
@@ -469,6 +438,21 @@ endfunction
 " augroup END
 
 " call airline#parts#define_function('lastcommit', 'LastCommit')
+" }}}
+" lightline {{{
+let g:lightline = {
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ],
+            \              [ 'filetype' ] ]
+            \ },
+            \ 'component': {
+            \   'charvaluehex': '0x%B'
+            \ },
+            \ }
 " }}}
 " deocomplete {{{
 nnoremap <leader>t :terminal<cr>
