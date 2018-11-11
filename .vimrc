@@ -450,6 +450,7 @@ endfunction
 " }}}
 " lightline {{{
 set showtabline=2
+let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#show_number  = 2
 let g:lightline#bufferline#shorten_path = 0
 let g:lightline#bufferline#unnamed      = '[No Name]'
@@ -481,7 +482,11 @@ let g:lightline = {
             \ },
             \ 'tabline': {
             \   'left': [['buffers']],
-            \   'right': [['close']]
+            \   'right': []
+            \ },
+            \ 'tabline_subseparator': {
+            \   'left': '',
+            \   'right': ''
             \ },
             \ 'component_expand': {
             \   'buffers': 'lightline#bufferline#buffers'
