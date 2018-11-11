@@ -15,7 +15,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips' | Plug 'ynotstartups/vim-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
@@ -146,7 +146,10 @@ fun! JoinSpaceless()
 endfun
 
 " Map it to a key
-nnoremap J :call JoinSpaceless()<CR>
+nnoremap <m-j> :call JoinSpaceless()<CR>
+nnoremap <m-k> K
+nnoremap J <c-f>
+nnoremap K <c-b>
 
 map q: <silent>
 
@@ -182,11 +185,6 @@ nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
 nnoremap <leader>v= :vertical resize +30<cr>
 nnoremap <leader>v- :vertical resize -30<cr>
-
-map <m-j> <c-d>
-map <m-k> <c-u>
-map <m-h> <C-W>h
-map <m-l> <C-W>l
 
 map <m-s> :split<cr>
 " }}}
@@ -321,12 +319,12 @@ function! JumpToType(extension)
     call fzf#vim#files('.', {'options':'--query '.l:fileName})
 endfunction
 
-nnoremap <leader>jS :call JumpToType("stories.js")<cr><cr>
-nnoremap <leader>jj :call JumpToType("jinja")<cr><cr>
-nnoremap <leader>jp :call JumpToType("py")<cr><cr>
-nnoremap <leader>js :call JumpToType("js")<cr><cr>
-nnoremap <leader>jt :call JumpToType("test")<cr><cr>
-nnoremap <leader>jl :call JumpToType("less")<cr><cr>
+nnoremap <silent> <leader>jS :call JumpToType("stories.js")<cr>
+nnoremap <silent> <leader>jj :call JumpToType("jinja")<cr>
+nnoremap <silent> <leader>jp :call JumpToType("py")<cr>
+nnoremap <silent> <leader>js :call JumpToType("js")<cr>
+nnoremap <silent> <leader>jt :call JumpToType("test")<cr>
+nnoremap <silent> <leader>jl :call JumpToType("less")<cr>
 " }}}
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
