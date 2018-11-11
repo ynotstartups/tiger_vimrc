@@ -180,6 +180,8 @@ nnoremap <leader>x  :split<cr><c-w><c-w>
 set splitbelow
 
 nnoremap <leader>q  <C-w><C-w>
+nnoremap <tab>  <C-w>w
+nnoremap <s-tab>  <C-w>W
 nnoremap <leader>o  :only<cr>
 nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
