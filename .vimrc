@@ -148,8 +148,8 @@ endfun
 " Map it to a key
 nnoremap <m-j> :call JoinSpaceless()<CR>
 nnoremap <m-k> K
-nnoremap J <c-f>
-nnoremap K <c-b>
+nnoremap J <c-d>
+nnoremap K <c-u>
 
 map q: <silent>
 
@@ -189,11 +189,6 @@ nnoremap <leader>v- :vertical resize -30<cr>
 map <m-s> :split<cr>
 " }}}
 " arrow key map {{{
-" nnoremap <up> <c-u>
-nnoremap <up> <c-u>
-nnoremap <down> <c-d>
-nnoremap <left> <c-b>
-nnoremap <right> <c-f>
 vnoremap <up> 15k
 vnoremap <down> 15j
 vnoremap <left> 30k
