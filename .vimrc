@@ -24,7 +24,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
 Plug 'sheerun/vim-polyglot'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
@@ -458,8 +458,6 @@ let g:lightline = {
 nnoremap <leader>t :terminal<cr>
 " }}}
 " nerdtree {{{
-" nnoremap <leader>n <esc>:NERDTreeToggle<cr>
-" nnoremap <leader>f <esc>:NERDTreeFind<cr>
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
 " }}}
