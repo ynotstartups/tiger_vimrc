@@ -88,6 +88,7 @@ set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
+set noshowmode
 " set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 let maplocalleader="`"
 
