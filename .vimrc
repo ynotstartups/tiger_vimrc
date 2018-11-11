@@ -343,8 +343,8 @@ let emmet_html5 = 0
 " }}}
 " fzf {{{
 autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler relativenumber
 
 set rtp+=/usr/local/opt/fzf
 nnoremap <leader>P :FZF<cr>
