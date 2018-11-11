@@ -222,6 +222,8 @@ nnoremap <m-e> :e#<cr>
 " }}}
 " folding {{{
 nnoremap \ za
+xnoremap iz :<C-U>silent!normal![zV]z<CR>
+onoremap iz :normal viz<CR>
 " }}}
 " copy/paste {{{
 set clipboard=unnamed
