@@ -208,15 +208,15 @@ nnoremap <leader>lb :source ~/.bash_profile<cr>
 " not working with nvim
 " nnoremap <leader>ev :e $MYVIMRC<cr>
 
-nnoremap <leader>ee :e#<cr>
-nnoremap <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
-nnoremap <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
-nnoremap <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
-nnoremap <leader>ep :e ~/.tiger_profile<cr>
-nnoremap <leader>et :e ~/Documents/TODO<cr>
-nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
-nnoremap <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
-nnoremap <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
+nnoremap <silent> <leader>ee :e#<cr>
+nnoremap <silent> <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
+nnoremap <silent> <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
+nnoremap <silent> <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
+nnoremap <silent> <leader>ep :e ~/.tiger_profile<cr>
+nnoremap <silent> <leader>et :e ~/Documents/TODO<cr>
+nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
+nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
+nnoremap <silent> <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
 
 nnoremap <m-e> :e#<cr>
 " }}}
