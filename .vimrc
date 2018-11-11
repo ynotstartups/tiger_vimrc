@@ -1,43 +1,46 @@
 set nocompatible
 filetype off
-" vundle{{{
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'Yggdroot/indentLine'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'groenewege/vim-less'
-Plugin 'guns/xterm-color-table.vim'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'junegunn/fzf.vim'
-Plugin 'lepture/vim-jinja'
-Plugin 'pangloss/vim-javascript'
-Plugin 'scrooloose/nerdtree'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'tomasr/molokai'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'vimwiki/vimwiki'
-Plugin 'w0rp/ale'
-Plugin 'wincent/terminus'
-
-Plugin 'SirVer/ultisnips'
-Plugin 'ynotstartups/vim-snippets'
-call vundle#end()
+" Autoinstall vim-plug {{{
+if empty(glob('~/.nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+" }}}
+" vim-plug {{{
+call plug#begin('~/.nvim/plugged')
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'Raimondi/delimitMate'
+Plug 'Shougo/deoplete.nvim'
+Plug 'SirVer/ultisnips' | Plug 'ynotstartups/vim-snippets'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'davidhalter/jedi-vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'groenewege/vim-less'
+Plug 'guns/xterm-color-table.vim'
+Plug 'henrik/vim-indexed-search'
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'lepture/vim-jinja'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
+Plug 'sheerun/vim-polyglot'
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'w0rp/ale'
+Plug 'wincent/terminus'
+call plug#end()
 " }}}
 " change leader to space, has to be in the beginning
 nnoremap <SPACE> <nop>
@@ -72,7 +75,8 @@ set expandtab
 " }}}
 set shortmess+=IWA " ignore Intro, Written and swapfile exists
 set laststatus=2 " status bar always on
-set number
+" set number
+set relativenumber
 set colorcolumn=80
 set wildmenu
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
@@ -86,6 +90,7 @@ set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
+set noshowmode
 " set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 let maplocalleader="`"
 
@@ -204,20 +209,22 @@ nnoremap <leader>lb :source ~/.bash_profile<cr>
 " not working with nvim
 " nnoremap <leader>ev :e $MYVIMRC<cr>
 
-nnoremap <leader>ee :e#<cr>
-nnoremap <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
-nnoremap <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
-nnoremap <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
-nnoremap <leader>ep :e ~/.tiger_profile<cr>
-nnoremap <leader>et :e ~/Documents/TODO<cr>
-nnoremap <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
-nnoremap <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
-nnoremap <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
+nnoremap <silent> <leader>ee :e#<cr>
+nnoremap <silent> <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
+nnoremap <silent> <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
+nnoremap <silent> <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
+nnoremap <silent> <leader>ep :e ~/.tiger_profile<cr>
+nnoremap <silent> <leader>et :e ~/Documents/TODO<cr>
+nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
+nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
+nnoremap <silent> <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
 
 nnoremap <m-e> :e#<cr>
 " }}}
 " folding {{{
 nnoremap \ za
+xnoremap iz :<C-U>silent!normal![zV]z<CR>
+onoremap iz :normal viz<CR>
 " }}}
 " copy/paste {{{
 set clipboard=unnamed
@@ -272,37 +279,6 @@ function! CleanWord(word)
     return substitute(a:word, '[-_\.]', '', 'g')
 endfunction
 " }}}
-" airline {{{
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-" let g:airline_section_x = airline#section#create([]) " file type
-" let g:airline_section_y = airline#section#create(['Modified ', 'lastcommit'])
-let g:airline_section_y = airline#section#create([])
-let g:airline_section_z = airline#section#create(['%3p%%'])
-
-let g:airline_powerline_fonts = 1
-
-" function! AirlineInit()
-" endfunction
-" autocmd User AirlineAfterInit call AirlineInit()
-
-augroup Airline
-    autocmd!
-    autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
-augroup END
-"  }}}
 " ale {{{
 let g:ale_echo_msg_format = '%linter%: %s'
 
@@ -368,6 +344,10 @@ let g:user_emmet_settings = {
 let emmet_html5 = 0
 " }}}
 " fzf {{{
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
 set rtp+=/usr/local/opt/fzf
 nnoremap <leader>P :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
@@ -415,7 +395,7 @@ nnoremap <leader>gS :GitGutterStageHunk<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcv<cr>
 nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gd :Gvdiff<cr>
 nnoremap <leader>gL :Glog<cr>
 
 nnoremap <leader>gl :Commits<cr>
@@ -468,12 +448,53 @@ endfunction
 
 " call airline#parts#define_function('lastcommit', 'LastCommit')
 " }}}
+" lightline {{{
+set showtabline=2
+let g:lightline#bufferline#show_number  = 2
+let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#unnamed      = '[No Name]'
+let g:lightline#bufferline#number_map = {
+\ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+\ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'}
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
+
+let g:lightline = {
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ],
+            \              [ 'filetype' ] ]
+            \ },
+            \ 'component': {
+            \   'charvaluehex': '0x%B'
+            \ },
+            \ 'tabline': {
+            \   'left': [['buffers']],
+            \   'right': [['close']]
+            \ },
+            \ 'component_expand': {
+            \   'buffers': 'lightline#bufferline#buffers'
+            \ },
+            \ 'component_type': {
+            \   'buffers': 'tabsel'
+            \ },
+            \ }
+" }}}
 " deocomplete {{{
 nnoremap <leader>t :terminal<cr>
 " }}}
 " nerdtree {{{
-" nnoremap <leader>n <esc>:NERDTreeToggle<cr>
-" nnoremap <leader>f <esc>:NERDTreeFind<cr>
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
 " }}}
