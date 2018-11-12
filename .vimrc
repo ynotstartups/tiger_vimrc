@@ -306,14 +306,14 @@ function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
     let l:fileName = substitute(l:fileName, 'test_', '', '')
     let l:fileName = substitute(l:fileName, '\.stories', '', '')
-    let l:fileName = CleanWord(l:fileName)
+    let l:fileName = substitute(l:fileName, '[-_\.]', '.', 'g')
 
     if a:extension == "test"
-        let l:fileName = "test" . l:fileName . "py"
+        let l:fileName = ".test." . l:fileName . ".py"
     else
-        let l:fileName = l:fileName . a:extension
+        let l:fileName = "/".l:fileName .".". a:extension
     endif
-    call fzf#vim#files('.', {'options':'--query '.l:fileName})
+    execute "e ".system("ag -g ".l:fileName)
 endfunction
 
 nnoremap <silent> <leader>jS :call JumpToType("stories.js")<cr>
