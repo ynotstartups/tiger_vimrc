@@ -157,6 +157,8 @@ nnoremap K <c-u>
 map q: <silent>
 
 inoremap jj <esc>
+cnoremap jj <c-c>
+
 " upper case whole word for writing constant
 inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
@@ -183,8 +185,6 @@ nnoremap <leader>x  :split<cr><c-w><c-w>
 set splitbelow
 
 nnoremap <leader>q  <C-w><C-w>
-nnoremap <tab>  <C-w>w
-nnoremap <s-tab>  <C-w>W
 nnoremap <leader>o  :only<cr>
 nnoremap <leader>=  :resize +5<cr>
 nnoremap <leader>-  :resize -5<cr>
@@ -347,6 +347,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler relativenumber
 
 set rtp+=/usr/local/opt/fzf
+nnoremap <tab> :FZF<cr>
 nnoremap <leader>P :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
 nnoremap <leader>pl :Commits<cr>
