@@ -131,7 +131,10 @@ nnoremap <leader>S :wa<cr>
 inoremap jk <esc>:w<cr>
 " }}}
 
+" qq to record, Q to replay
 nnoremap Q @q
+
+" Make Y behave like other capitals
 nnoremap Y y$
 " concat without space
 " Like gJ, but always remove spaces
