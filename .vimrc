@@ -609,10 +609,14 @@ augroup jinja
     autocmd FileType jinja setlocal colorcolumn=100
     autocmd FileType jinja setlocal commentstring={#%s#}
 
+    " for preventing typing classname with _ instead of - by autocomplete
+    autocmd Syntax jinja syntax region BEM_error start=/\v\w_[^_]/ end=/\v\w/me=e-1 containedin=htmlString,htmlTag contained
+
     autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
     autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
     autocmd Syntax jinja highlight link BEM_element Label
     autocmd Syntax jinja highlight link BEM_modifier Conditional
+    autocmd Syntax jinja highlight link BEM_error Error
 augroup END
 " }}}
 " javascript {{{
