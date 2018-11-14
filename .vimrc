@@ -498,6 +498,8 @@ let g:lightline = {
 " }}}
 " deocomplete {{{
 nnoremap <leader>t :terminal<cr>
+let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
+let g:deoplete#ignore_sources.python = ['tag']
 " }}}
 " nerdtree {{{
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
