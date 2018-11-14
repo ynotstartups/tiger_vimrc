@@ -422,6 +422,7 @@ let g:jedi#completions_enabled = 0
 let g:jedi#goto_command = "<leader>Jd"
 let g:jedi#goto_assignments_command = "<leader>Ja"
 let g:jedi#usages_command = "<leader>Ju"
+let g:jedi#documentation_command = "<leader>k"
 " }}}
 " last commits {{{
 function! LastCommit()
