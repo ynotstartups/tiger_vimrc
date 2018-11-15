@@ -168,8 +168,8 @@ nnoremap <c-o> <c-o>zz
 
 " buffers {{{
 set nostartofline
-nnoremap <S-h> <esc>:bp<cr>
-nnoremap <S-l> <esc>:bn<cr>
+nnoremap <silent> <S-h> <esc>:bp<cr>
+nnoremap <silent> <S-l> <esc>:bn<cr>
 map <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
