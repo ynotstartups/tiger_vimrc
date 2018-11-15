@@ -109,10 +109,9 @@ cnoremap \>s/ \>smagic/
 " nnoremap :g// :g//
 
 " Keep search matches in the middle of the window.
-" the following are not necessary because of indexed-search plugin
-" nnoremap n nzzzv
-" nnoremap N Nzzzv
-" nnoremap * *N
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap * *N
 
 if executable('rg')
     " Use rg over grep
