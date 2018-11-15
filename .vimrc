@@ -310,7 +310,8 @@ nnoremap ]L :ALELast<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:deoplete#enable_at_startup = 1
-call deoplete#enable()
+let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
+let g:deoplete#ignore_sources._ = ['tag']
 " }}}
 " django custom {{{
 function! JumpToType(extension)
