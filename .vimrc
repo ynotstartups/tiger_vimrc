@@ -635,8 +635,8 @@ augroup less
     autocmd FileType less setlocal iskeyword+=.
     autocmd FileType less setlocal iskeyword+=#
 
-    autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=lessClass contained
-    autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=lessClass contained
+    autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s|:/me=e-1 containedin=lessClass contained
+    autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s|:/me=e-1 containedin=lessClass contained
     autocmd Syntax less highlight def link BEM_element Label
     autocmd Syntax less highlight def link BEM_modifier Conditional
 
