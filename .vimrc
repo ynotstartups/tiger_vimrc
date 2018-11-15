@@ -35,7 +35,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
@@ -181,6 +180,12 @@ nnoremap ]t :tabnext<cr>
 nnoremap [t :tabprevious<cr>
 nnoremap ]T :tabfirst<cr>
 nnoremap [T :tablast<cr>
+" }}}
+" quickfix {{{
+nnoremap [q :cprevious<cr>
+nnoremap ]q :cnext<cr>
+nnoremap [Q :cfirst<cr>
+nnoremap ]Q :clast<cr>
 " }}}
 " windows {{{
 nnoremap <leader>x  :split<cr><c-w><c-w>
