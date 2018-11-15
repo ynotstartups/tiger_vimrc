@@ -147,6 +147,8 @@ fun! JoinSpaceless()
     endif
 endfun
 
+nnoremap gj :call JoinSpaceless()<cr>
+
 " Map it to a key
 nnoremap <m-j> :call JoinSpaceless()<CR>
 nnoremap <m-k> K
