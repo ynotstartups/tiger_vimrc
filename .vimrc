@@ -164,6 +164,8 @@ cnoremap jj <c-c>
 inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
 
+nnoremap <c-o> <c-o>zz
+
 " buffers {{{
 set nostartofline
 nnoremap <S-h> <esc>:bp<cr>
