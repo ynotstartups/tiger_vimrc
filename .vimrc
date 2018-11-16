@@ -330,15 +330,6 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap <leader><leader> <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 " }}}
-" Emmet {{{
-let g:user_emmet_leader_key='\'
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
-let emmet_html5 = 0
-" }}}
 " fzf {{{
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
@@ -412,12 +403,6 @@ function! BranchTicket()
 endfunction
 
 " }}}
-" indexed-search {{{
-let g:indexed_search_colors = 0
-let g:indexed_search_numbered_only = 1
-let g:indexed_search_dont_move = 1
-let g:indexed_search_center = 1
-" }}}
 " indentLine {{{
 let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit']
 " }}}
@@ -427,30 +412,6 @@ let g:jedi#goto_command = "<leader>Jd"
 let g:jedi#goto_assignments_command = "<leader>Ja"
 let g:jedi#usages_command = "<leader>Ju"
 let g:jedi#documentation_command = "<leader>k"
-" }}}
-" last commits {{{
-function! LastCommit()
-    let bufferName = expand('%')
-    " this system call has bug
-    " let output = system('git log -1 --pretty="%ar" -p '.bufferName.' | head -1')
-    let output = system("git log -1 --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short ".bufferName)
-
-     if !v:shell_error
-         "if len(output) >= 1
-             " let output = split(output, "\n")[0]
-         echom output
-         "endif
-     else
-        echom "Not Git"
-     endif
-endfunction
-
-" augroup LastCommit
-    " autocmd!
-    " autocmd BufNewFile,BufRead * call LastCommit()
-" augroup END
-
-" call airline#parts#define_function('lastcommit', 'LastCommit')
 " }}}
 " lightline {{{
 set showtabline=2
@@ -506,13 +467,6 @@ nnoremap <leader>t :terminal<cr>
 " nerdtree {{{
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
-" }}}
-" pymode {{{
-let g:pymode_lint_checkers = ['pyflakes', 'pep8']
-let g:pymode_options_max_line_length=100
-" }}}
-" startify {{{
-let g:startify_custom_header = []
 " }}}
 " sessions {{{
 " make sure the color still works after opening session
