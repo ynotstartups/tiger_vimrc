@@ -238,14 +238,14 @@ set clipboard=unnamed
 " copy with indent and set cursor to the end of paste
 nnoremap p p=`]`]
 
-nnoremap <leader>yf :let @*=expand("#")<cr>
-nnoremap <leader>yp :let @*=expand("%")<cr>
-nmap <leader>ym [[wyw
+nnoremap <leader>cf :let @*=expand("#")<cr>
+nnoremap <leader>cp :let @*=expand("%")<cr>
+nmap <leader>cm [[wyw
 function! CopyTestFunctionName()
     normal [[w"ayw
     let @*=expand('%').'::'.@a
 endfunction
-nnoremap <leader>yt :call CopyTestFunctionName()<cr>
+nnoremap <leader>ct :call CopyTestFunctionName()<cr>
 " }}}
 " undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
