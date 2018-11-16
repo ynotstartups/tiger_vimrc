@@ -377,6 +377,12 @@ nnoremap <m-g> :Commits<Space>
 nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
 nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
 
+inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
+            \ 'prefix': '^.*$',
+            \ 'source': 'rg -n ^ --color always',
+            \ 'options': '--ansi --delimiter : --nth 3..',
+            \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+
 command! -bang -nargs=* Rg
             \ call fzf#vim#grep(
             \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
