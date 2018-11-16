@@ -689,9 +689,6 @@ augroup END
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
-    autocmd FileType vim nnoremap <buffer> <leader>fn o"<space>{{{<esc>o}}}<esc>k0lli
-    autocmd FileType vim nnoremap <buffer> <leader>fs A<space>{{{<esc>
-    autocmd FileType vim nnoremap <buffer> <leader>fe o"<space>}}}<esc>
 augroup END
 " }}}
 " vimwiki {{{
