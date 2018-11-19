@@ -25,6 +25,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'lepture/vim-jinja'
 Plug 'mbbill/undotree'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'romainl/flattened'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
