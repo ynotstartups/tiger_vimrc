@@ -27,6 +27,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'pangloss/vim-javascript'
 Plug 'romainl/flattened'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
+Plug 'tmhedberg/matchit'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
