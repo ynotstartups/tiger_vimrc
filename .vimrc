@@ -202,9 +202,6 @@ nnoremap <leader>lv :source $MYVIMRC<cr>
 nnoremap <leader>lz :source ~/.zshrc<cr>
 nnoremap <leader>lb :source ~/.bash_profile<cr>
 
-" not working with nvim
-" nnoremap <leader>ev :e $MYVIMRC<cr>
-
 nnoremap <silent> <leader>ee :e#<cr>
 nnoremap <silent> <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
 nnoremap <silent> <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
@@ -488,15 +485,6 @@ autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcom
 " terminal neovim {{{
 tnoremap <leader><esc> <C-\><C-n>
 "}}}
-" trailing-whitespace {{{
-" fun! TrimWhitespace()
-    " let l:save = winsaveview()
-    " keeppatterns %s/\s\+$//e
-    " call winrestview(l:save)
-" endfun
-" command! TrimWhitespace call TrimWhitespace()
-" autocmd BufWritePre * :call TrimWhitespace()
-"}}}
 " ultisnips {{{
 
 let g:UltiSnipsExpandTrigger = "<NUL>"
@@ -515,23 +503,11 @@ endfunction
 inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
 " }}}
-" vim-prettier {{{
-" let g:prettier#autoformat = 0
-" let g:prettier#config#print_width = 80
-" autocmd BufWritePre *.js PrettierAsync
-" }}}
 " wiki {{{
 let wiki = {}
 let wiki.path = '~/Dropbox/vimwiki'
 let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
 let g:vimwiki_list = [wiki]
-" }}}
-" YouCompleteMe {{{
-set completeopt-=preview
-let g:ycm_semantic_triggers = {
-    \   'less': [ 're!^\s{4}', 're!:\s+' ],
-    \   'css': [ 're!^\s{4}', 're!:\s+' ],
-    \ }
 " }}}
 " Autoload {{{
 function! Autoload()
@@ -644,12 +620,6 @@ augroup END
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-" vimwiki {{{
-augroup vimwiki
-    autocmd!
-    autocmd FileType vimwiki let b:surround_{char2nr("=")} = "= \r ="
 augroup END
 " }}}
 " zshrc {{{
