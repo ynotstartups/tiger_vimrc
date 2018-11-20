@@ -434,18 +434,34 @@ nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 let g:lightline = {
             \ 'colorscheme': 'wombat',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \           [ 'readonly', 'relativepath', 'modified' ] ],
-            \   'right': [ [ 'lineinfo' ],
+            \   'left':  [
+            \              [ 'mode', 'paste' ],
+            \              [ 'readonly', 'relativepath', 'modified' ]
+            \            ],
+            \   'right': [
+            \              [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'filetype' ] ]
+            \              [ 'filetype' ]
+            \            ],
+            \ },
+            \ 'inactive': {
+            \   'left':  [
+            \              [ 'relativepath', 'modified' ]
+            \            ],
+            \   'right': [
+            \              [ 'filetype' ]
+            \            ]
             \ },
             \ 'component': {
             \   'charvaluehex': '0x%B'
             \ },
             \ 'tabline': {
-            \   'left': [['buffers']],
-            \   'right': []
+            \   'left':  [
+            \              ['buffers']
+            \            ],
+            \   'right': [
+            \             ['tabs']
+            \            ]
             \ },
             \ 'tabline_subseparator': {
             \   'left': '',
