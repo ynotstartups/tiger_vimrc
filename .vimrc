@@ -386,11 +386,12 @@ nnoremap <leader>gS :GitGutterStageHunk<cr>
 " let g:gitgutter_sign_removed = '∙'
 " let g:gitgutter_sign_modified_removed = '∙'
 
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gc :Gcv<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gd :Gvdiff<cr>
 nnoremap <leader>gL :Glog<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gc :Gcv<cr>
+nnoremap <leader>gd :Gvdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gw :Gwrite<cr>
 
 nnoremap <leader>gl :Commits<cr>
 
