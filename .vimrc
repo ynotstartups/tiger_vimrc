@@ -199,8 +199,7 @@ nnoremap <silent> <leader>ee :e#<cr>
 nnoremap <silent> <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
 nnoremap <silent> <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
 nnoremap <silent> <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
-nnoremap <silent> <leader>ep :e ~/.tiger_profile<cr>
-nnoremap <silent> <leader>et :e ~/Documents/TODO<cr>
+nnoremap <silent> <leader>et :e ~/Dropbox/files/TODO<cr>
 nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
 nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
 nnoremap <silent> <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
