@@ -598,7 +598,7 @@ augroup END
 " TODO {{{
 augroup TODO
     autocmd!
-    autocmd BufRead,BufNewFile ~/Documents/TODO set ft=TODO
+    autocmd BufRead,BufNewFile TODO set ft=TODO
     autocmd FileType TODO setlocal conceallevel=1
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
