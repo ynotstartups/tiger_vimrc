@@ -115,17 +115,6 @@ cnoremap \>s/ \>smagic/
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *N
-
-if executable('rg')
-    " Use rg over grep
-    augroup rg
-        autocmd!
-        set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-    augroup END
-endif
-" bind K to grep word under cursor
-nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<cr>:cw<cr>
-
 "  }}}
 " save {{{
 nnoremap <leader>s :w<cr>
