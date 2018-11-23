@@ -213,6 +213,13 @@ nnoremap <m-e> :e#<cr>
 nnoremap \ za
 xnoremap iz :<C-U>silent!normal![zV]z<CR>
 onoremap iz :normal viz<CR>
+" https://gist.github.com/sjl/3360978
+function! MyFoldText()
+    let line = getline(v:foldstart)
+    let foldedlinecount = v:foldend - v:foldstart
+    return line[:-4].'('.foldedlinecount.')'.repeat(" ",9999)
+endfunction
+set foldtext=MyFoldText()
 " }}}
 " copy/paste {{{
 set clipboard=unnamed
