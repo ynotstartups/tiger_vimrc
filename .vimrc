@@ -349,7 +349,7 @@ nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(exp
 
 inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
             \ 'prefix': '^.*$',
-            \ 'source': 'rg -n ^ --color always',
+            \ 'source': 'rg -n ^ --color always -t'.expand('%:e'),
             \ 'options': '--ansi --delimiter : --nth 3..',
             \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
