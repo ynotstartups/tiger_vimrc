@@ -75,6 +75,9 @@ set expandtab
 " for code indented with tabs
 " set list lcs=tab:\|\
 
+vnoremap < <gv
+vnoremap > >gv
+
 " }}}
 set shortmess+=IWA " ignore Intro, Written and swapfile exists
 set laststatus=2 " status bar always on
