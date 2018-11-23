@@ -115,6 +115,8 @@ cnoremap \>s/ \>smagic/
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *N
+
+nnoremap <leader>k :nohlsearch<cr>
 "  }}}
 " save {{{
 nnoremap <leader>s :w<cr>
