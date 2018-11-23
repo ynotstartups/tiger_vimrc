@@ -317,7 +317,7 @@ nnoremap <silent> <leader>jl :call JumpToType("less")<cr>
 " EasyMotion {{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " have to use nmap for whatever reason
-nmap <leader><leader> <Plug>(easymotion-overwin-f2)
+nmap a <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 " }}}
 " fzf {{{
