@@ -217,7 +217,7 @@ set clipboard=unnamed
 " copy with indent and set cursor to the end of paste
 nnoremap p p=`]`]
 
-nnoremap <leader>cf :let @*=expand("#")<cr>
+nnoremap <leader>cf :let @*=expand("%:t")<cr>
 nnoremap <leader>cp :let @*=expand("%")<cr>
 nmap <leader>cm [[wyw
 function! CopyTestFunctionName()
