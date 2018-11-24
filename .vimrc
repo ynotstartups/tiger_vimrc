@@ -48,8 +48,28 @@ call plug#end()
 " change leader to space, has to be in the beginning
 nnoremap <SPACE> <nop>
 let mapleader = " "
-" personal
-
+" sane settings {{{
+set shortmess+=IWA " ignore Intro, Written and swapfile exists
+set laststatus=2 " status bar always on
+" set number
+set relativenumber
+set colorcolumn=80
+set wildmenu
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
+set autoread
+au CursorHold * checktime
+set hidden " no need to save when change buffer
+" set timeout
+" set timeoutlen=500
+set cmdheight=2 " set command line height to 2
+set backspace=indent,eol,start
+set iskeyword+=-
+set iskeyword+=_
+set noshowmode
+" set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
+let maplocalleader="`"
+" }}}
 " color {{{
 set t_Co=256
 syntax on
@@ -79,27 +99,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 " }}}
-set shortmess+=IWA " ignore Intro, Written and swapfile exists
-set laststatus=2 " status bar always on
-" set number
-set relativenumber
-set colorcolumn=80
-set wildmenu
-set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
-set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
-set autoread
-au CursorHold * checktime
-set hidden " no need to save when change buffer
-" set timeout
-" set timeoutlen=500
-set cmdheight=2 " set command line height to 2
-set backspace=indent,eol,start
-set iskeyword+=-
-set iskeyword+=_
-set noshowmode
-" set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
-let maplocalleader="`"
-
 " search {{{
 set ignorecase
 set smartcase
