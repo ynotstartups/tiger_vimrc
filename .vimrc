@@ -238,6 +238,8 @@ nnoremap <leader>ct :call CopyTestFunctionName()<cr>
 " }}}
 " undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
+nnoremap U <c-r>
+
 set undofile
 set undodir=~/.vim/undo
 
