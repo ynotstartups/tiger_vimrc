@@ -264,10 +264,6 @@ if has("autocmd")
 endif
 
 " }}}
-
-" private
-execute "source " . $HOME . "/.vim/private.vim"
-
 " plugins
 " util functions {{{
 function! CleanWord(word)
