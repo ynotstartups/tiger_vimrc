@@ -126,6 +126,11 @@ nnoremap <leader>s :w<cr>
 nnoremap <leader>S :wa<cr>
 inoremap jk <esc>:w<cr>
 " }}}
+" sane mappings {{{
+nnoremap <CR> :FZF<cr>
+" In the quickfix window, <CR> is used to jump to the error under the
+" cursor, so undefine the mapping there.
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -152,8 +157,6 @@ nnoremap <m-k> K
 nnoremap J <c-d>
 nnoremap K <c-u>
 
-map q: <silent>
-
 inoremap jj <esc>
 cnoremap jj <c-c>
 
@@ -162,7 +165,7 @@ inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
 
 nnoremap <c-o> <c-o>zz
-
+" }}}
 " buffers {{{
 set nostartofline
 nnoremap <silent> <S-h> <esc>:bp<cr>
