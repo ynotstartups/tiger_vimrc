@@ -27,16 +27,14 @@ Plug 'mbbill/undotree'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'romainl/flattened'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
 Plug 'tmhedberg/matchit'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
+Plug 'tpope/vim-git' " git syntax highlight
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-rhubarb' " github extension for fugitive
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/BufOnly.vim'
