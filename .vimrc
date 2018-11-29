@@ -596,12 +596,6 @@ augroup less
     autocmd FileType less execute "syntax sync fromstart"
 augroup END
 " }}}
-" tiger_profile {{{
-augroup tiger_profile
-    autocmd!
-    autocmd BufRead,BufNewFile .tiger_profile setfiletype sh
-augroup END
-" }}}
 " python {{{
 augroup python
     autocmd FileType python setlocal colorcolumn=100
@@ -629,12 +623,6 @@ augroup TODO
     autocmd Syntax TODO syntax match TODOLabel "\v^. \(life\).*" conceal cchar=☝
     autocmd Syntax TODO syntax match Life life conceal cchar=!
 
-augroup END
-" }}}
-" NOTES {{{
-augroup NOTES
-    autocmd!
-    autocmd BufRead,BufNewFile ~/Documents/NOTES set ft=markdown
 augroup END
 " }}}
 " Vimscript {{{
