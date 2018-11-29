@@ -526,6 +526,7 @@ let wiki.path = '~/Dropbox/vimwiki'
 let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
 let wiki.ext = '.txt'
 let g:vimwiki_list = [wiki]
+let g:vimwiki_global_ext = 0
 " }}}
 " Autoload {{{
 function! Autoload()
