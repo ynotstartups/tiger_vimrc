@@ -202,7 +202,7 @@ nnoremap <silent> <leader>ee :e#<cr>
 nnoremap <silent> <leader>ea :e ~/Documents/applescript_learning/open_or_reload.scpt<cr>
 nnoremap <silent> <leader>eb :e ~/Dropbox/vimwiki/BUGS.wiki<cr>
 nnoremap <silent> <leader>en :e ~/Dropbox/vimwiki/NOTES.wiki<cr>
-nnoremap <silent> <leader>et :e ~/Dropbox/files/TODO<cr>
+nnoremap <silent> <leader>et :e ~/Dropbox/files/TODO.txt<cr>
 nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.wiki<cr>
 nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
 nnoremap <silent> <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
@@ -609,7 +609,7 @@ augroup END
 " TODO {{{
 augroup TODO
     autocmd!
-    autocmd BufRead,BufNewFile TODO set ft=TODO
+    autocmd BufRead,BufNewFile,BufEnter TODO.txt set ft=TODO
     autocmd FileType TODO setlocal conceallevel=1
     " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
