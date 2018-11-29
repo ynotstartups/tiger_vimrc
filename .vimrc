@@ -520,6 +520,18 @@ endfunction
 inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
 " }}}
+" unimpaired {{{
+let g:nremap = {
+            \ "[t": "",
+            \ "]t": "",
+            \ "[T": "",
+            \ "]T": "",
+            \ }
+nnoremap <silent> [t :tabprevious<cr>
+nnoremap <silent> ]t :tabnext<cr>
+nnoremap <silent> [T :tabfirst<cr>
+nnoremap <silent> ]T :tablast<cr>
+" }}}
 " wiki {{{
 let wiki = {}
 let wiki.path = '~/Dropbox/vimwiki'
