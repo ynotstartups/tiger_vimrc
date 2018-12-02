@@ -75,6 +75,11 @@ set background=dark
 colorscheme molokai
 " MatchParen highlighting makes it look like cursor jumped to matching parenthesis
 hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
+
+" less offensive hlsearch color
+hi Search cterm=NONE ctermfg=0 ctermbg=3
+
+" diff
 hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
 hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
 highlight diffAdd    ctermfg=none ctermbg=22
