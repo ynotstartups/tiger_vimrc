@@ -417,6 +417,18 @@ let g:jedi#goto_assignments_command = "<leader>Ja"
 let g:jedi#usages_command = "<leader>Ju"
 let g:jedi#documentation_command = "<leader>k"
 " }}}
+" LanguageClient-neovim {{{
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
+    \ }
+
+nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
+" TODO save after
+nnoremap <leader>f :call LanguageClient#textDocument_formatting()<cr>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" }}}
 " lightline {{{
 set showtabline=2
 let g:lightline#bufferline#filename_modifier = ':t'
