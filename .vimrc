@@ -49,8 +49,6 @@ let mapleader = " "
 " sane settings {{{
 set shortmess+=IWA " ignore Intro, Written and swapfile exists
 set laststatus=2 " status bar always on
-" set number
-set relativenumber
 set colorcolumn=80
 set wildmenu
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
