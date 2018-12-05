@@ -306,16 +306,18 @@ let g:deoplete#ignore_sources._ = ['tag']
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
+
     let l:fileName = substitute(l:fileName, 'test_', '', '')
     let l:fileName = substitute(l:fileName, '\.stories', '', '')
-    let l:fileName = substitute(l:fileName, '[-_\.]', '.', 'g')
+    let l:fileName = substitute(l:fileName, '[-_]', '.', 'g')
 
     if a:extension == "test"
-        let l:fileName = ".test." . l:fileName . ".py"
+        let l:fileName = "/test." . l:fileName . ".py"
     else
         let l:fileName = "/".l:fileName .".". a:extension
     endif
-    execute "e ".system("ag -g ".l:fileName)
+    " TODO error when ag gives back more than 1 result
+    execute "edit ".system("ag -g ".l:fileName)
 endfunction
 
 nnoremap <silent> <leader>jS :call JumpToType("stories.js")<cr>
