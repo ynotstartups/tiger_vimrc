@@ -633,24 +633,15 @@ augroup END
 augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile,BufEnter TODO.txt set ft=TODO
-    autocmd FileType TODO setlocal conceallevel=1
-    " autocmd BufRead,BufNewFile ~/Documents/TODO normal! ggO  i<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
     autocmd FileType TODO nnoremap <buffer> <leader>c :setlocal conceallevel=0<cr>
-    autocmd FileType TODO nnoremap <buffer> O <esc>O<space><space>
-    autocmd FileType TODO nnoremap <buffer> o <esc>o<space><space>
-    " change number in line
-    autocmd FileType TODO onoremap 1 :<c-u>normal! ^viw<cr>
-    autocmd FileType TODO onoremap ( :<c-u>normal! 0f(vi(<cr>
-    autocmd FileType TODO onoremap ) :<c-u>normal! 0f(vi(<cr>
 
-    autocmd Syntax TODO syntax match TODOLabel "\v^  \(.{-}\)"
+    " .{-} instead of .* for not greedy match
+    autocmd Syntax TODO syntax match TODOLabel "\v^\s\s\(.{-}\)"
     autocmd Syntax TODO highlight link TODOLabel Keyword
 
-    autocmd Syntax TODO syntax match TODOLabel "\v^. \(life\).*" conceal cchar=☝
-    autocmd Syntax TODO syntax match Life life conceal cchar=!
-
+    autocmd Syntax TODO syntax match TODOLabel "\v^.\s\(life\).*" conceal cchar=☝
 augroup END
 " }}}
 " Vimscript {{{
