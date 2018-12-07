@@ -573,6 +573,8 @@ autocmd FilterWritePre * if &diff | execute 'windo set wrap' | endif
 autocmd FilterWritePre * if &diff | execute 'IndentLinesDisable' | endif
 " }}}
 " git {{{
+source ~/Documents/tiger_vimrc/python/jira.py
+
 augroup gitcommit
     autocmd!
     autocmd FileType gitcommit setlocal spell spelllang=en_gb
@@ -581,7 +583,7 @@ augroup gitcommit
 
     " turn off Capital letter check for the first letter
     autocmd FileType gitcommit setlocal spellcapcheck=
-    autocmd FileType gitcommit nnoremap <buffer> <localleader>t 0"=BranchTicket()<cr>P
+    autocmd FileType gitcommit map <buffer> <localleader>t :py3 branch_ticket()<cr>
 augroup END
 " }}}
 " jinja {{{
