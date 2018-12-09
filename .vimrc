@@ -165,6 +165,8 @@ inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
 
 nnoremap <c-o> <c-o>zz
+
+nnoremap <leader>m :noh<cr>
 " }}}
 " buffers {{{
 set nostartofline
