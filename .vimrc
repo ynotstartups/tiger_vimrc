@@ -503,8 +503,6 @@ let NERDTreeIgnore = ['\.pyc$']
 " sessions {{{
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
-
-nnoremap <leader>m <esc>:mks ~/Documents/vim_sessions/
 " }}}
 " surround {{{
 autocmd FileType jinja let b:surround_{char2nr("v")} = "{{ \r }}"
