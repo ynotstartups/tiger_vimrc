@@ -95,10 +95,6 @@ set expandtab
 
 " for code indented with tabs
 " set list lcs=tab:\|\
-
-vnoremap < <gv
-vnoremap > >gv
-
 " }}}
 " search {{{
 set ignorecase
