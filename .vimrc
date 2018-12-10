@@ -11,17 +11,23 @@ endif
 call plug#begin('~/.nvim/plugged')
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips' | Plug 'ynotstartups/vim-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'davidhalter/jedi-vim'
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
+" Plug 'davidhalter/jedi-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf.vim'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-user'
 Plug 'lepture/vim-jinja'
 Plug 'mbbill/undotree'
 Plug 'mengelbrecht/lightline-bufferline'
@@ -38,6 +44,7 @@ Plug 'tpope/vim-rhubarb' " github extension for fugitive
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 Plug 'wincent/terminus'
@@ -80,10 +87,10 @@ hi Search cterm=NONE ctermfg=0 ctermbg=3
 " diff
 hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
 hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
-highlight diffAdd    ctermfg=none ctermbg=22
-highlight diffDelete ctermfg=52 ctermbg=52
-highlight diffChange ctermfg=none ctermbg=22
-highlight diffText ctermfg=none ctermbg=235
+highlight diffAdd    ctermfg=none ctermbg=none
+highlight diffDelete ctermfg=none ctermbg=none
+highlight diffChange ctermfg=none ctermbg=none
+highlight diffText ctermfg=none ctermbg=none
 " }}}
 " indent {{{
 filetype plugin indent on
@@ -276,9 +283,9 @@ endfunction
 " ale {{{
 let g:ale_echo_msg_format = '%linter%: %s'
 
-let g:ale_linters = {
-            \   'python': ['flake8'],
-            \}
+" let g:ale_linters = {
+"             \   'python': ['flake8'],
+"             \}
 let g:ale_linters_ignore = {
             \   'javascript': ['jshint'],
             \}
@@ -421,6 +428,7 @@ set hidden
 let g:LanguageClient_serverCommands = {
     \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
     \ }
+let g:LanguageClient_diagnosticsEnable=0
 
 nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
 " TODO save after
@@ -589,10 +597,10 @@ augroup jinja
     autocmd FileType jinja setlocal commentstring={#%s#}
 
     " for preventing typing classname with _ instead of - by autocomplete
-    autocmd Syntax jinja syntax region BEM_error start=/\v\w_[^_]/ end=/\v\w/me=e-1 containedin=htmlString,htmlTag contained
+    autocmd Syntax jinja syntax region BEM_error start=/\v\w_[^_]/ end=/\v\w/me=e-1 containedin=htmlString contained
 
-    autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
-    autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString,htmlTag contained
+    autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString contained
+    autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString contained
     autocmd Syntax jinja highlight link BEM_element Label
     autocmd Syntax jinja highlight link BEM_modifier Conditional
     autocmd Syntax jinja highlight link BEM_error Error
@@ -633,15 +641,16 @@ augroup END
 augroup TODO
     autocmd!
     autocmd BufRead,BufNewFile,BufEnter TODO.txt set ft=TODO
+
     autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
     autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
-    autocmd FileType TODO nnoremap <buffer> <leader>c :setlocal conceallevel=0<cr>
 
     " .{-} instead of .* for not greedy match
     autocmd Syntax TODO syntax match TODOLabel "\v^\s\s\(.{-}\)"
     autocmd Syntax TODO highlight link TODOLabel Keyword
 
     autocmd Syntax TODO syntax match TODOLabel "\v^.\s\(life\).*" conceal cchar=☝
+    autocmd FileType TODO nnoremap <buffer> <leader>c :setlocal conceallevel=0<cr>
 augroup END
 " }}}
 " Vimscript {{{
