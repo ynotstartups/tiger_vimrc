@@ -310,6 +310,8 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
 let g:deoplete#ignore_sources._ = ['tag']
+
+nnoremap <silent> <leader>D :call deoplete#enable()<cr>
 " }}}
 " django custom {{{
 function! JumpToType(extension)
