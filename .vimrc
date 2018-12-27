@@ -300,13 +300,9 @@ let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'python': ['isort'],
             \   'javascript': ['prettier'],
+            \   'rust': ['rustfmt'],
             \}
 let g:ale_fix_on_save = 1
-
-nnoremap [L :ALEFirst<cr>
-nnoremap [l :ALEPrevious<cr>
-nnoremap ]l :ALENext<cr>
-nnoremap ]L :ALELast<cr>
 "  }}}
 " deocomplete {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -434,8 +430,10 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ }
 let g:LanguageClient_diagnosticsEnable=0
+" let g:LanguageClient_hasSnippetSupport=0
 
 nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
 " TODO save after
