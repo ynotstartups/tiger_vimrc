@@ -386,11 +386,16 @@ command! -bang -nargs=* History call fzf#vim#history({'options': '--no-sort'})
 nnoremap <leader>rw :Rg <c-r><c-w><cr>
 "  }}}
 " Git/Fugitive {{{
+let g:gitgutter_map_keys = 0
+
 command! -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
 
 nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gu :GitGutterUndo<cr>
 nnoremap <leader>gS :GitGutterStageHunk<cr>
+nnoremap <leader>gU :let gitgutter_diff_base='upstream/master' <bar> GitGutterAll<cr>
+nnoremap [c :GitGutterPrevHunk<cr>
+nnoremap ]c :GitGutterNextHunk<cr>
 
 " let g:gitgutter_sign_added = '∙'
 " let g:gitgutter_sign_modified = '∙'
@@ -405,15 +410,6 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gw :Gwrite<cr>
 
 nnoremap <leader>gl :Commits<cr>
-
-function! GitBranch()
-    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! BranchTicket()
-    return GitBranch()[:7]
-endfunction
-
 " }}}
 " indentLine {{{
 let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit']
