@@ -657,8 +657,11 @@ augroup less
 
     autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s|:/me=e-1 containedin=lessClass contained
     autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s|:/me=e-1 containedin=lessClass contained
+    autocmd Syntax less syntax region BEM_error start=/\v[^_]_/ end=/\v\w/ containedin=BEM_element contained
+
     autocmd Syntax less highlight def link BEM_element Label
     autocmd Syntax less highlight def link BEM_modifier Conditional
+    autocmd Syntax less highlight def link BEM_error Error
 
     autocmd Syntax less syntax region LESS_error start=/\v\s0px/ms=s+1 end=/\v./me=e-1 containedin=lessDefinition contained
     autocmd Syntax less highlight def link LESS_error Error
