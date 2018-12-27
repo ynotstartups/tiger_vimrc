@@ -572,11 +572,20 @@ let g:nremap = {
             \ "]t": "",
             \ "[T": "",
             \ "]T": "",
+            \ "[l": "",
+            \ "]l": "",
+            \ "[L": "",
+            \ "]L": "",
             \ }
 nnoremap <silent> [t :tabprevious<cr>
 nnoremap <silent> ]t :tabnext<cr>
 nnoremap <silent> [T :tabfirst<cr>
 nnoremap <silent> ]T :tablast<cr>
+
+nnoremap <silent> [L :ALEFirst<cr>
+nnoremap <silent> [l :ALEPrevious<cr>
+nnoremap <silent> ]l :ALENext<cr>
+nnoremap <silent> ]L :ALELast<cr>
 " }}}
 " wiki {{{
 let wiki = {}
