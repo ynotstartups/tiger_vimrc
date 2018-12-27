@@ -31,6 +31,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'sgur/vim-textobj-parameter'
 Plug 'lepture/vim-jinja'
 Plug 'mbbill/undotree'
 Plug 'mengelbrecht/lightline-bufferline'
@@ -125,7 +127,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *N
 
-nnoremap <leader>k :nohlsearch<cr>
+nnoremap <leader>k K
 "  }}}
 " save {{{
 nnoremap <leader>s :w<cr>
@@ -172,7 +174,9 @@ nnoremap <m-u> <esc>viwU<esc>e
 
 nnoremap <c-o> <c-o>zz
 
-nnoremap <leader>m :noh<cr>
+nnoremap <leader>h :noh<cr>
+
+nnoremap <leader>wq :wq<cr>
 " }}}
 " buffers {{{
 set nostartofline
