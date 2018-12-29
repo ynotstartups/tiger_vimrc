@@ -466,7 +466,8 @@ let g:lightline = {
             \   'right': [
             \              [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'filetype' ]
+            \              [ 'filetype' ],
+            \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
             \            ],
             \ },
             \ 'inactive': {
@@ -493,10 +494,18 @@ let g:lightline = {
             \   'right': ''
             \ },
             \ 'component_expand': {
-            \   'buffers': 'lightline#bufferline#buffers'
+            \   'buffers': 'lightline#bufferline#buffers',
+            \   'linter_checking': 'lightline#ale#checking',
+            \   'linter_warnings': 'lightline#ale#warnings',
+            \   'linter_errors': 'lightline#ale#errors',
+            \   'linter_ok': 'lightline#ale#ok',
             \ },
             \ 'component_type': {
-            \   'buffers': 'tabsel'
+            \   'buffers': 'tabsel',
+            \   'linter_checking': 'left',
+            \   'linter_warnings': 'warning',
+            \   'linter_errors': 'error',
+            \   'linter_ok': 'left',
             \ },
             \ }
 " }}}
