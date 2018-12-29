@@ -560,6 +560,8 @@ tnoremap <leader><esc> <C-\><C-n>
 " ultisnips {{{
 
 let g:UltiSnipsExpandTrigger = "<NUL>"
+let g:UltiSnipsJumpForwardTrigger="<cr>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
 " Expand snippet or return
 let g:ulti_expand_res = 0
@@ -571,9 +573,10 @@ function! Ulti_ExpandOrEnter()
         return "\<return>"
 endfunction
 
-" Set <space> as primary trigger
+" Set <return> as primary trigger
 inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 " }}}
 " unimpaired {{{
 let g:nremap = {
