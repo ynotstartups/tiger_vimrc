@@ -431,12 +431,19 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ }
 let g:LanguageClient_diagnosticsEnable=0
-" let g:LanguageClient_hasSnippetSupport=0
+let g:LanguageClient_hasSnippetSupport=0
 
 nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
-" TODO save after
-nnoremap <leader>f :call LanguageClient#textDocument_formatting()<cr>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
+function! LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+        nnoremap <buffer> <silent> <leader>k :call LanguageClient#textDocument_hover()<cr>
+        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+        " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+    endif
+endfunction
+
+autocmd FileType * call LC_maps()
 " }}}
 " lightline {{{
 set showtabline=2
