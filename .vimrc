@@ -126,7 +126,6 @@ nnoremap <leader>S :wa<cr>
 inoremap jk <esc>:w<cr>
 " }}}
 " sane mappings {{{
-nnoremap <CR> :FZF<cr>
 " In the quickfix window, <CR> is used to jump to the error under the
 " cursor, so undefine the mapping there.
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -511,30 +510,6 @@ let g:lightline = {
 " }}}
 " terminal {{{
 nnoremap <leader>t :terminal<cr>
-" }}}
-" neosnippet {{{
-" Expand the completed snippet trigger by <CR>.
-imap <expr><CR>
-            \ (pumvisible() && neosnippet#expandable()) ?
-            \ "\<Plug>(neosnippet_expand)" : "\<CR>"
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets' behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ neosnippet#expandable_or_jumpable() ?
-            \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-
-
 " }}}
 " nerdtree {{{
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
