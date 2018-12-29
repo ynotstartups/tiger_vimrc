@@ -12,30 +12,21 @@ call plug#begin('~/.nvim/plugged')
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-" Plug 'SirVer/ultisnips' | Plug 'ynotstartups/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'autozimu/LanguageClient-neovim', {
             \ 'branch': 'next',
             \ 'do': 'bash install.sh',
             \ }
-" Plug 'davidhalter/jedi-vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale'
 Plug 'junegunn/fzf.vim'
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-entire'
-Plug 'sgur/vim-textobj-parameter'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter'
 Plug 'lepture/vim-jinja'
 Plug 'mbbill/undotree'
-Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
