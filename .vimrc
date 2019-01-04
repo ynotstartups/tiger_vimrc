@@ -650,7 +650,7 @@ augroup less
     autocmd Syntax less highlight def link BEM_modifier Conditional
     autocmd Syntax less highlight def link BEM_error Error
 
-    autocmd Syntax less syntax region LESS_error start=/\v\s0px/ms=s+1 end=/\v./me=e-1 containedin=lessDefinition contained
+    autocmd Syntax less syntax region LESS_error start=/\v\s0px/ms=s+1 start=/\v\C\sNone/ end=/\v./me=e-1 containedin=lessDefinition contained
     autocmd Syntax less highlight def link LESS_error Error
 
     autocmd FileType less execute "syntax sync fromstart"
