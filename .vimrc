@@ -312,6 +312,10 @@ let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
 let g:deoplete#ignore_sources._ = ['tag']
 
 nnoremap <silent> <leader>D :call deoplete#enable()<cr>
+
+call deoplete#custom#option({
+            \ 'min_pattern_length': 1,
+            \ })
 " }}}
 " django custom {{{
 function! JumpToType(extension)
