@@ -9,6 +9,7 @@ endif
 " }}}
 " vim-plug {{{
 call plug#begin('~/.nvim/plugged')
+Plug 'FooSoft/vim-argwrap'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -39,6 +40,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb' " github extension for fugitive
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
 Plug 'vimwiki/vimwiki'
@@ -57,7 +59,8 @@ set wildmenu
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
 set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
 set autoread
-au CursorHold * checktime
+" disable for command line window
+" au CursorHold * checktime
 set hidden " no need to save when change buffer
 " set timeout
 " set timeoutlen=500
@@ -271,7 +274,14 @@ if has("autocmd")
 endif
 
 " }}}
+" private {{{
+" use for setting github enterpirce
+execute "source " . $HOME . "/.vim/private.vim"
+" }}}
 " plugins
+" argwrap {{{
+let g:argwrap_tail_comma = 1
+" }}}
 " util functions {{{
 function! CleanWord(word)
     return substitute(a:word, '[-_\.]', '', 'g')
@@ -340,6 +350,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
 
 set rtp+=/usr/local/opt/fzf
 nnoremap <tab> :FZF<cr>
+nnoremap <leader><space> :FZF<cr>
 nnoremap <leader>P :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
 nnoremap <leader>pl :Commits<cr>
@@ -375,7 +386,7 @@ command! -bang -nargs=* Rg
 
 command! -bang -nargs=* History call fzf#vim#history({'options': '--no-sort'})
 
-nnoremap <leader>rw :Rg <c-r><c-w><cr>
+nnoremap <leader>rw :Rg -e '<c-r><c-w>' <cr>
 "  }}}
 " Git/Fugitive {{{
 let g:gitgutter_map_keys = 0
@@ -575,6 +586,9 @@ nnoremap <silent> ]l :ALENext<cr>
 nnoremap <silent> ]L :ALELast<cr>
 " }}}
 " wiki {{{
+let g:python_highlight_all = 1
+" }}}
+" wiki {{{
 let wiki = {}
 let wiki.path = '~/Dropbox/vimwiki'
 let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
@@ -583,8 +597,11 @@ let g:vimwiki_list = [wiki]
 let g:vimwiki_global_ext = 0
 " }}}
 " Autoload {{{
+let g:use_autoload=1
 function! Autoload()
-    silent execute "!osascript /Users/tigerhuang/Documents/applescript_learning/open_or_reload.scpt"
+    if g:use_autoload
+        silent execute "!osascript /Users/tigerhuang/Documents/applescript_learning/open_or_reload.scpt"
+    endif
 endfunction
 augroup autoload
     autocmd!
@@ -609,6 +626,7 @@ augroup gitcommit
     " turn off Capital letter check for the first letter
     autocmd FileType gitcommit setlocal spellcapcheck=
     autocmd FileType gitcommit map <buffer> <localleader>t :py3 branch_ticket()<cr>
+    autocmd FileType gitcommit map <buffer> <localleader>j :py3 jira_link()<cr>
 augroup END
 " }}}
 " jinja {{{
@@ -659,6 +677,8 @@ augroup END
 " python {{{
 augroup python
     autocmd FileType python setlocal colorcolumn=100
+    autocmd FileType python map <buffer> <localleader>i :ImportName<cr>
+    autocmd FileType python map <buffer> <leader>' ysiw'
 augroup END
 " }}}
 " TODO {{{
