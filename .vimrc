@@ -316,6 +316,12 @@ nnoremap <silent> <leader>D :call deoplete#enable()<cr>
 call deoplete#custom#option({
             \ 'min_pattern_length': 1,
             \ })
+
+call deoplete#custom#var('around', {
+            \   'mark_above': '[↑]',
+            \   'mark_below': '[↓]',
+            \   'mark_changes': '[*]',
+            \})
 " }}}
 " django custom {{{
 function! JumpToType(extension)
