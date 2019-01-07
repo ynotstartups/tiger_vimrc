@@ -21,6 +21,7 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ 'do': 'bash install.sh',
             \ }
 Plug 'easymotion/vim-easymotion'
+Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale'
@@ -117,8 +118,8 @@ cnoremap \>s/ \>smagic/
 " nnoremap :g// :g//
 
 " Keep search matches in the middle of the window.
-nnoremap n nzzzv
-nnoremap N Nzzzv
+nmap n nzzzv<Plug>SearchIndex
+nmap N Nzzzv<Plug>SearchIndex
 nnoremap * *N
 
 nnoremap <leader>k K
