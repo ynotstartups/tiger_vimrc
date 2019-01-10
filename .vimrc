@@ -30,7 +30,7 @@ Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-tex
 Plug 'lepture/vim-jinja'
 Plug 'mbbill/undotree'
 Plug 'mgedmin/python-imports.vim'
-Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
 Plug 'tmhedberg/matchit'
 Plug 'tomasr/molokai'
@@ -61,7 +61,7 @@ set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in
 set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
 set autoread
 " disable for command line window
-" au CursorHold * checktime
+au CursorHold * checktime
 set hidden " no need to save when change buffer
 " set timeout
 " set timeoutlen=500
@@ -362,12 +362,10 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
 set rtp+=/usr/local/opt/fzf
 nnoremap <tab> :FZF<cr>
 nnoremap <leader><space> :FZF<cr>
-nnoremap <leader>P :FZF<cr>
 nnoremap <leader>pb :Buffers<cr>
 nnoremap <leader>pl :Commits<cr>
 nnoremap <leader>pg :GFiles?<cr>
 nnoremap <leader>pm :History<cr>
-nnoremap <leader>pp :FZF<cr>
 nnoremap <leader>pr :Rg<Space>
 nnoremap <leader>pt :Tags<cr>
 nnoremap <leader>ps :Snippets<cr>
@@ -441,9 +439,10 @@ set hidden
 let g:LanguageClient_serverCommands = {
     \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ }
 let g:LanguageClient_diagnosticsEnable=0
-let g:LanguageClient_hasSnippetSupport=0
+" let g:LanguageClient_hasSnippetSupport=0
 
 nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
 
