@@ -12,14 +12,15 @@ call plug#begin('~/.nvim/plugged')
 Plug 'FooSoft/vim-argwrap'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/denite.nvim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"             \ 'branch': 'next',
+"             \ 'do': 'bash install.sh',
+"             \ }
 Plug 'easymotion/vim-easymotion'
 Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
@@ -28,6 +29,7 @@ Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug '
 Plug 'junegunn/fzf.vim'
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter'
 Plug 'lepture/vim-jinja'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'mbbill/undotree'
 Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
@@ -57,7 +59,7 @@ set shortmess+=IWA " ignore Intro, Written and swapfile exists
 set laststatus=2 " status bar always on
 set colorcolumn=80
 set wildmenu
-set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+set wildignore=*.class,*.o,*~,*.pyc,.git  " Ignore certain files in tab-completion
 set updatetime=100 " how how long (in milliseconds) the plugin will wait for GitGutter
 set autoread
 " disable for command line window
@@ -305,24 +307,57 @@ let g:ale_fixers = {
             \}
 let g:ale_fix_on_save = 1
 "  }}}
+" coc {{{
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+" }}}
+"
 " deocomplete {{{
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
-let g:deoplete#ignore_sources._ = ['tag']
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
+" let g:deoplete#ignore_sources._ = ['tag']
 
-nnoremap <silent> <leader>D :call deoplete#enable()<cr>
+" nnoremap <silent> <leader>D :call deoplete#enable()<cr>
 
-call deoplete#custom#option({
-            \ 'min_pattern_length': 1,
-            \ })
+" call deoplete#custom#option({
+"             \ 'min_pattern_length': 1,
+"             \ })
 
-call deoplete#custom#var('around', {
-            \   'mark_above': '[↑]',
-            \   'mark_below': '[↓]',
-            \   'mark_changes': '[*]',
-            \})
+" call deoplete#custom#var('around', {
+"             \   'mark_above': '[↑]',
+"             \   'mark_below': '[↓]',
+"             \   'mark_changes': '[*]',
+"             \})
 " }}}
 " django custom {{{
 function! JumpToType(extension)
@@ -434,27 +469,27 @@ let g:jedi#usages_command = "<leader>Ju"
 let g:jedi#documentation_command = "<leader>k"
 " }}}
 " LanguageClient-neovim {{{
-set hidden
+" set hidden
 
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ }
-let g:LanguageClient_diagnosticsEnable=0
-" let g:LanguageClient_hasSnippetSupport=0
+" let g:LanguageClient_serverCommands = {
+"     \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
+"     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ }
+" let g:LanguageClient_diagnosticsEnable=0
+" " let g:LanguageClient_hasSnippetSupport=0
 
-nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
+" nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
 
-function! LC_maps()
-    if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer> <silent> <leader>k :call LanguageClient#textDocument_hover()<cr>
-        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-        " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-    endif
-endfunction
+" function! LC_maps()
+"     if has_key(g:LanguageClient_serverCommands, &filetype)
+"         nnoremap <buffer> <silent> <leader>k :call LanguageClient#textDocument_hover()<cr>
+"         nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+"         " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"     endif
+" endfunction
 
-autocmd FileType * call LC_maps()
+" autocmd FileType * call LC_maps()
 " }}}
 " lightline {{{
 set showtabline=2
