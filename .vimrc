@@ -22,6 +22,7 @@ Plug 'airblade/vim-gitgutter'
 "             \ 'do': 'bash install.sh',
 "             \ }
 Plug 'easymotion/vim-easymotion'
+Plug 'elzr/vim-json'
 Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
@@ -459,7 +460,7 @@ nnoremap <leader>gw :Gwrite<cr>
 nnoremap <leader>gl :Commits<cr>
 " }}}
 " indentLine {{{
-let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit']
+let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit', 'json']
 " }}}
 " jedi {{{
 let g:jedi#completions_enabled = 0
