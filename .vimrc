@@ -591,22 +591,22 @@ tnoremap <leader><esc> <C-\><C-n>
 "}}}
 " ultisnips {{{
 
-let g:UltiSnipsExpandTrigger = "<NUL>"
-let g:UltiSnipsJumpForwardTrigger="<cr>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+" let g:UltiSnipsExpandTrigger = "<NUL>"
+" let g:UltiSnipsJumpForwardTrigger="<cr>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
-" Expand snippet or return
-let g:ulti_expand_res = 0
-function! Ulti_ExpandOrEnter()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res
-        return ''
-    else
-        return "\<return>"
-endfunction
+" " Expand snippet or return
+" let g:ulti_expand_res = 0
+" function! Ulti_ExpandOrEnter()
+"     call UltiSnips#ExpandSnippet()
+"     if g:ulti_expand_res
+"         return ''
+"     else
+"         return "\<return>"
+" endfunction
 
-" Set <return> as primary trigger
-inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
+" " Set <return> as primary trigger
+" inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 " }}}
