@@ -23,6 +23,7 @@ Plug 'airblade/vim-gitgutter'
 "             \ }
 Plug 'easymotion/vim-easymotion'
 Plug 'elzr/vim-json'
+Plug 'farmergreg/vim-lastplace'
 Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
@@ -272,10 +273,10 @@ autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.
             \ execute "source " . $HOME . "/.vim/Session.vim"
 
 " the following to have Vim jump to the last position when reopening a file
-if has("autocmd")
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g`\"" | endif
-endif
+" if has("autocmd")
+"     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+"                 \| exe "normal! g`\"" | endif
+" endif
 
 " }}}
 " private {{{
