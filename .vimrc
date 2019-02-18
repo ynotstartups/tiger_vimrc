@@ -17,6 +17,7 @@ Plug 'Shougo/denite.nvim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
+Plug 'craigemery/vim-autotag'
 " Plug 'autozimu/LanguageClient-neovim', {
 "             \ 'branch': 'next',
 "             \ 'do': 'bash install.sh',
@@ -29,9 +30,10 @@ Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale'
 Plug 'junegunn/fzf.vim'
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks'
 Plug 'lepture/vim-jinja'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
 Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
@@ -287,13 +289,16 @@ execute "source " . $HOME . "/.vim/private.vim"
 " argwrap {{{
 let g:argwrap_tail_comma = 1
 " }}}
+" argwrap {{{
+let g:autotagTagsFile="TAGS"
+" }}}
 " util functions {{{
 function! CleanWord(word)
     return substitute(a:word, '[-_\.]', '', 'g')
 endfunction
 " }}}
 " ale {{{
-let g:ale_echo_msg_format = '%linter%: %s'
+let g:ale_echo_msg_format = '[ale] %linter%: %s'
 
 " let g:ale_linters = {
 "             \   'python': ['flake8'],
@@ -304,17 +309,22 @@ let g:ale_linters_ignore = {
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'python': ['isort'],
-            \   'javascript': ['prettier'],
+            \   'javascript': ['prettier-eslint'],
             \   'rust': ['rustfmt'],
             \}
 let g:ale_fix_on_save = 1
 "  }}}
 " coc {{{
+
+set completeopt-=preview " for disabling the autocomplete preview
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gu <Plug>(coc-references)
+nmap <silent> gR <Plug>(coc-rename)
+
+" nnoremap <silent> <leader>R :call <Plug>(coc-rename)<cr>
 
 " Use K for show documentation in preview window
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
@@ -333,7 +343,9 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -342,25 +354,6 @@ endfunction
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 " }}}
 "
-" deocomplete {{{
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
-" let g:deoplete#ignore_sources._ = ['tag']
-
-" nnoremap <silent> <leader>D :call deoplete#enable()<cr>
-
-" call deoplete#custom#option({
-"             \ 'min_pattern_length': 1,
-"             \ })
-
-" call deoplete#custom#var('around', {
-"             \   'mark_above': '[↑]',
-"             \   'mark_below': '[↓]',
-"             \   'mark_changes': '[*]',
-"             \})
-" }}}
 " django custom {{{
 function! JumpToType(extension)
     let l:fileName = expand('%:t:r')
@@ -592,7 +585,8 @@ tnoremap <leader><esc> <C-\><C-n>
 "}}}
 " ultisnips {{{
 
-" let g:UltiSnipsExpandTrigger = "<NUL>"
+" require otherwise it will replace tab in insert mode
+let g:UltiSnipsExpandTrigger = "<NUL>"
 " let g:UltiSnipsJumpForwardTrigger="<cr>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
@@ -644,7 +638,7 @@ let g:vimwiki_list = [wiki]
 let g:vimwiki_global_ext = 0
 " }}}
 " Autoload {{{
-let g:use_autoload=1
+let g:use_autoload=0
 function! Autoload()
     if g:use_autoload
         silent execute "!osascript /Users/tigerhuang/Documents/applescript_learning/open_or_reload.scpt"
@@ -662,7 +656,7 @@ autocmd FilterWritePre * if &diff | execute 'windo set wrap' | endif
 autocmd FilterWritePre * if &diff | execute 'IndentLinesDisable' | endif
 " }}}
 " git {{{
-source ~/Documents/tiger_vimrc/python/jira.py
+source $HOME/Documents/tiger_vimrc/python/jira.py
 
 augroup gitcommit
     autocmd!
@@ -695,7 +689,7 @@ augroup END
 " javascript {{{
 augroup javascript
     autocmd!
-    autocmd FileType javascript execute "UltiSnipsAddFiletypes jinja2"
+    " autocmd FileType javascript execute "UltiSnipsAddFiletypes jinja2"
 augroup END
 " }}}
 " less {{{
