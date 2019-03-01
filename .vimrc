@@ -14,14 +14,10 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'Yggdroot/indentLine'
-Plug 'airblade/vim-gitgutter'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' " snippets
+Plug 'Yggdroot/indentLine' " hightlight indentations
+Plug 'airblade/vim-gitgutter' " plus minus sign for changes
 Plug 'craigemery/vim-autotag'
-" Plug 'autozimu/LanguageClient-neovim', {
-"             \ 'branch': 'next',
-"             \ 'do': 'bash install.sh',
-"             \ }
 Plug 'easymotion/vim-easymotion'
 Plug 'elzr/vim-json'
 Plug 'farmergreg/vim-lastplace'
@@ -29,15 +25,16 @@ Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale'
-Plug 'junegunn/fzf.vim'
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks'
+Plug 'jparise/vim-graphql'
+Plug 'junegunn/fzf.vim' " fuzzy finder
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax'
 Plug 'lepture/vim-jinja'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
 Plug 'mgedmin/python-imports.vim'
 Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'}
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
 Plug 'tmhedberg/matchit'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
@@ -51,7 +48,7 @@ Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
 Plug 'vimwiki/vimwiki'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale' " linters
 Plug 'wincent/terminus'
 call plug#end()
 " }}}
@@ -93,10 +90,10 @@ hi Search cterm=NONE ctermfg=0 ctermbg=3
 " diff
 hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
 hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
-highlight diffAdd    ctermfg=none ctermbg=none
-highlight diffDelete ctermfg=none ctermbg=none
-highlight diffChange ctermfg=none ctermbg=none
-highlight diffText ctermfg=none ctermbg=none
+" highlight diffAdd    ctermfg=none ctermbg=none
+" highlight diffDelete ctermfg=none ctermbg=none
+" highlight diffChange ctermfg=none ctermbg=none
+" highlight diffText ctermfg=none ctermbg=none
 " }}}
 " indent {{{
 filetype plugin indent on
@@ -172,11 +169,16 @@ cnoremap jj <c-c>
 inoremap <m-u> <esc>viwU<esc>ea
 nnoremap <m-u> <esc>viwU<esc>e
 
+" jump backward and forward
 nnoremap <c-o> <c-o>zz
+nnoremap <c-p> <c-i>zz
 
 nnoremap <leader>h :noh<cr>
 
 nnoremap <leader>wq :wq<cr>
+
+" apply . on each selected line, from vim training course
+xnoremap . :normal .<CR>
 " }}}
 " buffers {{{
 set nostartofline
