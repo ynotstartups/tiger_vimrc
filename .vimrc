@@ -24,7 +24,7 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'google/vim-searchindex'
 Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
-Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale'
+Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale' | Plug 'itchyny/vim-gitbranch'
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax'
@@ -513,6 +513,7 @@ let g:lightline = {
             \ 'active': {
             \   'left':  [
             \              [ 'mode', 'paste' ],
+            \              [ 'gitbranch' ],
             \              [ 'readonly', 'relativepath', 'modified' ]
             \            ],
             \   'right': [
@@ -532,6 +533,9 @@ let g:lightline = {
             \ },
             \ 'component': {
             \   'charvaluehex': '0x%B'
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'gitbranch#name'
             \ },
             \ 'tabline': {
             \   'left':  [
