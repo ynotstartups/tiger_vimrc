@@ -27,7 +27,7 @@ Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale' | Plug 'itchyny/vim-gitbranch'
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim' " fuzzy finder
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax' | Plug 'whatyouhide/vim-textobj-xmlattr'
 Plug 'lepture/vim-jinja'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
 Plug 'markonm/traces.vim'
