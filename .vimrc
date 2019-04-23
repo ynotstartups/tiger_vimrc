@@ -14,7 +14,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' " snippets
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
 Plug 'Yggdroot/indentLine' " hightlight indentations
 Plug 'airblade/vim-gitgutter' " plus minus sign for changes
 Plug 'craigemery/vim-autotag'
@@ -72,9 +72,11 @@ set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
+set iskeyword+=%
 set noshowmode
 " set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 let maplocalleader="`"
+set foldmethod=marker
 " }}}
 " color {{{
 set t_Co=256
