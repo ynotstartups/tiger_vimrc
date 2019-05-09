@@ -28,11 +28,12 @@ Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug '
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax' | Plug 'whatyouhide/vim-textobj-xmlattr'
+Plug 'keith/swift.vim'
 Plug 'lepture/vim-jinja'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
 Plug 'mgedmin/python-imports.vim'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
 Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
 Plug 'tmhedberg/matchit'
@@ -320,7 +321,7 @@ let g:ale_fix_on_save = 1
 "  }}}
 " coc {{{
 
-set completeopt-=preview " for disabling the autocomplete preview
+" set completeopt-=preview " for disabling the autocomplete preview
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gy <Plug>(coc-type-definition)
@@ -347,6 +348,8 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
+inoremap <silent><expr> <c-space> coc#refresh()
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
