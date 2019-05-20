@@ -182,6 +182,8 @@ nnoremap <leader>wq :wq<cr>
 
 " apply . on each selected line, from vim training course
 xnoremap . :normal .<CR>
+
+nnoremap <c-p> <c-i>
 " }}}
 " buffers {{{
 set nostartofline
