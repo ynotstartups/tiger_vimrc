@@ -78,6 +78,7 @@ set noshowmode
 " set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 let maplocalleader="`"
 set foldmethod=marker
+set number
 " }}}
 " color {{{
 set t_Co=256
@@ -311,7 +312,7 @@ let g:ale_linters_ignore = {
             \}
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'python': ['isort'],
+            \   'python': ['isort', 'black'],
             \   'javascript': ['prettier-eslint'],
             \   'rust': ['rustfmt'],
             \}
