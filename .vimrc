@@ -10,33 +10,23 @@ endif
 " vim-plug {{{
 call plug#begin('~/.nvim/plugged')
 Plug 'FooSoft/vim-argwrap'
-Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Raimondi/delimitMate'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
 Plug 'Yggdroot/indentLine' " hightlight indentations
-Plug 'airblade/vim-gitgutter' " plus minus sign for changes
-Plug 'craigemery/vim-autotag'
 Plug 'easymotion/vim-easymotion'
 Plug 'elzr/vim-json'
 Plug 'farmergreg/vim-lastplace'
 Plug 'google/vim-searchindex'
-Plug 'groenewege/vim-less'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale' | Plug 'itchyny/vim-gitbranch'
-Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax' | Plug 'whatyouhide/vim-textobj-xmlattr'
 Plug 'keith/swift.vim'
-Plug 'lepture/vim-jinja'
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
-Plug 'mgedmin/python-imports.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
-Plug 'pangloss/vim-javascript' | Plug 'maxmellon/vim-jsx-pretty'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
-Plug 'tmhedberg/matchit'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -47,10 +37,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/BufOnly.vim'
-Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
-Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale' " linters
-Plug 'wincent/terminus'
 call plug#end()
 " }}}
 " change leader to space, has to be in the beginning
@@ -90,14 +77,6 @@ hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
 
 " less offensive hlsearch color
 hi Search cterm=NONE ctermfg=0 ctermbg=3
-
-" diff
-hi diffAdded ctermfg=34  cterm=NONE guifg=#2BFF2B gui=NONE
-hi diffRemoved ctermfg=160 cterm=NONE guifg=#FF2B2B gui=NONE
-" highlight diffAdd    ctermfg=none ctermbg=none
-" highlight diffDelete ctermfg=none ctermbg=none
-" highlight diffChange ctermfg=none ctermbg=none
-" highlight diffText ctermfg=none ctermbg=none
 " }}}
 " indent {{{
 filetype plugin indent on
@@ -107,8 +86,6 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" for code indented with tabs
-" set list lcs=tab:\|\
 " }}}
 " search {{{
 set ignorecase
@@ -191,14 +168,12 @@ set nostartofline
 nnoremap <silent> <S-h> <esc>:bp<cr>
 nnoremap <silent> <S-l> <esc>:bn<cr>
 map <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
-nnoremap <leader>ba :%bd<cr>
 nnoremap <leader>bo :BufOnly<cr>
 
 nnoremap <m-w> :bd<cr>
 " }}}
 " windows {{{
 nnoremap <leader>x  :split<cr><c-w><c-w>
-" nnoremap <leader>wv  :vsplit<cr><c-w><c-w>
 set splitbelow
 
 nnoremap <leader>q  <C-w><C-w>
@@ -210,23 +185,10 @@ nnoremap <leader>v- :vertical resize -30<cr>
 
 map <m-s> :split<cr>
 " }}}
-" arrow key map {{{
-vnoremap <up> 15k
-vnoremap <down> 15j
-vnoremap <left> 30k
-vnoremap <right> 30j
-" }}}
 " quick reload/edit {{{
-nnoremap <leader>lv :source $MYVIMRC<cr>
-nnoremap <leader>lz :source ~/.zshrc<cr>
-nnoremap <leader>lb :source ~/.bash_profile<cr>
-
 nnoremap <silent> <leader>ee :e#<cr>
 nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.txt<cr>
 nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
-nnoremap <silent> <leader>ez :e ~/Documents/tiger_zshrc/.zshrc<cr>
-
-nnoremap <m-e> :e#<cr>
 " }}}
 " folding {{{
 nnoremap \ za
@@ -292,8 +254,6 @@ execute "source " . $HOME . "/.vim/private.vim"
 " plugins
 " argwrap {{{
 let g:argwrap_tail_comma = 1
-" }}}
-" argwrap {{{
 let g:autotagTagsFile="TAGS"
 " }}}
 " util functions {{{
@@ -310,6 +270,8 @@ let g:ale_echo_msg_format = '[ale] %linter%: %s'
 let g:ale_linters_ignore = {
             \   'javascript': ['jshint'],
             \}
+
+" \   'python': ['isort', 'black'],
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'python': ['isort', 'black'],
@@ -636,17 +598,6 @@ nnoremap <silent> [l :ALEPrevious<cr>
 nnoremap <silent> ]l :ALENext<cr>
 nnoremap <silent> ]L :ALELast<cr>
 " }}}
-" wiki {{{
-let g:python_highlight_all = 1
-" }}}
-" wiki {{{
-let wiki = {}
-let wiki.path = '~/Dropbox/vimwiki'
-let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
-let wiki.ext = '.txt'
-let g:vimwiki_list = [wiki]
-let g:vimwiki_global_ext = 0
-" }}}
 " Autoload {{{
 let g:use_autoload=0
 function! Autoload()
@@ -661,10 +612,6 @@ augroup autoload
 augroup END
 " }}}
 " file specific
-" diff {{{
-autocmd FilterWritePre * if &diff | execute 'windo set wrap' | endif
-autocmd FilterWritePre * if &diff | execute 'IndentLinesDisable' | endif
-" }}}
 " git {{{
 source $HOME/Documents/tiger_vimrc/python/jira.py
 
@@ -680,83 +627,9 @@ augroup gitcommit
     autocmd FileType gitcommit map <buffer> <localleader>j :py3 jira_link()<cr>
 augroup END
 " }}}
-" jinja {{{
-augroup jinja
-    autocmd!
-    autocmd FileType jinja setlocal colorcolumn=100
-    autocmd FileType jinja setlocal commentstring={#%s#}
-
-    " for preventing typing classname with _ instead of - by autocomplete
-    autocmd Syntax jinja syntax region BEM_error start=/\v\w_[^_]/ end=/\v\w/me=e-1 containedin=htmlString contained
-
-    autocmd Syntax jinja syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s/me=e-1 containedin=htmlString contained
-    autocmd Syntax jinja syntax region BEM_modifier start=/\v--/ end=/\v"|\s/me=e-1 containedin=htmlString contained
-    autocmd Syntax jinja highlight link BEM_element Label
-    autocmd Syntax jinja highlight link BEM_modifier Conditional
-    autocmd Syntax jinja highlight link BEM_error Error
-augroup END
-" }}}
-" javascript {{{
-augroup javascript
-    autocmd!
-    " autocmd FileType javascript execute "UltiSnipsAddFiletypes jinja2"
-augroup END
-" }}}
-" less {{{
-augroup less
-    autocmd!
-    autocmd FileType less setlocal iskeyword+=@-@
-    autocmd FileType less setlocal iskeyword+=&
-    " css selector wonder whether this will be useful
-    autocmd FileType less setlocal iskeyword+=.
-    autocmd FileType less setlocal iskeyword+=#
-
-    autocmd Syntax less syntax region BEM_element start=/\v__/ end=/\v--/me=e-2 end=/\v"|\s|:/me=e-1 containedin=lessClass contained
-    autocmd Syntax less syntax region BEM_modifier start=/\v--/ end=/\v"|\s|:/me=e-1 containedin=lessClass contained
-    autocmd Syntax less syntax region BEM_error start=/\v[^_]_/ end=/\v\w/ containedin=BEM_element contained
-
-    autocmd Syntax less highlight def link BEM_element Label
-    autocmd Syntax less highlight def link BEM_modifier Conditional
-    autocmd Syntax less highlight def link BEM_error Error
-
-    autocmd Syntax less syntax region LESS_error start=/\v\s0px/ms=s+1 start=/\v\C\sNone/ end=/\v./me=e-1 containedin=lessDefinition contained
-    autocmd Syntax less highlight def link LESS_error Error
-
-    autocmd FileType less execute "syntax sync fromstart"
-augroup END
-" }}}
-" python {{{
-augroup python
-    autocmd FileType python setlocal colorcolumn=100
-    autocmd FileType python map <buffer> <localleader>i :ImportName<cr>
-    autocmd FileType python map <buffer> <leader>' ysiw'
-augroup END
-" }}}
-" TODO {{{
-augroup TODO
-    autocmd!
-    autocmd BufRead,BufNewFile,BufEnter TODO.txt set ft=TODO
-
-    autocmd FileType TODO nnoremap <buffer> <leader>f <esc>0r*<esc>:sort <bar> :write<cr>
-    autocmd FileType TODO nnoremap <buffer> <leader>n <esc>ggO()<space><left><left>
-
-    " .{-} instead of .* for not greedy match
-    autocmd Syntax TODO syntax match TODOLabel "\v^\s\s\(.{-}\)"
-    autocmd Syntax TODO highlight link TODOLabel Keyword
-
-    autocmd Syntax TODO syntax match TODOLabel "\v^.\s\(life\).*" conceal cchar=☝
-    autocmd FileType TODO nnoremap <buffer> <leader>c :setlocal conceallevel=0<cr>
-augroup END
-" }}}
 " Vimscript {{{
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-" zshrc {{{
-augroup filetype_zsh
-    autocmd!
-    autocmd FileType zsh setlocal foldmethod=marker
 augroup END
 " }}}
