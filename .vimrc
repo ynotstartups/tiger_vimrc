@@ -37,6 +37,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
 Plug 'w0rp/ale' " linters
 call plug#end()
 " }}}
