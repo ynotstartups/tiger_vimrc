@@ -54,15 +54,12 @@ set autoread
 " disable for command line window
 au CursorHold * checktime
 set hidden " no need to save when change buffer
-" set timeout
-" set timeoutlen=500
 set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
 set iskeyword+=-
 set iskeyword+=_
 set iskeyword+=%
 set noshowmode
-" set shada=!,'500,<50,s10,h " change v:oldfile from 100 to 500 for fzf history
 let maplocalleader="`"
 set foldmethod=marker
 set number
@@ -98,8 +95,6 @@ nnoremap / /\v
 vnoremap / /\v
 cnoremap %s/ %smagic/
 cnoremap \>s/ \>smagic/
-" nnoremap :g/ :g/\v
-" nnoremap :g// :g//
 
 " Keep search matches in the middle of the window.
 nmap n nzzzv<Plug>SearchIndex
