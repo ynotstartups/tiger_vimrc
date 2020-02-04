@@ -251,26 +251,11 @@ execute "source " . $HOME . "/.vim/private.vim"
 let g:argwrap_tail_comma = 1
 let g:autotagTagsFile="TAGS"
 " }}}
-" util functions {{{
-function! CleanWord(word)
-    return substitute(a:word, '[-_\.]', '', 'g')
-endfunction
-" }}}
 " ale {{{
 let g:ale_echo_msg_format = '[ale] %linter%: %s'
-
-" let g:ale_linters = {
-"             \   'python': ['flake8'],
-"             \}
-let g:ale_linters_ignore = {
-            \   'javascript': ['jshint'],
-            \}
-
-" \   'python': ['isort', 'black'],
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'python': ['isort', 'black'],
-            \   'javascript': ['prettier-eslint'],
             \   'rust': ['rustfmt'],
             \}
 let g:ale_fix_on_save = 1
