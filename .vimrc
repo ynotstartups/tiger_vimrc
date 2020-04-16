@@ -14,6 +14,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
 Plug 'Yggdroot/indentLine' " hightlight indentations
+Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
 Plug 'elzr/vim-json'
 Plug 'farmergreg/vim-lastplace'
@@ -21,9 +22,8 @@ Plug 'google/vim-searchindex'
 Plug 'guns/xterm-color-table.vim'
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale' | Plug 'itchyny/vim-gitbranch'
 Plug 'junegunn/fzf.vim' " fuzzy finder
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'fvictorio/vim-textobj-backticks' | Plug 'poetic/vim-textobj-javascript' | Plug 'kana/vim-textobj-function' | Plug 'haya14busa/vim-textobj-function-syntax' | Plug 'whatyouhide/vim-textobj-xmlattr'
-Plug 'keith/swift.vim'
-Plug 'markonm/traces.vim'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'jeetsukumaran/vim-pythonsense'
+Plug 'markonm/traces.vim' " Range, pattern and substitute preview for Vim
 Plug 'mbbill/undotree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
