@@ -12,7 +12,7 @@ call plug#begin('~/.nvim/plugged')
 Plug 'FooSoft/vim-argwrap'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
 Plug 'Yggdroot/indentLine' " hightlight indentations
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
@@ -26,7 +26,10 @@ Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-tex
 Plug 'markonm/traces.vim' " Range, pattern and substitute preview for Vim
 Plug 'mbbill/undotree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
+Plug 'posva/vim-vue'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
+Plug 'stephpy/vim-yaml'
+Plug 'tmhedberg/SimpylFold'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -592,20 +595,15 @@ augroup autoload
     autocmd FileType jinja autocmd! BufWritePost <buffer> call Autoload()
 augroup END
 " }}}
+" python-syntax {{{
+let g:python_highlight_all = 1
+" }}}
 " file specific
-" git {{{
-source $HOME/Documents/tiger_vimrc/python/jira.py
-
-augroup gitcommit
+" python {{{
+augroup filetype_python
     autocmd!
-    autocmd FileType gitcommit setlocal spell spelllang=en_gb
-    autocmd FileType gitcommit setlocal textwidth=72
-    autocmd FileType gitcommit setlocal colorcolumn=73
-
-    " turn off Capital letter check for the first letter
-    autocmd FileType gitcommit setlocal spellcapcheck=
-    autocmd FileType gitcommit map <buffer> <localleader>t :py3 branch_ticket()<cr>
-    autocmd FileType gitcommit map <buffer> <localleader>j :py3 jira_link()<cr>
+    autocmd FileType python setlocal foldmethod=indent
+    autocmd FileType python setlocal foldlevel=99
 augroup END
 " }}}
 " Vimscript {{{
@@ -613,4 +611,8 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
+" Yaml {{{
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " }}}
