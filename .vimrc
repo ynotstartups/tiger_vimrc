@@ -9,35 +9,31 @@ endif
 " }}}
 " vim-plug {{{
 call plug#begin('~/.nvim/plugged')
-Plug 'FooSoft/vim-argwrap'
-Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'Shougo/denite.nvim'
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
 Plug 'Yggdroot/indentLine' " hightlight indentations
-Plug 'airblade/vim-gitgutter'
-Plug 'easymotion/vim-easymotion'
-Plug 'elzr/vim-json'
-Plug 'farmergreg/vim-lastplace'
-Plug 'google/vim-searchindex'
-Plug 'guns/xterm-color-table.vim'
+Plug 'airblade/vim-gitgutter' " shows a git diff in the sign column
+" Plug 'davidhalter/jedi-vim'
+Plug 'dhruvasagar/vim-table-mode' " use :TableModeToggle to input ascii table
+Plug 'farmergreg/vim-lastplace' " Intelligently reopen files at your last edit position.
+Plug 'google/vim-searchindex' " shows number of search
 Plug 'itchyny/lightline.vim' | Plug 'mengelbrecht/lightline-bufferline' | Plug 'maximbaz/lightline-ale' | Plug 'itchyny/vim-gitbranch'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire' | Plug 'sgur/vim-textobj-parameter' | Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'markonm/traces.vim' " Range, pattern and substitute preview for Vim
 Plug 'mbbill/undotree'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " autocomplete and language server
-Plug 'posva/vim-vue'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'} " autocomplete and language server
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeFind'} " directory sidebar
 Plug 'stephpy/vim-yaml'
-Plug 'tmhedberg/SimpylFold'
-Plug 'tomasr/molokai'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
+Plug 'tomasr/molokai' " molokai theme
+Plug 'tpope/vim-commentary' " add shortcut for making a line comment
+Plug 'tpope/vim-fugitive' " Gbrowse
 Plug 'tpope/vim-git' " git syntax highlight
-Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat' " . to repeat
 Plug 'tpope/vim-rhubarb' " github extension for fugitive
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround' " The plugin provides mappings to easily delete, change and add such surroundings in pairs.
+Plug 'tpope/vim-unimpaired' " adds mapping like [q ]q
 Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/ReplaceWithRegister' " gr{motion} go replace
@@ -65,7 +61,6 @@ set iskeyword+=_
 set iskeyword+=%
 set noshowmode
 let maplocalleader="`"
-set foldmethod=marker
 set number
 " }}}
 " color {{{
@@ -80,8 +75,8 @@ hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
 hi Search cterm=NONE ctermfg=0 ctermbg=3
 " }}}
 " indent {{{
-filetype plugin indent on
-set smartindent
+" filetype plugin indent on
+" set smartindent
 
 set tabstop=4
 set shiftwidth=4
@@ -99,20 +94,13 @@ nnoremap / /\v
 vnoremap / /\v
 cnoremap %s/ %smagic/
 cnoremap \>s/ \>smagic/
-
-" Keep search matches in the middle of the window.
-nmap n nzzzv<Plug>SearchIndex
-nmap N Nzzzv<Plug>SearchIndex
-nnoremap * *N
-
-nnoremap <leader>k K
 "  }}}
 " save {{{
-nnoremap <leader>s :w<cr>
-nnoremap <leader>S :wa<cr>
-inoremap jk <esc>:w<cr>
+" nnoremap <leader>s :w<cr>
+" nnoremap <leader>S :wa<cr>
+" inoremap jk <esc>:w<cr>
 " }}}
-" sane mappings {{{
+" important mappings {{{
 " In the quickfix window, <CR> is used to jump to the error under the
 " cursor, so undefine the mapping there.
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -137,62 +125,43 @@ endfun
 nnoremap gj :call JoinSpaceless()<cr>
 
 " Map it to a key
-nnoremap <m-j> :call JoinSpaceless()<CR>
-nnoremap <m-k> K
 nnoremap J <c-d>
 nnoremap K <c-u>
-
-inoremap jj <esc>
-cnoremap jj <c-c>
-
-" upper case whole word for writing constant
-inoremap <m-u> <esc>viwU<esc>ea
-nnoremap <m-u> <esc>viwU<esc>e
 
 " jump backward and forward
 nnoremap <c-o> <c-o>zz
 nnoremap <c-p> <c-i>zz
 
-nnoremap <leader>h :noh<cr>
-
-nnoremap <leader>wq :wq<cr>
 
 " apply . on each selected line, from vim training course
 xnoremap . :normal .<CR>
 
-nnoremap <c-p> <c-i>
+" nnoremap <leader>h :nohlsearch<cr>
+
+" remove other windows
+" nnoremap <leader>o  :only<cr>
+
+" nnoremap <leader>gb :Gblame<cr>
+" nnoremap <leader>gp :GitGutterPreviewHunk<cr>
+" nnoremap <leader>gu :GitGutterUndo<cr>
 " }}}
 " buffers {{{
 set nostartofline
 nnoremap <silent> <S-h> <esc>:bp<cr>
 nnoremap <silent> <S-l> <esc>:bn<cr>
-map <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
+" map <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>bo :BufOnly<cr>
-
-nnoremap <m-w> :bd<cr>
 " }}}
-" windows {{{
-nnoremap <leader>x  :split<cr><c-w><c-w>
+" windows management {{{
 set splitbelow
-
-nnoremap <leader>q  <C-w><C-w>
-nnoremap <leader>o  :only<cr>
-nnoremap <leader>=  :resize +5<cr>
-nnoremap <leader>-  :resize -5<cr>
-nnoremap <leader>v= :vertical resize +30<cr>
-nnoremap <leader>v- :vertical resize -30<cr>
-
-map <m-s> :split<cr>
+" nnoremap <leader>q  <C-w><C-w>
 " }}}
 " quick reload/edit {{{
 nnoremap <silent> <leader>ee :e#<cr>
 nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.txt<cr>
 nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
 " }}}
-" folding {{{
-nnoremap \ za
-xnoremap iz :<C-U>silent!normal![zV]z<CR>
-onoremap iz :normal viz<CR>
+" folding text {{{
 " https://gist.github.com/sjl/3360978
 function! MyFoldText()
     let line = getline(v:foldstart)
@@ -209,7 +178,6 @@ nnoremap p p=`]`]
 
 nnoremap <leader>cf :let @*=expand("%:t")<cr>
 nnoremap <leader>cp :let @*=expand("%")<cr>
-nmap <leader>cm [[wyw
 function! CopyTestFunctionName()
     normal [[w"ayw
     let @*=expand('%').'::'.@a
@@ -218,8 +186,6 @@ nnoremap <leader>ct :call CopyTestFunctionName()<cr>
 " }}}
 " undo/swap extra dir {{{
 " Persistent undo, remember to mkdir ~/.vim/undo
-nnoremap U <c-r>
-
 set undofile
 set undodir=~/.vim/undo
 
@@ -239,103 +205,21 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
 autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
             \ execute "source " . $HOME . "/.vim/Session.vim"
 
-" the following to have Vim jump to the last position when reopening a file
-" if has("autocmd")
-"     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-"                 \| exe "normal! g`\"" | endif
-" endif
-
 " }}}
 " private {{{
 " use for setting github enterpirce
 execute "source " . $HOME . "/.vim/private.vim"
 " }}}
 " plugins
-" argwrap {{{
-let g:argwrap_tail_comma = 1
-let g:autotagTagsFile="TAGS"
-" }}}
 " ale {{{
 let g:ale_echo_msg_format = '[ale] %linter%: %s'
+let g:ale_linters = {'python': ['mypy', 'flake8']}
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'python': ['isort', 'black'],
-            \   'rust': ['rustfmt'],
             \}
 let g:ale_fix_on_save = 1
 "  }}}
-" coc {{{
-
-" set completeopt-=preview " for disabling the autocomplete preview
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gu <Plug>(coc-references)
-nmap <silent> gR <Plug>(coc-rename)
-
-" nnoremap <silent> <leader>R :call <Plug>(coc-rename)<cr>
-
-" Use K for show documentation in preview window
-nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-inoremap <silent><expr> <c-space> coc#refresh()
-
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
-" }}}
-"
-" django custom {{{
-function! JumpToType(extension)
-    let l:fileName = expand('%:t:r')
-
-    let l:fileName = substitute(l:fileName, 'test_', '', '')
-    let l:fileName = substitute(l:fileName, '\.stories', '', '')
-    let l:fileName = substitute(l:fileName, '[-_]', '.', 'g')
-
-    if a:extension == "test"
-        let l:fileName = "/test." . l:fileName . ".py"
-    else
-        let l:fileName = "/".l:fileName .".". a:extension
-    endif
-    " TODO error when ag gives back more than 1 result
-    execute "edit ".system("ag -g ".l:fileName)
-endfunction
-
-nnoremap <silent> <leader>jS :call JumpToType("stories.js")<cr>
-nnoremap <silent> <leader>jj :call JumpToType("jinja")<cr>
-nnoremap <silent> <leader>jp :call JumpToType("py")<cr>
-nnoremap <silent> <leader>js :call JumpToType("js")<cr>
-nnoremap <silent> <leader>jt :call JumpToType("test")<cr>
-nnoremap <silent> <leader>jl :call JumpToType("less")<cr>
-" }}}
-" EasyMotion {{{
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" have to use nmap for whatever reason
-nmap a <Plug>(easymotion-overwin-f2)
-let g:EasyMotion_smartcase = 1
-" }}}
 " fzf {{{
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
@@ -343,24 +227,6 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
 
 set rtp+=/usr/local/opt/fzf
 nnoremap <tab> :FZF<cr>
-nnoremap <leader><space> :FZF<cr>
-nnoremap <leader>pb :Buffers<cr>
-nnoremap <leader>pl :Commits<cr>
-nnoremap <leader>pg :GFiles?<cr>
-nnoremap <leader>pm :History<cr>
-nnoremap <leader>pr :Rg<Space>
-nnoremap <leader>pt :Tags<cr>
-nnoremap <leader>ps :Snippets<cr>
-
-" require alt sends Esc+, iterm2 preference->Profiles->Keys
-nnoremap <m-p> :FZF<cr>
-nnoremap <m-b> :Buffers<cr>
-nnoremap <m-m> :History<cr>
-nnoremap <m-r> :Rg<Space>
-nnoremap <m-g> :Commits<Space>
-
-nnoremap <leader>pw :call fzf#vim#files('.', {'options':'--query '.CleanWord('<c-r><c-w>')})<cr>
-nnoremap <leader>pf :call fzf#vim#files('.', {'options':'--query '.CleanWord(expand('%:t:r'))})<cr>
 
 inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
             \ 'prefix': '^.*$',
@@ -381,62 +247,11 @@ nnoremap <leader>rw :Rg -e '<c-r><c-w>' <cr>
 "  }}}
 " Git/Fugitive {{{
 let g:gitgutter_map_keys = 0
-
-command! -bar -bang -nargs=* Gcv :Gcommit<bang> -v <args>
-
-nnoremap <leader>gp :GitGutterPreviewHunk<cr>
-nnoremap <leader>gu :GitGutterUndo<cr>
-nnoremap <leader>gS :GitGutterStageHunk<cr>
-nnoremap <leader>gU :let gitgutter_diff_base='upstream/master' <bar> GitGutterAll<cr>
 nnoremap [c :GitGutterPrevHunk<cr>
 nnoremap ]c :GitGutterNextHunk<cr>
-
-" let g:gitgutter_sign_added = '∙'
-" let g:gitgutter_sign_modified = '∙'
-" let g:gitgutter_sign_removed = '∙'
-" let g:gitgutter_sign_modified_removed = '∙'
-
-nnoremap <leader>gL :Glog<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gc :Gcv<cr>
-nnoremap <leader>gd :Gvdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gw :Gwrite<cr>
-
-nnoremap <leader>gl :Commits<cr>
 " }}}
 " indentLine {{{
 let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit', 'json']
-" }}}
-" jedi {{{
-let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = "<leader>Jd"
-let g:jedi#goto_assignments_command = "<leader>Ja"
-let g:jedi#usages_command = "<leader>Ju"
-let g:jedi#documentation_command = "<leader>k"
-" }}}
-" LanguageClient-neovim {{{
-" set hidden
-
-" let g:LanguageClient_serverCommands = {
-"     \ 'python': ['/Users/tigerhuang/Documents/env/lyst3/bin/pyls'],
-"     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-"     \ }
-" let g:LanguageClient_diagnosticsEnable=0
-" " let g:LanguageClient_hasSnippetSupport=0
-
-" nnoremap <leader>pc :call LanguageClient_contextMenu()<CR>
-
-" function! LC_maps()
-"     if has_key(g:LanguageClient_serverCommands, &filetype)
-"         nnoremap <buffer> <silent> <leader>k :call LanguageClient#textDocument_hover()<cr>
-"         nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-"         " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-"     endif
-" endfunction
-
-" autocmd FileType * call LC_maps()
 " }}}
 " lightline {{{
 set showtabline=2
@@ -468,7 +283,6 @@ let g:lightline = {
             \            ],
             \   'right': [
             \              [ 'lineinfo' ],
-            \              [ 'percent' ],
             \              [ 'filetype' ],
             \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
             \            ],
@@ -515,9 +329,6 @@ let g:lightline = {
             \ },
             \ }
 " }}}
-" terminal {{{
-nnoremap <leader>t :terminal<cr>
-" }}}
 " nerdtree {{{
 nnoremap <leader>n <esc>:NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
@@ -526,74 +337,21 @@ let NERDTreeIgnore = ['\.pyc$']
 " make sure the color still works after opening session
 set sessionoptions-=options  " Don't save options
 " }}}
-" surround {{{
-autocmd FileType jinja let b:surround_{char2nr("v")} = "{{ \r }}"
-autocmd FileType jinja let b:surround_{char2nr("{")} = "{{ \r }}"
-autocmd FileType jinja let b:surround_{char2nr("%")} = "{% \r %}"
-autocmd FileType jinja let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-autocmd FileType jinja let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
-autocmd FileType jinja let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
-autocmd FileType jinja let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
-autocmd FileType jinja let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
-" }}}
-" terminal neovim {{{
-tnoremap <leader><esc> <C-\><C-n>
-"}}}
-" ultisnips {{{
-
-" require otherwise it will replace tab in insert mode
-let g:UltiSnipsExpandTrigger = "<NUL>"
-" let g:UltiSnipsJumpForwardTrigger="<cr>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-j>"
-
-" " Expand snippet or return
-" let g:ulti_expand_res = 0
-" function! Ulti_ExpandOrEnter()
-"     call UltiSnips#ExpandSnippet()
-"     if g:ulti_expand_res
-"         return ''
-"     else
-"         return "\<return>"
-" endfunction
-
-" " Set <return> as primary trigger
-" inoremap <silent> <return> <C-R>=Ulti_ExpandOrEnter()<cr>
-
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
+" lastplace {{{
+let g:lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
 " }}}
 " unimpaired {{{
 let g:nremap = {
-            \ "[t": "",
-            \ "]t": "",
-            \ "[T": "",
-            \ "]T": "",
             \ "[l": "",
             \ "]l": "",
             \ "[L": "",
             \ "]L": "",
             \ }
-nnoremap <silent> [t :tabprevious<cr>
-nnoremap <silent> ]t :tabnext<cr>
-nnoremap <silent> [T :tabfirst<cr>
-nnoremap <silent> ]T :tablast<cr>
 
 nnoremap <silent> [L :ALEFirst<cr>
 nnoremap <silent> [l :ALEPrevious<cr>
 nnoremap <silent> ]l :ALENext<cr>
 nnoremap <silent> ]L :ALELast<cr>
-" }}}
-" Autoload {{{
-let g:use_autoload=0
-function! Autoload()
-    if g:use_autoload
-        silent execute "!osascript /Users/tigerhuang/Documents/applescript_learning/open_or_reload.scpt"
-    endif
-endfunction
-augroup autoload
-    autocmd!
-    autocmd FileType python autocmd! BufWritePost <buffer> call Autoload()
-    autocmd FileType jinja autocmd! BufWritePost <buffer> call Autoload()
-augroup END
 " }}}
 " python-syntax {{{
 let g:python_highlight_all = 1
