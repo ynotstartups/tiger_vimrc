@@ -12,8 +12,9 @@ Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets
 Plug 'Yggdroot/indentLine' " hightlight indentations
 Plug 'airblade/vim-gitgutter' " shows a git diff in the sign column
 Plug 'google/vim-searchindex' " shows number of search
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim' " fuzzy finder
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim' " fuzzy finder
+Plug 'jremmen/vim-ripgrep' " add Rg to vim
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line' | Plug 'kana/vim-textobj-entire'
 Plug 'markonm/traces.vim' " Range, pattern and substitute preview for Vim
 Plug 'tpope/vim-commentary' " add shortcut gc for making a line comment
@@ -27,26 +28,18 @@ call plug#end()
 nnoremap <SPACE> <nop>
 let mapleader = " "
 
-" sane settings
+" better setting
 set shortmess+=IWA " ignore Intro, Written and swapfile exists
 set laststatus=2 " status bar always on
 set wildmenu
 set wildignore=*.class,*.o,*~,*.pyc,.git  " Ignore certain files when finding files
-set updatetime=100 " how long (in milliseconds) the plugin will wait for GitGutter
 set autoread " automatically apply changes from outside of Vim
-" disable for command line window
-au CursorHold * checktime
 set hidden " files leave the screen become hidden buffer
-" set cmdheight=2 " set command line height to 2
 set backspace=indent,eol,start
-set iskeyword+=-
-set iskeyword+=_
-set iskeyword+=%
-set number
-set tabstop=4
-set shiftwidth=4
+set number " add line number before each line in vim
+" set tabstop=4
+" set shiftwidth=4
 set expandtab " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
-
 
 " finding files
 set path+=**
@@ -61,55 +54,37 @@ let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 " find key binding with netrw-browse-maps
-" D	   Attempt to remove the file(s)/directory(ies)         |netrw-D|
-" gh   Quick hide/unhide of dot-files                       |netrw-gh|
-" o    Enter the file/directory under the cursor in a new   netrw-o
-"      browser window.  A horizontal split is used.
+" D    Attempt to remove the file(s)/directory(ies)
+" gh   Quick hide/unhide of dot-files
+" o    Enter the file/directory under the cursor in a new browser window. A horizontal split is used.
 " R    Rename the designated file(s)/directory(ies)
 " p    Preview the file
-" %	   Open a new file in netrw's current directory         |netrw-%|
+" %    Open a new file in netrw's current directory
 " :e.  Open netrw
 
 " color
-set t_Co=256
 syntax on
-set background=dark
 colorscheme molokai
 
 " search
 set ignorecase
 set smartcase
 
-" permanent very magic mode
-" nnoremap / /\v
-" vnoremap / /\v
-" cnoremap %s/ %smagic/
-" cnoremap \>s/ \>smagic/
-
-" important mappings
-" In the quickfix window, <CR> is used to jump to the error under the
-" cursor, so undefine the mapping there.
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-
 " qq to record, @q to replay
 
 " Make Y behave like other capitals
 nnoremap Y y$
 
-" apply . on each selected line, from vim training course
-xnoremap . :normal .<CR>
-
-" quick reload/edit
+" shortcuts to edit certain files
 nnoremap <silent> <leader>eu :e ~/Dropbox/vimwiki/USEFUL COMMANDS.txt<cr>
 nnoremap <silent> <leader>ev :e ~/Documents/tiger_vimrc/.vimrc<cr>
 
 " copy/paste
-set clipboard=unnamed
+set clipboard+=unnamed " vim uses system clipboard
 
 " ctags
-" ctags -R . " create ctags
-" <ctrl>]    " jump to tagjump to tags
-" 2<ctrl>]    " jump to tag and skips import
+" ctags -R .    " create ctags
+" <ctrl>]       " jump to tagjump to tags
 
 " plugins
 " ale
@@ -122,26 +97,33 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 
 " fzf
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler relativenumber
+" autocmd! FileType fzf
+" autocmd  FileType fzf set laststatus=0 noshowmode noruler norelativenumber
+"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler relativenumber
 
-set rtp+=/usr/local/opt/fzf
-" nnoremap <tab> :FZF<cr>
+" set rtp+=/usr/local/opt/fzf
 
-command! -bang -nargs=* Rg
-            \ call fzf#vim#grep(
-            \   'rg --column --line-number --no-heading --color=always --smart-case --sort=modified '.<q-args>, 1,
-            \   <bang>0 ? fzf#vim#with_preview('up:60%')
-            \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-            \   <bang>0)
+" add Rg command to grep
+" command! -bang -nargs=* Rg
+"             \ call fzf#vim#grep(
+"             \   'rg --column --line-number --no-heading --color=always --smart-case --sort=modified '.<q-args>, 1,
+"             \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"             \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"             \   <bang>0)
 
-nnoremap <leader>rw :Rg -e '<c-r><c-w>' <cr>
+" nnoremap <leader>rw :Rg -e '<c-r><c-w>' <cr>
 
 " GitGutter
-let g:gitgutter_map_keys = 0
-nnoremap [c :GitGutterPrevHunk<cr>
-nnoremap ]c :GitGutterNextHunk<cr>
+" see help (shortcut K) for gitgutter-mappings
+set updatetime=100 " how long (in milliseconds) the plugin will wait for GitGutter
+" <Leader>hp              Preview the hunk under the cursor.
+" <Leader>hs              Stage the hunk under the cursor.
+" <Leader>hu              Undo the hunk under the cursor.
+" ]c                      Jump to the next [count] hunk.
+" [c                      Jump to the previous [count] hunk.
+" Hunk text object:
+" 'ic' operates on the current hunk's lines.  'ac' does the same but also includes
+" trailing empty lines.
 
 " indentLine
 let g:indentLine_fileTypeExclude = ['help', 'man', 'gitcommit', 'json']
